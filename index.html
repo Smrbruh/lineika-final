@@ -1,818 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-  <title>Linear Algebra Practice | Finals Prep</title>
-  <!-- KaTeX CDN -->
+  <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-      background: #0b0f15;
-      color: #e6edf3;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1.5rem;
-      margin: 0;
-      line-height: 1.5;
-    }
-
-    .app-container {
-      width: 100%;
-      max-width: 1100px;
-      height: 90vh;
-      max-height: 900px;
-      background: #131a22;
-      border-radius: 2.5rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
-    }
-
-    /* header */
-    .header {
-      padding: 1.2rem 2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      background: rgba(19, 26, 34, 0.8);
-      backdrop-filter: blur(12px);
-    }
-
-    .logo {
-      font-weight: 700;
-      font-size: 1.7rem;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .score-area {
-      display: flex;
-      align-items: center;
-      gap: 1.8rem;
-      background: #1e293b;
-      padding: 0.6rem 1.8rem;
-      border-radius: 3rem;
-      font-weight: 500;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
-
-    .streak-badge {
-      background: #f59e0b;
-      color: #0f172a;
-      padding: 0.3rem 1rem;
-      border-radius: 2rem;
-      font-weight: 700;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .accuracy {
-      color: #94a3b8;
-    }
-
-    /* main layout: sidebar + content */
-    .main-layout {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    /* sidebar */
-    .sidebar {
-      width: 260px;
-      background: #0f172a;
-      border-right: 1px solid rgba(255,255,255,0.05);
-      padding: 1.8rem 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      overflow-y: auto;
-      transition: all 0.2s ease;
-    }
-
-    .topic-btn {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-      color: #cbd5e1;
-      padding: 0.8rem 1rem;
-      border-radius: 1rem;
-      font-weight: 500;
-      font-size: 0.9rem;
-      text-align: left;
-      cursor: pointer;
-      transition: all 0.2s;
-      background: #1e293b;
-      letter-spacing: -0.2px;
-    }
-
-    .topic-btn:hover {
-      background: #334155;
-      border-color: #60a5fa;
-      color: white;
-    }
-
-    .topic-btn.active {
-      background: #2563eb;
-      border-color: #3b82f6;
-      color: white;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(37,99,235,0.4);
-    }
-
-    .difficulty-selector {
-      margin-top: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .diff-label {
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #94a3b8;
-    }
-
-    .diff-btns {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .diff-btn {
-      flex: 1;
-      background: #1e293b;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-      padding: 0.5rem 0.3rem;
-      border-radius: 2rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
-      text-align: center;
-    }
-
-    .diff-btn.active {
-      background: #7c3aed;
-      border-color: #a78bfa;
-      color: white;
-    }
-
-    /* content right */
-    .content {
-      flex: 1;
-      padding: 2rem 2rem 1.8rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.8rem;
-      overflow-y: auto;
-    }
-
-    .problem-card {
-      background: #1e293b;
-      border-radius: 2rem;
-      padding: 2rem;
-      box-shadow: 0 15px 30px -15px rgba(0,0,0,0.7);
-      border: 1px solid rgba(255,255,255,0.06);
-      min-height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      transition: 0.2s;
-    }
-
-    .math-render {
-      text-align: center;
-      word-break: break-word;
-    }
-
-    .answer-section {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .answer-input {
-      flex: 2;
-      min-width: 200px;
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 1.5rem;
-      padding: 0.9rem 1.5rem;
-      font-size: 1.1rem;
-      color: white;
-      outline: none;
-      transition: 0.2s;
-      font-family: 'Fira Code', monospace;
-    }
-
-    .answer-input:focus {
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.3);
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      background: #334155;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 2.5rem;
-      font-weight: 600;
-      color: #f1f5f9;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: all 0.2s;
-      font-size: 0.9rem;
-      letter-spacing: -0.2px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .btn-primary {
-      background: #2563eb;
-      border-color: #3b82f6;
-      box-shadow: 0 4px 12px rgba(37,99,235,0.5);
-    }
-
-    .btn-primary:hover {
-      background: #1d4ed8;
-    }
-
-    .btn:hover {
-      filter: brightness(1.2);
-    }
-
-    .feedback-message {
-      font-weight: 500;
-      padding: 0.5rem 1rem;
-      border-radius: 2rem;
-      font-size: 0.95rem;
-    }
-
-    .correct-feedback {
-      background: #14532d;
-      color: #86efac;
-    }
-
-    .incorrect-feedback {
-      background: #7f1d1d;
-      color: #fecaca;
-    }
-
-    .hint-box {
-      background: #1e1b4b;
-      border-left: 4px solid #a78bfa;
-      padding: 1rem 1.5rem;
-      border-radius: 1rem;
-      color: #ddd6fe;
-      margin-top: 0.5rem;
-    }
-
-    .mock-mode-indicator {
-      background: #b45309;
-      color: white;
-      padding: 0.3rem 1.2rem;
-      border-radius: 2rem;
-      font-weight: 600;
-    }
-
-    @media (max-width: 750px) {
-      .main-layout {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-        padding: 1rem;
-      }
-      .topic-btn {
-        font-size: 0.8rem;
-        padding: 0.6rem 0.9rem;
-      }
-      .content {
-        padding: 1.2rem;
-      }
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linear Algebra Practice Platform</title>
 </head>
 <body>
-<div class="app-container">
-  <header class="header">
-    <div class="logo">◈ Linear Algebra Practice</div>
-    <div class="score-area">
-      <span>📊 <span id="correctCount">0</span>/<span id="totalAttempts">0</span></span>
-      <span class="accuracy" id="accuracyDisplay">—%</span>
-      <span class="streak-badge" id="streakDisplay">🔥 0</span>
-      <span id="mockTimerDisplay" style="display: none; margin-left: 0.5rem; font-weight: bold;">⏱️ 0s</span>
-    </div>
+  <header>
+    <h1>Linear Algebra Practice Platform</h1>
+    <nav aria-label="Main navigation">
+      <button id="mock-exam-btn" type="button">Mock Exam</button>
+      <button id="reset-progress-btn" type="button">Reset Progress</button>
+    </nav>
   </header>
 
-  <div class="main-layout">
-    <!-- sidebar topics -->
-    <aside class="sidebar">
-      <div id="topicList"></div>
-      <div class="difficulty-selector">
-        <span class="diff-label">Difficulty</span>
-        <div class="diff-btns" id="difficultyGroup">
-          <button class="diff-btn active" data-diff="easy">Easy</button>
-          <button class="diff-btn" data-diff="medium">Medium</button>
-          <button class="diff-btn" data-diff="hard">Hard</button>
-        </div>
+  <main>
+    <aside id="sidebar" aria-label="Practice configuration">
+      <div role="group" aria-labelledby="difficulty-heading">
+        <h2 id="difficulty-heading">Difficulty</h2>
+        <select id="difficulty-selector" aria-label="Select difficulty level">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
       </div>
-      <button class="btn" id="mockExamBtn" style="margin-top: 0.8rem; background: #b45309;">🎯 Mock Exam (10)</button>
+
+      <nav aria-label="Topics by week">
+        <h2>Topics</h2>
+        <ul id="topic-list">
+          <li data-week="1"><button type="button">Week 1: Systems, Row Reduction, Vector Equations</button></li>
+          <li data-week="2"><button type="button">Week 2: Solution Sets, Applications, Linear Independence</button></li>
+          <li data-week="3"><button type="button">Week 3: Linear Transformations, Matrix Operations</button></li>
+          <li data-week="4"><button type="button">Week 4: Inverse Matrices, Factorizations</button></li>
+          <li data-week="5"><button type="button">Week 5: Determinants, Cramer’s Rule</button></li>
+          <li data-week="6"><button type="button">Week 6: Vector Spaces, Subspaces, Null/Column Spaces</button></li>
+          <li data-week="7"><button type="button">Week 7: Bases, Dimension, Coordinate Systems, Rank</button></li>
+          <li data-week="8"><button type="button">Week 8: Change of Basis, Eigenvalues, Eigenvectors</button></li>
+          <li data-week="9"><button type="button">Week 9: Diagonalization, Complex Eigenvalues</button></li>
+          <li data-week="10"><button type="button">Week 10: Full Course Review & Mock Exam</button></li>
+        </ul>
+      </nav>
+
+      <div role="group" aria-label="Practice mode">
+        <h2>Mode</h2>
+        <button id="mode-quiz" type="button">Quiz</button>
+        <button id="mode-practice" type="button">Practice</button>
+        <button id="mode-mock" type="button">Mock Exam</button>
+      </div>
     </aside>
 
-    <!-- main practice area -->
-    <main class="content">
-      <div class="problem-card" id="problemContainer">
-        <div class="math-render" id="problemLatex">\[\text{Select a topic}\]</div>
+    <section id="main-content" aria-label="Problem workspace">
+      <div id="score-panel" aria-label="Score summary">
+        <span>Score: <span id="score-value">0</span></span>
+        <span>Streak: <span id="streak-value">0</span></span>
+        <span>Questions Attempted: <span id="attempts-value">0</span></span>
       </div>
 
-      <div class="answer-section">
-        <input type="text" class="answer-input" id="answerInput" placeholder="Enter answer (e.g. 5, [1,2;3,4])" autocomplete="off">
-        <div class="action-buttons">
-          <button class="btn btn-primary" id="checkBtn">✓ Check</button>
-          <button class="btn" id="nextBtn">⟳ Next</button>
-          <button class="btn" id="hintBtn">💡 Hint</button>
+      <div id="problem-card" aria-label="Problem card">
+        <div id="problem-statement" aria-label="Problem statement"></div>
+
+        <div id="hint-container" aria-live="polite">
+          <p id="hint-text"></p>
         </div>
+
+        <div class="answer-area">
+          <label for="answer-input">Your answer:</label>
+          <input type="text" id="answer-input" aria-label="Answer input field">
+          <div class="button-row">
+            <button id="check-btn" type="button">Check</button>
+            <button id="hint-btn" type="button">Hint</button>
+            <button id="next-btn" type="button">Next Problem</button>
+          </div>
+        </div>
+
+        <div id="feedback-message" aria-live="assertive" aria-label="Feedback message"></div>
       </div>
 
-      <div id="feedbackArea"></div>
-      <div id="hintArea"></div>
-    </main>
-  </div>
-</div>
-
-<script>
-  (function() {
-    // ---------- STATE ----------
-    const topics = [
-      "Matrices", "Determinants", "Inverse Matrix", "Rank",
-      "Vector Spaces", "Eigenvalues", "Eigenvectors",
-      "Orthogonality", "LU Decomposition", "Linear Transformations"
-    ];
-
-    let currentTopic = "Determinants";
-    let difficulty = "easy"; // easy, medium, hard
-    let currentProblem = null; // { type, matrix, vector, answer, hint, displayLatex }
-    let correctCount = 0;
-    let totalAttempts = 0;
-    let streak = 0;
-    let mockMode = false;
-    let mockQuestionsRemaining = 0;
-    let mockTimerInterval = null;
-    let mockSeconds = 0;
-
-    // DOM elements
-    const topicListEl = document.getElementById('topicList');
-    const problemLatex = document.getElementById('problemLatex');
-    const answerInput = document.getElementById('answerInput');
-    const checkBtn = document.getElementById('checkBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const hintBtn = document.getElementById('hintBtn');
-    const feedbackArea = document.getElementById('feedbackArea');
-    const hintArea = document.getElementById('hintArea');
-    const correctSpan = document.getElementById('correctCount');
-    const totalSpan = document.getElementById('totalAttempts');
-    const accuracyDisplay = document.getElementById('accuracyDisplay');
-    const streakDisplay = document.getElementById('streakDisplay');
-    const mockTimerDisplay = document.getElementById('mockTimerDisplay');
-    const mockExamBtn = document.getElementById('mockExamBtn');
-    const diffBtns = document.querySelectorAll('.diff-btn');
-
-    // ---------- UTILS ----------
-    function randInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    function renderLatex(element, latexString) {
-      element.innerHTML = '';
-      const span = document.createElement('span');
-      span.textContent = latexString;
-      element.appendChild(span);
-      if (window.renderMathInElement) {
-        renderMathInElement(element, {
-          delimiters: [
-            {left: '\\[', right: '\\]', display: true},
-            {left: '\\(', right: '\\)', display: false}
-          ]
-        });
-      } else {
-        setTimeout(() => {
-          if (window.renderMathInElement) renderMathInElement(element);
-        }, 50);
-      }
-    }
-
-    function updateStatsDisplay() {
-      correctSpan.textContent = correctCount;
-      totalSpan.textContent = totalAttempts;
-      const acc = totalAttempts > 0 ? Math.round((correctCount / totalAttempts) * 100) : 0;
-      accuracyDisplay.textContent = `${acc}%`;
-      streakDisplay.textContent = `🔥 ${streak}`;
-      localStorage.setItem('linearAlgebraStats', JSON.stringify({ correctCount, totalAttempts, streak }));
-    }
-
-    function loadStats() {
-      const saved = localStorage.getItem('linearAlgebraStats');
-      if (saved) {
-        try {
-          const { correctCount: cc, totalAttempts: ta, streak: st } = JSON.parse(saved);
-          correctCount = cc || 0;
-          totalAttempts = ta || 0;
-          streak = st || 0;
-        } catch(e) {}
-      }
-      updateStatsDisplay();
-    }
-
-    function clearFeedbackAndHint() {
-      feedbackArea.innerHTML = '';
-      hintArea.innerHTML = '';
-    }
-
-    // ---------- MATRIX & VECTOR HELPERS ----------
-    function generateRandomMatrix(rows, cols, minVal = -9, maxVal = 9) {
-      const m = [];
-      for (let i = 0; i < rows; i++) {
-        const row = [];
-        for (let j = 0; j < cols; j++) {
-          row.push(randInt(minVal, maxVal));
-        }
-        m.push(row);
-      }
-      return m;
-    }
-
-    function matrixToLatex(matrix) {
-      return '\\begin{bmatrix}' + matrix.map(row => row.join(' & ')).join(' \\\\ ') + '\\end{bmatrix}';
-    }
-
-    function determinant2x2(m) {
-      return m[0][0] * m[1][1] - m[0][1] * m[1][0];
-    }
-
-    function determinant3x3(m) {
-      const a = m[0][0], b = m[0][1], c = m[0][2];
-      const d = m[1][0], e = m[1][1], f = m[1][2];
-      const g = m[2][0], h = m[2][1], i = m[2][2];
-      return a*(e*i - f*h) - b*(d*i - f*g) + c*(d*h - e*g);
-    }
-
-    function isInvertible2x2(m) {
-      return determinant2x2(m) !== 0;
-    }
-
-    function inverse2x2(m) {
-      const det = determinant2x2(m);
-      if (det === 0) return null;
-      return [
-        [m[1][1]/det, -m[0][1]/det],
-        [-m[1][0]/det, m[0][0]/det]
-      ];
-    }
-
-    function rankMatrix(matrix) {
-      const m = matrix.map(row => [...row]);
-      const rows = m.length, cols = m[0].length;
-      let rank = 0;
-      for (let col = 0; col < cols; col++) {
-        let pivot = -1;
-        for (let row = rank; row < rows; row++) {
-          if (Math.abs(m[row][col]) > 0.0001) {
-            pivot = row;
-            break;
-          }
-        }
-        if (pivot === -1) continue;
-        [m[rank], m[pivot]] = [m[pivot], m[rank]];
-        const pivotVal = m[rank][col];
-        for (let j = 0; j < cols; j++) m[rank][j] /= pivotVal;
-        for (let r = 0; r < rows; r++) {
-          if (r !== rank && Math.abs(m[r][col]) > 0.0001) {
-            const factor = m[r][col];
-            for (let j = 0; j < cols; j++) m[r][j] -= factor * m[rank][j];
-          }
-        }
-        rank++;
-        if (rank === rows) break;
-      }
-      return rank;
-    }
-
-    function eigenvalues2x2(matrix) {
-      const a = matrix[0][0], b = matrix[0][1], c = matrix[1][0], d = matrix[1][1];
-      const trace = a + d;
-      const det = a*d - b*c;
-      const disc = trace*trace - 4*det;
-      if (disc < 0) return null; // complex
-      const sqrtDisc = Math.sqrt(disc);
-      const lambda1 = (trace + sqrtDisc) / 2;
-      const lambda2 = (trace - sqrtDisc) / 2;
-      return [lambda1, lambda2];
-    }
-
-    // ---------- PROBLEM GENERATOR PER TOPIC ----------
-    function generateProblem(topic, diff) {
-      let matrix, answer, hint, displayLatex = '';
-      const size = diff === 'easy' ? 2 : (diff === 'medium' ? 3 : (Math.random() < 0.5 ? 2 : 3));
-      
-      switch(topic) {
-        case 'Determinants':
-          if (size === 2) {
-            matrix = generateRandomMatrix(2, 2, -5, 5);
-            answer = determinant2x2(matrix);
-            displayLatex = `\\[ \\det\\left(${matrixToLatex(matrix)}\\right) \\]`;
-            hint = 'Multiply main diagonal and subtract product of other diagonal.';
-          } else {
-            matrix = generateRandomMatrix(3, 3, -4, 4);
-            answer = determinant3x3(matrix);
-            displayLatex = `\\[ \\det\\left(${matrixToLatex(matrix)}\\right) \\]`;
-            hint = 'Expand along first row using cofactors.';
-          }
-          break;
-
-        case 'Matrices':
-          const rows = diff==='hard'?3:2, cols= diff==='hard'?3:2;
-          matrix = generateRandomMatrix(rows, cols, -4, 4);
-          const scalar = randInt(-3, 3);
-          answer = matrix.map(row => row.map(v => v*scalar));
-          displayLatex = `\\[ ${scalar} \\cdot ${matrixToLatex(matrix)} \\]`;
-          hint = `Multiply each entry by ${scalar}.`;
-          break;
-
-        case 'Inverse Matrix':
-          matrix = generateRandomMatrix(2, 2, -3, 3);
-          while (!isInvertible2x2(matrix)) matrix = generateRandomMatrix(2,2,-3,3);
-          const inv = inverse2x2(matrix);
-          answer = inv.map(row => row.map(v => Math.round(v*100)/100));
-          displayLatex = `\\[ \\text{Inverse of } ${matrixToLatex(matrix)} \\]`;
-          hint = 'Use formula (1/det) * adjugate. det = ad-bc.';
-          break;
-
-        case 'Rank':
-          matrix = (size===2) ? generateRandomMatrix(2,3,-2,2) : generateRandomMatrix(3,3,-2,2);
-          answer = rankMatrix(matrix);
-          displayLatex = `\\[ \\text{rank}${matrixToLatex(matrix)} \\]`;
-          hint = 'Row reduce to echelon form and count non-zero rows.';
-          break;
-
-        case 'Eigenvalues':
-          matrix = generateRandomMatrix(2,2,-3,3);
-          const eigs = eigenvalues2x2(matrix);
-          if (!eigs) { answer = 'complex'; } else { answer = eigs.map(v=>Math.round(v*100)/100); }
-          displayLatex = `\\[ \\text{Eigenvalues of } ${matrixToLatex(matrix)} \\]`;
-          hint = 'Solve det(A - λI)=0.';
-          break;
-
-        case 'Eigenvectors':
-          matrix = [[2,1],[1,2]];
-          answer = [[1,1],[-1,1]]; // simplified
-          displayLatex = `\\[ \\text{Eigenvectors of } ${matrixToLatex(matrix)} \\]`;
-          hint = 'For λ=3 solve (A-3I)v=0; for λ=1 solve (A-I)v=0.';
-          break;
-
-        case 'Vector Spaces':
-          const v1 = [randInt(-3,3), randInt(-3,3)];
-          const v2 = [randInt(-3,3), randInt(-3,3)];
-          answer = v1[0]*v2[0] + v1[1]*v2[1];
-          displayLatex = `\\[ \\langle ${v1}, ${v2} \\rangle \\]`;
-          hint = 'Dot product: multiply corresponding components and sum.';
-          break;
-
-        case 'Orthogonality':
-          const a = [randInt(-4,4), randInt(-4,4)];
-          answer = a[0]*a[0]+a[1]*a[1];
-          displayLatex = `\\[ \\| ${a} \\|^2 \\]`;
-          hint = 'Compute squared norm (dot product with itself).';
-          break;
-
-        case 'LU Decomposition':
-          matrix = [[2,-1], [4,3]];
-          answer = {L:[[1,0],[2,1]], U:[[2,-1],[0,5]]};
-          displayLatex = `\\[ \\text{LU of } ${matrixToLatex(matrix)} \\]`;
-          hint = 'L lower triangular with 1s on diagonal, U upper triangular.';
-          break;
-
-        case 'Linear Transformations':
-          matrix = [[0,-1],[1,0]];
-          const vec = [randInt(1,3), randInt(1,3)];
-          answer = [matrix[0][0]*vec[0]+matrix[0][1]*vec[1], matrix[1][0]*vec[0]+matrix[1][1]*vec[1]];
-          displayLatex = `\\[ T\\left(${vec}\\right) = ${matrixToLatex(matrix)} \\cdot ${vec} \\]`;
-          hint = 'Apply matrix multiplication.';
-          break;
-
-        default: answer = 0;
-      }
-      return { topic, matrix, answer, hint, displayLatex, difficulty: diff };
-    }
-
-    function loadProblem(prob) {
-      currentProblem = prob;
-      renderLatex(problemLatex, prob.displayLatex);
-      answerInput.value = '';
-      clearFeedbackAndHint();
-      answerInput.focus();
-    }
-
-    function nextProblem() {
-      if (mockMode) {
-        if (mockQuestionsRemaining <= 0) {
-          endMockExam();
-          return;
-        }
-        mockQuestionsRemaining--;
-        if (mockQuestionsRemaining === 0) {
-          endMockExam();
-        }
-      }
-      const prob = generateProblem(currentTopic, difficulty);
-      loadProblem(prob);
-    }
-
-    // ---------- ANSWER PARSING & CHECKING ----------
-    function parseAnswerInput(raw) {
-      raw = raw.trim();
-      if (raw.startsWith('[') && raw.endsWith(']')) {
-        try {
-          const parsed = JSON.parse(raw);
-          return parsed;
-        } catch(e) { return raw; }
-      }
-      const num = parseFloat(raw);
-      if (!isNaN(num)) return num;
-      return raw;
-    }
-
-    function answersMatch(user, correct) {
-      if (typeof correct === 'number' && typeof user === 'number') {
-        return Math.abs(user - correct) < 0.001;
-      }
-      if (Array.isArray(correct) && Array.isArray(user)) {
-        if (correct.length !== user.length) return false;
-        return correct.every((val, idx) => {
-          if (Array.isArray(val) && Array.isArray(user[idx])) {
-            return val.length === user[idx].length && val.every((v,i)=> Math.abs(v - user[idx][i])<0.01);
-          }
-          return Math.abs(val - user[idx]) < 0.01;
-        });
-      }
-      if (typeof correct === 'object' && correct.L && correct.U) {
-        return false; // simplified
-      }
-      return String(user).toLowerCase() === String(correct).toLowerCase();
-    }
-
-    function checkAnswer() {
-      if (!currentProblem) return;
-      const userRaw = answerInput.value.trim();
-      if (userRaw === '') {
-        feedbackArea.innerHTML = '<span class="feedback-message incorrect-feedback">⚠️ Enter an answer.</span>';
-        return;
-      }
-      const userAns = parseAnswerInput(userRaw);
-      const correct = currentProblem.answer;
-      totalAttempts++;
-
-      const isCorrect = answersMatch(userAns, correct);
-      if (isCorrect) {
-        correctCount++;
-        streak++;
-        feedbackArea.innerHTML = '<span class="feedback-message correct-feedback">✓ Correct! Great job.</span>';
-        if (streak >= 3) {
-          // subtle animation already via streak display
-        }
-      } else {
-        streak = 0;
-        let correctStr = '';
-        if (typeof correct === 'number') correctStr = correct;
-        else if (Array.isArray(correct)) correctStr = JSON.stringify(correct);
-        else correctStr = String(correct);
-        feedbackArea.innerHTML = `<span class="feedback-message incorrect-feedback">✗ Incorrect. Correct answer: ${correctStr}</span>`;
-      }
-      updateStatsDisplay();
-    }
-
-    function showHint() {
-      if (!currentProblem) return;
-      hintArea.innerHTML = `<div class="hint-box">💡 ${currentProblem.hint}</div>`;
-    }
-
-    // ---------- MOCK EXAM ----------
-    function startMockExam() {
-      mockMode = true;
-      mockQuestionsRemaining = 10;
-      mockSeconds = 0;
-      mockTimerDisplay.style.display = 'inline';
-      mockExamBtn.textContent = '⏳ Running...';
-      mockExamBtn.disabled = true;
-      if (mockTimerInterval) clearInterval(mockTimerInterval);
-      mockTimerInterval = setInterval(() => {
-        mockSeconds++;
-        mockTimerDisplay.textContent = `⏱️ ${mockSeconds}s`;
-      }, 1000);
-      nextProblem();
-    }
-
-    function endMockExam() {
-      mockMode = false;
-      mockQuestionsRemaining = 0;
-      if (mockTimerInterval) clearInterval(mockTimerInterval);
-      mockTimerInterval = null;
-      mockTimerDisplay.style.display = 'none';
-      mockExamBtn.textContent = '🎯 Mock Exam (10)';
-      mockExamBtn.disabled = false;
-      feedbackArea.innerHTML = '<span class="feedback-message correct-feedback">✅ Mock exam finished!</span>';
-      // load normal problem
-      const prob = generateProblem(currentTopic, difficulty);
-      loadProblem(prob);
-    }
-
-    // ---------- EVENT LISTENERS ----------
-    function renderTopicButtons() {
-      topicListEl.innerHTML = '';
-      topics.forEach(topic => {
-        const btn = document.createElement('button');
-        btn.className = `topic-btn ${topic === currentTopic ? 'active' : ''}`;
-        btn.textContent = topic;
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.topic-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentTopic = topic;
-          if (mockMode) endMockExam();
-          const prob = generateProblem(currentTopic, difficulty);
-          loadProblem(prob);
-        });
-        topicListEl.appendChild(btn);
-      });
-    }
-
-    diffBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        diffBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        difficulty = btn.dataset.diff;
-        if (mockMode) endMockExam();
-        const prob = generateProblem(currentTopic, difficulty);
-        loadProblem(prob);
-      });
-    });
-
-    checkBtn.addEventListener('click', checkAnswer);
-    nextBtn.addEventListener('click', nextProblem);
-    hintBtn.addEventListener('click', showHint);
-    mockExamBtn.addEventListener('click', startMockExam);
-
-    answerInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') checkAnswer();
-    });
-
-    // initial load
-    loadStats();
-    renderTopicButtons();
-    const initialProb = generateProblem(currentTopic, difficulty);
-    loadProblem(initialProb);
-
-    // KaTeX auto-render after dynamic changes
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.renderMathInElement) {
-        renderMathInElement(document.body);
-      }
-    });
-  })();
-</script>
+      <div id="mock-timer-container" aria-label="Mock exam timer" hidden>
+        <span>Time Left: <span id="timer-display">10:00</span></span>
+      </div>
+    </section>
+  </main>
+  <script src="script.js"></script>
 </body>
 </html>
