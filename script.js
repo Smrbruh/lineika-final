@@ -499,7 +499,7 @@ const SearchSystem = (() => {
 
   function createUI() {
     // Inject search results panel below the nav-search input
-    const wrap = qs('.nav-search-wrap');
+    const wrap = qs('#nav-search')?.parentElement;
     if (wrap) {
       wrap.style.position = 'relative';
       resultsPanel = document.createElement('div');
