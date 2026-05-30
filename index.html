@@ -1,89 +1,2418 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Linear Algebra Practice Platform</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linear Algebra Prep Hub – Astana IT University</title>
+  <meta name="description" content="Complete Linear Algebra preparation website for the School of Artificial Intelligence and Data Science, Astana IT University. Covers all 10 weeks: systems of equations, matrices, determinants, vector spaces, eigenvalues, diagonalization, and more." />
+  <!-- MathJax for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        packages: {'[+]': ['ams']}
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <link rel="stylesheet" href="la_hub.css" />
 </head>
 <body>
-  <header>
-    <h1>Linear Algebra Practice Platform</h1>
-    <nav aria-label="Main navigation">
-      <button id="mock-exam-btn" type="button">Mock Exam</button>
-      <button id="reset-progress-btn" type="button">Reset Progress</button>
-    </nav>
+
+<!-- ============================================================
+     SITE HEADER
+     ============================================================ -->
+<header id="site-header" class="site-header" role="banner">
+  <div class="header-inner">
+    <div class="header-brand">
+      <span class="brand-icon" aria-hidden="true">&#x3a3;</span>
+      <div class="brand-text">
+        <h1 class="site-title">Linear Algebra Prep Hub</h1>
+        <p class="site-subtitle">School of Artificial Intelligence and Data Science &mdash; Astana IT University</p>
+      </div>
+    </div>
+    <div class="header-meta">
+      <span class="course-badge">5 Credit Units</span>
+      <span class="semester-badge">Spring 2026</span>
+      <span class="lecturer-badge">Zamart Ramazanova, Senior Lecturer</span>
+    </div>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark/light mode" type="button">&#9790;</button>
+  </div>
+</header>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav id="main-nav" class="main-nav" role="navigation" aria-label="Course weeks navigation">
+  <div class="nav-inner">
+    <div class="nav-search-wrap">
+      <input type="search" id="nav-search" class="nav-search" placeholder="Search topics…" aria-label="Search topics" />
+    </div>
+    <ol class="week-nav-list" role="list">
+      <li class="nav-item"><a href="#week1" class="nav-link" data-week="1">Wk 1<span class="nav-label">Systems &amp; Equations</span></a></li>
+      <li class="nav-item"><a href="#week2" class="nav-link" data-week="2">Wk 2<span class="nav-label">Solution Sets &amp; Independence</span></a></li>
+      <li class="nav-item"><a href="#week3" class="nav-link" data-week="3">Wk 3<span class="nav-label">Transformations</span></a></li>
+      <li class="nav-item"><a href="#week4" class="nav-link" data-week="4">Wk 4<span class="nav-label">Inverses &amp; Factorizations</span></a></li>
+      <li class="nav-item"><a href="#week5" class="nav-link" data-week="5">Wk 5<span class="nav-label">Determinants</span></a></li>
+      <li class="nav-item"><a href="#week6" class="nav-link" data-week="6">Wk 6<span class="nav-label">Vector Spaces</span></a></li>
+      <li class="nav-item"><a href="#week7" class="nav-link" data-week="7">Wk 7<span class="nav-label">Bases &amp; Rank</span></a></li>
+      <li class="nav-item"><a href="#week8" class="nav-link" data-week="8">Wk 8<span class="nav-label">Eigenvalues</span></a></li>
+      <li class="nav-item"><a href="#week9" class="nav-link" data-week="9">Wk 9<span class="nav-label">Diagonalization</span></a></li>
+      <li class="nav-item nav-item--review"><a href="#week10" class="nav-link" data-week="10">Wk 10<span class="nav-label">Final Review</span></a></li>
+    </ol>
+    <div class="progress-tracker" role="region" aria-label="Study progress">
+      <span class="progress-label">Progress</span>
+      <div class="progress-bar-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+      </div>
+      <span class="progress-pct" id="progress-pct">0%</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO / COURSE OVERVIEW
+     ============================================================ -->
+<section id="hero" class="hero-section" aria-labelledby="hero-heading">
+  <div class="hero-inner">
+    <h2 id="hero-heading" class="hero-heading">Master Linear Algebra</h2>
+    <p class="hero-subheading">Your complete exam preparation companion for the Linear Algebra course (AITU, 2026). Covers all 10 weeks, every theorem, every technique.</p>
+    <div class="hero-stats" role="list">
+      <div class="hero-stat" role="listitem"><span class="stat-number">10</span><span class="stat-label">Weeks</span></div>
+      <div class="hero-stat" role="listitem"><span class="stat-number">200+</span><span class="stat-label">Practice Problems</span></div>
+      <div class="hero-stat" role="listitem"><span class="stat-number">50+</span><span class="stat-label">Key Theorems</span></div>
+      <div class="hero-stat" role="listitem"><span class="stat-number">1</span><span class="stat-label">Final Exam</span></div>
+    </div>
+    <div class="hero-cta-group">
+      <a href="#week1" class="btn btn--primary">Start Studying</a>
+      <a href="#week10" class="btn btn--outline">Jump to Review</a>
+    </div>
+    <aside class="course-info-card" aria-label="Course information">
+      <h3 class="card-title">Course Information</h3>
+      <dl class="course-info-dl">
+        <dt>Textbook</dt><dd>Lay, Lay &amp; McDonald – <em>Linear Algebra and Its Applications</em>, 5th ed., 2016</dd>
+        <dt>Weekly Load</dt><dd>3 hrs Theory + 2 hrs Practice</dd>
+        <dt>Assessment</dt><dd>Quiz 1 (30) + Midterm (70) + Quiz 2 (30) + Endterm (70) + Final (100)</dd>
+        <dt>Final Formula</dt><dd>\(0.3 \times \text{Att}_1 + 0.3 \times \text{Att}_2 + 0.4 \times \text{Final}\)</dd>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main id="main-content" role="main">
+
+<!-- ===========================================================
+     WEEK 1: Systems of Linear Equations, Row Reduction,
+             Vector Equations, The Matrix Equation
+     =========================================================== -->
+<article id="week1" class="week-article" data-week="1" aria-labelledby="week1-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">01</div>
+    <div class="week-header-text">
+      <h2 id="week1-title" class="week-title">Week 1: Linear Equations in Linear Algebra</h2>
+      <p class="week-subtitle">Systems of Linear Equations &bull; Row Reduction &amp; Echelon Forms &bull; Vector Equations &bull; The Matrix Equation</p>
+    </div>
+    <button class="week-complete-btn" data-week="1" aria-pressed="false" type="button">Mark Complete</button>
   </header>
 
-  <main>
-    <aside id="sidebar" aria-label="Practice configuration">
-      <div role="group" aria-labelledby="difficulty-heading">
-        <h2 id="difficulty-heading">Difficulty</h2>
-        <select id="difficulty-selector" aria-label="Select difficulty level">
-          <option value="easy">Easy</option>
-          <option value="medium" selected>Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-      </div>
+  <!-- Learning Objectives -->
+  <section id="w1-objectives" class="content-section" aria-labelledby="w1-obj-h">
+    <h3 id="w1-obj-h" class="section-title">Learning Objectives</h3>
+    <ul class="objectives-list">
+      <li>Define a linear equation and a system of linear equations; identify consistent vs. inconsistent systems.</li>
+      <li>Construct the coefficient matrix and augmented matrix for a linear system.</li>
+      <li>Apply all three elementary row operations and explain why they preserve solution sets.</li>
+      <li>Transform any matrix to row echelon form (REF) and reduced row echelon form (RREF) using the row reduction algorithm.</li>
+      <li>Identify pivot positions, pivot columns, basic variables, and free variables.</li>
+      <li>Express the solution set of a consistent system in parametric form.</li>
+      <li>Understand vectors in \(\mathbb{R}^n\), compute linear combinations, and determine when \(\mathbf{b}\) is in \(\text{Span}\{v_1,\ldots,v_p\}\).</li>
+      <li>Convert between vector equations and matrix equations \(A\mathbf{x} = \mathbf{b}\).</li>
+    </ul>
+  </section>
 
-      <nav aria-label="Topics by week">
-        <h2>Topics</h2>
-        <ul id="topic-list">
-          <li data-week="1"><button type="button">Week 1: Systems, Row Reduction, Vector Equations</button></li>
-          <li data-week="2"><button type="button">Week 2: Solution Sets, Applications, Linear Independence</button></li>
-          <li data-week="3"><button type="button">Week 3: Linear Transformations, Matrix Operations</button></li>
-          <li data-week="4"><button type="button">Week 4: Inverse Matrices, Factorizations</button></li>
-          <li data-week="5"><button type="button">Week 5: Determinants, Cramer’s Rule</button></li>
-          <li data-week="6"><button type="button">Week 6: Vector Spaces, Subspaces, Null/Column Spaces</button></li>
-          <li data-week="7"><button type="button">Week 7: Bases, Dimension, Coordinate Systems, Rank</button></li>
-          <li data-week="8"><button type="button">Week 8: Change of Basis, Eigenvalues, Eigenvectors</button></li>
-          <li data-week="9"><button type="button">Week 9: Diagonalization, Complex Eigenvalues</button></li>
-          <li data-week="10"><button type="button">Week 10: Full Course Review & Mock Exam</button></li>
+  <!-- Key Definitions -->
+  <section id="w1-definitions" class="content-section" aria-labelledby="w1-def-h">
+    <h3 id="w1-def-h" class="section-title">Key Definitions</h3>
+    <dl class="definition-list">
+      <dt class="def-term">Linear Equation</dt>
+      <dd class="def-body">An equation of the form \(a_1 x_1 + a_2 x_2 + \cdots + a_n x_n = b\), where the coefficients \(a_1,\ldots,a_n\) and constant \(b\) are real (or complex) numbers. The variables appear with exponent 1 and are never multiplied together.</dd>
+
+      <dt class="def-term">System of Linear Equations (Linear System)</dt>
+      <dd class="def-body">A collection of one or more linear equations involving the same variables \(x_1, \ldots, x_n\). A <strong>solution</strong> is an assignment of values that simultaneously satisfies every equation.</dd>
+
+      <dt class="def-term">Consistent / Inconsistent System</dt>
+      <dd class="def-body">A system is <em>consistent</em> if it has at least one solution (either exactly one, or infinitely many). A system is <em>inconsistent</em> if it has no solution.</dd>
+
+      <dt class="def-term">Coefficient Matrix &amp; Augmented Matrix</dt>
+      <dd class="def-body">For the system \(A\mathbf{x}=\mathbf{b}\), the <em>coefficient matrix</em> \(A\) records only the coefficients of the variables. The <em>augmented matrix</em> \([A \mid \mathbf{b}]\) appends the constant vector \(\mathbf{b}\) as an extra column.</dd>
+
+      <dt class="def-term">Elementary Row Operations</dt>
+      <dd class="def-body">Three operations that preserve the solution set:
+        <ol class="inline-list">
+          <li><strong>Replacement</strong> – Replace \(R_i\) by \(R_i + c R_j\) (\(i \neq j\)).</li>
+          <li><strong>Interchange</strong> – Swap \(R_i \leftrightarrow R_j\).</li>
+          <li><strong>Scaling</strong> – Multiply \(R_i\) by a nonzero scalar \(c\).</li>
+        </ol>
+      </dd>
+
+      <dt class="def-term">Row Equivalence</dt>
+      <dd class="def-body">Two matrices are <em>row equivalent</em> if one can be obtained from the other by a finite sequence of elementary row operations. Row-equivalent matrices represent linear systems with identical solution sets.</dd>
+
+      <dt class="def-term">Echelon Form (REF)</dt>
+      <dd class="def-body">A matrix is in <em>row echelon form</em> if: (1) all nonzero rows appear above any zero rows; (2) the leading entry of each row lies strictly to the right of the leading entry of the row above it; (3) all entries below a leading entry are zero.</dd>
+
+      <dt class="def-term">Reduced Row Echelon Form (RREF)</dt>
+      <dd class="def-body">A REF with two additional properties: (4) every leading entry is \(1\); (5) every leading \(1\) is the only nonzero entry in its column. The RREF of any matrix is <strong>unique</strong> (Theorem 1).</dd>
+
+      <dt class="def-term">Pivot Position / Pivot Column</dt>
+      <dd class="def-body">A <em>pivot position</em> is a location in \(A\) corresponding to a leading \(1\) in the RREF. A <em>pivot column</em> contains a pivot position. Columns without a pivot correspond to free variables.</dd>
+
+      <dt class="def-term">Basic Variable / Free Variable</dt>
+      <dd class="def-body">A variable corresponding to a pivot column is a <em>basic variable</em>. All other variables are <em>free variables</em> — they can take any value, generating infinitely many solutions.</dd>
+
+      <dt class="def-term">Vector in \(\mathbb{R}^n\)</dt>
+      <dd class="def-body">An ordered list of \(n\) real numbers \(\mathbf{v} = (v_1, v_2, \ldots, v_n)^T\). Two vectors are equal iff their corresponding entries are equal.</dd>
+
+      <dt class="def-term">Linear Combination</dt>
+      <dd class="def-body">Given vectors \(\mathbf{v}_1, \ldots, \mathbf{v}_p\) in \(\mathbb{R}^m\) and scalars \(c_1, \ldots, c_p\), the vector \(c_1\mathbf{v}_1 + \cdots + c_p\mathbf{v}_p\) is a <em>linear combination</em> of \(\mathbf{v}_1, \ldots, \mathbf{v}_p\).</dd>
+
+      <dt class="def-term">Span</dt>
+      <dd class="def-body">\(\text{Span}\{v_1,\ldots,v_p\}\) is the set of <em>all</em> linear combinations of \(\mathbf{v}_1,\ldots,\mathbf{v}_p\). Geometrically, for two non-parallel vectors in \(\mathbb{R}^3\), the span is a plane through the origin.</dd>
+    </dl>
+  </section>
+
+  <!-- Core Concepts -->
+  <section id="w1-concepts" class="content-section" aria-labelledby="w1-con-h">
+    <h3 id="w1-con-h" class="section-title">Core Concepts</h3>
+    <div class="concept-block">
+      <h4 class="concept-title">The Three Solution Types</h4>
+      <p>Every linear system has exactly one of three outcomes. There is no fourth option. This is one of the most powerful facts in the entire subject:</p>
+      <ol class="concept-list">
+        <li><strong>No solution</strong> – the system is inconsistent. This happens when row reduction produces a row \([0\ 0\ \cdots\ 0\ |\ b]\) with \(b \neq 0\).</li>
+        <li><strong>Exactly one solution</strong> – consistent, with every variable basic (no free variables).</li>
+        <li><strong>Infinitely many solutions</strong> – consistent, with at least one free variable.</li>
+      </ol>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">The Row Reduction Algorithm (5 Steps)</h4>
+      <ol class="concept-list">
+        <li><strong>Forward Phase (Steps 1–4):</strong> Locate the leftmost nonzero column (pivot column). Place a nonzero entry (pivot) at top via row interchange. Create zeros below the pivot. Cover the pivot row; repeat on the remaining submatrix.</li>
+        <li><strong>Backward Phase (Step 5):</strong> Starting from the rightmost pivot, create zeros <em>above</em> each pivot (not just below). Scale each pivot row so the pivot is 1. This produces RREF.</li>
+      </ol>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Parametric Description of Solution Sets</h4>
+      <p>Once in RREF, express each basic variable in terms of the free variables. The free variables serve as parameters (usually denoted \(t, s, r, \ldots\)). Each different choice of parameter values produces a different solution, and every solution arises this way.</p>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Matrix Equation \(A\mathbf{x} = \mathbf{b}\)</h4>
+      <p>The product \(A\mathbf{x}\) is a linear combination of the columns of \(A\) using the entries of \(\mathbf{x}\) as weights:
+        \[ A\mathbf{x} = x_1\mathbf{a}_1 + x_2\mathbf{a}_2 + \cdots + x_n\mathbf{a}_n \]
+      where \(\mathbf{a}_1, \ldots, \mathbf{a}_n\) are the columns of \(A\). So \(A\mathbf{x}=\mathbf{b}\) has a solution iff \(\mathbf{b}\) is a linear combination of the columns of \(A\), i.e., \(\mathbf{b} \in \text{Span}\{\mathbf{a}_1,\ldots,\mathbf{a}_n\}\).</p>
+    </div>
+  </section>
+
+  <!-- Important Theorems -->
+  <section id="w1-theorems" class="content-section" aria-labelledby="w1-thm-h">
+    <h3 id="w1-thm-h" class="section-title">Important Theorems</h3>
+    <div class="theorem-block" id="thm-rref-unique">
+      <div class="theorem-label">Theorem 1 – Uniqueness of RREF</div>
+      <p>Each matrix is row equivalent to one and only one reduced echelon matrix.</p>
+      <p class="theorem-intuition"><em>Intuition:</em> No matter what sequence of row operations you apply, the final RREF is the same. This makes RREF a canonical form — you can always check your work.</p>
+    </div>
+    <div class="theorem-block" id="thm-exist-unique">
+      <div class="theorem-label">Theorem 2 – Existence and Uniqueness</div>
+      <p>A linear system is consistent if and only if the rightmost column of the augmented matrix is <em>not</em> a pivot column, i.e., no row of the form \([0\ \cdots\ 0\ |\ b]\) with \(b \neq 0\) appears in echelon form. When consistent, the system has: (i) a <em>unique</em> solution when there are no free variables, or (ii) <em>infinitely many</em> solutions when there is at least one free variable.</p>
+    </div>
+    <div class="theorem-block" id="thm-ax-b-equiv">
+      <div class="theorem-label">Theorem – Equivalent Statements for \(A\mathbf{x}=\mathbf{b}\)</div>
+      <p>For an \(m\times n\) matrix \(A\) with columns \(\mathbf{a}_1,\ldots,\mathbf{a}_n\), the following are equivalent:</p>
+      <ul>
+        <li>For each \(\mathbf{b}\) in \(\mathbb{R}^m\), the equation \(A\mathbf{x}=\mathbf{b}\) has a solution.</li>
+        <li>Each \(\mathbf{b}\) in \(\mathbb{R}^m\) is a linear combination of the columns of \(A\).</li>
+        <li>The columns of \(A\) span \(\mathbb{R}^m\).</li>
+        <li>\(A\) has a pivot position in every row.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Geometric Interpretation -->
+  <section id="w1-geometry" class="content-section" aria-labelledby="w1-geo-h">
+    <h3 id="w1-geo-h" class="section-title">Geometric Interpretation</h3>
+    <p>Each linear equation in two variables describes a <em>line</em> in \(\mathbb{R}^2\). Three outcomes of a 2×2 system: two lines intersect at one point (unique solution); two lines are parallel and distinct (no solution); two lines coincide (infinitely many solutions).</p>
+    <p>In \(\mathbb{R}^3\), each equation describes a <em>plane</em>. A \(3\times 3\) system asks where three planes have a common point. The solution set can be empty, a single point, a line (one free variable), or an entire plane (two free variables).</p>
+    <p>The span of two linearly independent vectors in \(\mathbb{R}^3\) is a 2-dimensional plane through the origin. Adding a third independent vector extends the span to all of \(\mathbb{R}^3\).</p>
+  </section>
+
+  <!-- Engineering Applications -->
+  <section id="w1-engineering" class="content-section" aria-labelledby="w1-eng-h">
+    <h3 id="w1-eng-h" class="section-title">Engineering Applications</h3>
+    <ul class="app-list">
+      <li><strong>Circuit Analysis (Kirchhoff's Laws):</strong> Node voltages or mesh currents are modeled by linear systems. Row reduction gives the current or voltage at each node.</li>
+      <li><strong>Structural Engineering:</strong> Forces in trusses satisfy equilibrium equations — a linear system in the unknown forces.</li>
+      <li><strong>Chemical Reaction Balancing:</strong> Conservation of each element gives one linear equation; the augmented matrix encodes all constraints.</li>
+      <li><strong>Control Systems:</strong> State-space models are expressed as \(A\mathbf{x}=\mathbf{b}\); solutions describe equilibria.</li>
+    </ul>
+  </section>
+
+  <!-- Computer Science Applications -->
+  <section id="w1-cs" class="content-section" aria-labelledby="w1-cs-h">
+    <h3 id="w1-cs-h" class="section-title">Computer Science Applications</h3>
+    <ul class="app-list">
+      <li><strong>Computer Graphics:</strong> Solving for intersection points of rays with surfaces.</li>
+      <li><strong>Machine Learning:</strong> Normal equations for linear regression (\(A^T A\mathbf{w} = A^T\mathbf{y}\)) are linear systems.</li>
+      <li><strong>Cryptography:</strong> Linear systems over finite fields underlie many symmetric ciphers (e.g., AES MixColumns).</li>
+      <li><strong>Network Flow:</strong> Flow conservation constraints at each node form a linear system.</li>
+    </ul>
+  </section>
+
+  <!-- Worked Examples -->
+  <section id="w1-examples" class="content-section" aria-labelledby="w1-ex-h">
+    <h3 id="w1-ex-h" class="section-title">Worked Examples</h3>
+
+    <div class="example-block">
+      <h4 class="example-title">Example 1: Row Reduce to RREF (from Lecture 1)</h4>
+      <p>The matrix \(A = \begin{bmatrix} 0 & -3 & -6 & 4 & 9 \\ -1 & -2 & -1 & 3 & 1 \\ -2 & -3 & 0 & 3 & -1 \\ 1 & 4 & 5 & -9 & -7 \end{bmatrix}\)</p>
+      <ol class="example-steps">
+        <li><strong>Find the leftmost nonzero column</strong> – column 1. Swap \(R_1 \leftrightarrow R_4\) to put \(1\) in the pivot position.</li>
+        <li><strong>Zero out below the pivot</strong> using replacements.</li>
+        <li><strong>Move to the submatrix</strong>, identify next pivot in column 2.</li>
+        <li>Continue until echelon form; pivot columns are 1, 2, and 4.</li>
+        <li><strong>Backward phase</strong>: scale each pivot row to get leading 1s, then zero above each pivot.</li>
+      </ol>
+      <p><strong>Key result:</strong> Columns 1, 2, 4 are pivot columns; column 3 and 5 are free variable columns.</p>
+    </div>
+
+    <div class="example-block">
+      <h4 class="example-title">Example 2: Solve the System from Lecture 10 Review</h4>
+      <p>Solve: \(\begin{cases} 5x_1 - 3x_2 + 8x_3 = 1 \\ x_1 + 4x_2 - 15x_3 = 2 \\ 2x_2 - 8x_3 = 0 \end{cases}\)</p>
+      <p>Augmented matrix and row operations yield RREF: \(\begin{bmatrix} 1 & 4 & -15 & 2 \\ 0 & 1 & -4 & 0 \\ 0 & 0 & 1 & 1 \end{bmatrix}\)</p>
+      <p>Back substitution: \(x_3 = 1\), then \(x_2 = 4\), then \(x_1 = -16 + 15 + 2 = 1\). Solution: \((1, 4, 1)\).</p>
+    </div>
+  </section>
+
+  <!-- Common Mistakes -->
+  <section id="w1-mistakes" class="content-section mistakes-section" aria-labelledby="w1-mis-h">
+    <h3 id="w1-mis-h" class="section-title">Common Mistakes</h3>
+    <ul class="mistakes-list">
+      <li><strong>Confusing REF and RREF:</strong> In REF, pivot entries need not be 1, and entries <em>above</em> a pivot may be nonzero. RREF requires both. Exam problems often ask specifically for one.</li>
+      <li><strong>Missing a pivot column:</strong> When a column has all zeros below the current pivot row, skip it — it is NOT a pivot column. Free variables come from non-pivot columns.</li>
+      <li><strong>Calling the trivial solution "no solution":</strong> \(\mathbf{x} = \mathbf{0}\) is always a solution to \(A\mathbf{x}=\mathbf{0}\). A homogeneous system is always consistent.</li>
+      <li><strong>Wrong column for the augmented matrix:</strong> The augmented matrix adds the constants as the LAST column. Do not mix it with the coefficient matrix.</li>
+      <li><strong>Order of operations:</strong> In row replacement \(R_i \leftarrow R_i + cR_j\), you are replacing row \(i\), not row \(j\). Always check which row you are modifying.</li>
+    </ul>
+  </section>
+
+  <!-- Must Memorize -->
+  <section id="w1-memorize" class="content-section memorize-section" aria-labelledby="w1-mem-h">
+    <h3 id="w1-mem-h" class="section-title">Must Memorize</h3>
+    <ul class="memorize-list">
+      <li>Three elementary row operations and their names.</li>
+      <li>5 properties of REF; 2 additional properties of RREF.</li>
+      <li>Theorem 1 (Uniqueness of RREF) and Theorem 2 (Existence &amp; Uniqueness).</li>
+      <li>Definition of pivot position and pivot column.</li>
+      <li>Column interpretation: \(A\mathbf{x} = x_1\mathbf{a}_1 + \cdots + x_n\mathbf{a}_n\).</li>
+      <li>A system is inconsistent iff the augmented matrix has a pivot in the last column.</li>
+    </ul>
+  </section>
+
+  <!-- Exam Tips -->
+  <section id="w1-examtips" class="content-section exam-tips-section" aria-labelledby="w1-tip-h">
+    <h3 id="w1-tip-h" class="section-title">Exam Tips</h3>
+    <ul class="tips-list">
+      <li>Always write the augmented matrix first. Examiners check you haven't confused coefficients with constants.</li>
+      <li>After each row operation, write the operation label (e.g., \(R_2 \leftarrow R_2 - 2R_1\)) — you earn partial credit for clear work.</li>
+      <li>When asked "how many solutions?", check the last column: if it's a pivot column → 0 solutions; else count free variables.</li>
+      <li>If a question says "is \(\mathbf{b}\) in the span of the columns?", that is exactly the question of consistency of \(A\mathbf{x}=\mathbf{b}\).</li>
+    </ul>
+  </section>
+
+  <!-- Problem Solving Strategy -->
+  <section id="w1-strategy" class="content-section" aria-labelledby="w1-str-h">
+    <h3 id="w1-str-h" class="section-title">Problem Solving Strategy</h3>
+    <div class="strategy-steps">
+      <div class="strategy-step"><span class="step-num">1</span><span class="step-text">Write the augmented matrix \([A \mid \mathbf{b}]\).</span></div>
+      <div class="strategy-step"><span class="step-num">2</span><span class="step-text">Apply row operations to reach REF. Identify pivot columns.</span></div>
+      <div class="strategy-step"><span class="step-num">3</span><span class="step-text">Check consistency (no pivot in the last column?).</span></div>
+      <div class="strategy-step"><span class="step-num">4</span><span class="step-text">Continue to RREF. Label basic and free variables.</span></div>
+      <div class="strategy-step"><span class="step-num">5</span><span class="step-text">Write the parametric solution (express basic variables in terms of free variables).</span></div>
+    </div>
+  </section>
+
+  <!-- Formula Sheet -->
+  <section id="w1-formulas" class="content-section formula-section" aria-labelledby="w1-for-h">
+    <h3 id="w1-for-h" class="section-title">Formula Sheet – Week 1</h3>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Matrix–Vector Product</div>
+        <div class="formula-math">\[ A\mathbf{x} = \sum_{j=1}^n x_j \mathbf{a}_j \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Row-column rule \((AB)_{ij}\)</div>
+        <div class="formula-math">\[ (AB)_{ij} = \sum_{k=1}^n a_{ik} b_{kj} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Parametric Solution</div>
+        <div class="formula-math">\[ \mathbf{x} = \mathbf{x}_p + t_1\mathbf{v}_1 + t_2\mathbf{v}_2 + \cdots \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Rank + Nullity = n</div>
+        <div class="formula-math">\[ \operatorname{rank}(A) + \dim\operatorname{Nul}(A) = n \]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Practice Questions -->
+  <section id="w1-practice" class="content-section practice-section" aria-labelledby="w1-prac-h">
+    <h3 id="w1-prac-h" class="section-title">Practice Questions</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">Row reduce the matrix \(A = \begin{bmatrix} 1 & 2 & 1 \\ 0 & 2 & 8 \\ 4 & 5 & 9 \end{bmatrix}\) to echelon form, then RREF.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Apply \(R_3 \leftarrow R_3 - 4R_1\) first, then work on the 2×2 submatrix. The pivot columns determine basic variables.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Solve: \(\begin{cases} x_1 + x_2 + 3x_3 = 0 \\ 2x_1 + x_2 + 4x_3 = 1 \\ 3x_1 + x_2 + 5x_3 = 2 \end{cases}\). Also describe the geometric shape of the solution set in \(\mathbb{R}^3\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Form the augmented matrix and row reduce. Check whether you have 0, 1, or 2 free variables — each corresponds to a different geometric object (point, line, or plane).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Is \(\mathbf{b} = \begin{bmatrix}7\\4\\-3\end{bmatrix}\) in \(\text{Span}\left\{ \begin{bmatrix}2\\1\\-1\end{bmatrix}, \begin{bmatrix}0\\1\\2\end{bmatrix} \right\}\)?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Set up \(A\mathbf{x}=\mathbf{b}\) where \(A\) has the two span vectors as columns. Row reduce the augmented matrix and check consistency.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">A \(3\times 5\) system in REF has pivots in columns 1, 2, and 4. How many solutions does the system have? Name all free variables.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Count free variables: they correspond to non-pivot columns (columns 3 and 5). Any consistent system with free variables has infinitely many solutions.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">True or False? If \(A\) is a \(4\times 3\) matrix and \(A\mathbf{x}=\mathbf{b}\) is consistent for every \(\mathbf{b} \in \mathbb{R}^4\), then \(A\) must have a pivot in every row.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Recall the equivalence theorem: columns of \(A\) span \(\mathbb{R}^m\) iff there is a pivot in every row. But \(A\) has only 3 columns and 4 rows — can 3 vectors span \(\mathbb{R}^4\)?</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Find all values of \(h\) for which the system \(\begin{cases} x_1 + hx_2 = 2 \\ 4x_1 + 8x_2 = k \end{cases}\) is consistent.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Row reduce. The system becomes inconsistent when a zero row on the left pairs with a nonzero entry on the right. Express the condition on \(h\) and \(k\).</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Challenge Problems -->
+  <section id="w1-challenge" class="content-section challenge-section" aria-labelledby="w1-chal-h">
+    <h3 id="w1-chal-h" class="section-title">Challenge Problems</h3>
+    <ol class="challenge-list">
+      <li class="challenge-item">
+        <span class="challenge-q">Let \(A\) be a \(3\times3\) matrix with the property that \(A\mathbf{x} = \begin{bmatrix}1\\0\\-1\end{bmatrix}\) has both \(\begin{bmatrix}1\\2\\3\end{bmatrix}\) and \(\begin{bmatrix}3\\1\\4\end{bmatrix}\) as solutions. Find another solution and explain the structure of the complete solution set.</span>
+        <details class="hint-block"><summary>Hint</summary><p>If \(\mathbf{u}\) and \(\mathbf{v}\) are both solutions to \(A\mathbf{x}=\mathbf{b}\), what can you say about \(\mathbf{u}-\mathbf{v}\)? How does this generate more solutions?</p></details>
+      </li>
+      <li class="challenge-item">
+        <span class="challenge-q">Prove that if \(\{v_1, v_2, v_3\}\) spans \(\mathbb{R}^3\), then \(\{v_1+v_2, v_1-v_2, v_3\}\) also spans \(\mathbb{R}^3\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Express any vector in \(\mathbb{R}^3\) as \(c_1v_1+c_2v_2+c_3v_3\). Then express \(v_1\) and \(v_2\) in terms of \((v_1+v_2)\) and \((v_1-v_2)\) by simple algebra.</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <!-- FAQ -->
+  <section id="w1-faq" class="content-section faq-section" aria-labelledby="w1-faq-h">
+    <h3 id="w1-faq-h" class="section-title">Frequently Asked Questions</h3>
+    <details class="faq-item">
+      <summary class="faq-q">What is the difference between row echelon form and reduced row echelon form?</summary>
+      <div class="faq-a"><p>REF requires (1) zero rows at the bottom, (2) leading entries shift right as you go down, and (3) zeros below each leading entry. RREF adds two conditions: (4) each leading entry is exactly 1, and (5) zeros appear both below AND above each leading 1. RREF is unique for every matrix, while REF is not.</p></div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Can a system have exactly two solutions?</summary>
+      <div class="faq-a"><p>No. A linear system can only have 0, 1, or infinitely many solutions. If it has two distinct solutions \(\mathbf{u}\) and \(\mathbf{v}\), then \(\mathbf{u} + t(\mathbf{v}-\mathbf{u})\) is also a solution for every real \(t\), giving infinitely many.</p></div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Why do elementary row operations not change the solution set?</summary>
+      <div class="faq-a"><p>Each operation corresponds to an algebraically valid manipulation of equations (adding a multiple of one equation to another, reordering equations, or scaling an equation by a nonzero constant). None of these operations add or remove solutions.</p></div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">What is the significance of span in applications?</summary>
+      <div class="faq-a"><p>Span tells you what outputs a system can produce. In machine learning, the span of your feature columns determines which target vectors can be perfectly fit. In control theory, the span of the input columns tells you which states can be reached.</p></div>
+    </details>
+  </section>
+
+  <!-- Summary -->
+  <section id="w1-summary" class="content-section summary-section" aria-labelledby="w1-sum-h">
+    <h3 id="w1-sum-h" class="section-title">Week 1 Summary</h3>
+    <div class="summary-card">
+      <p><strong>Big Picture:</strong> Linear algebra begins with the fundamental problem of solving \(A\mathbf{x}=\mathbf{b}\). The key algorithm — row reduction — transforms any system to RREF, revealing the complete solution structure. Every linear system has zero, one, or infinitely many solutions; this trichotomy is one of the most important facts in mathematics.</p>
+      <p><strong>Core chain:</strong> Linear system → Augmented matrix → Row reduce → REF (check consistency) → RREF → Parametric solution.</p>
+      <p><strong>Vector viewpoint:</strong> \(A\mathbf{x}=\mathbf{b}\) asks whether \(\mathbf{b}\) is in the span of the columns of \(A\). This geometric perspective becomes increasingly powerful in later weeks.</p>
+    </div>
+  </section>
+</article>
+
+<!-- ===========================================================
+     WEEK 2: Solution Sets, Applications, Linear Independence
+     =========================================================== -->
+<article id="week2" class="week-article" data-week="2" aria-labelledby="week2-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">02</div>
+    <div class="week-header-text">
+      <h2 id="week2-title" class="week-title">Week 2: Solution Sets, Applications &amp; Linear Independence</h2>
+      <p class="week-subtitle">Solution Sets of Linear Systems &bull; Applications of Linear Systems &bull; Linear Independence</p>
+    </div>
+    <button class="week-complete-btn" data-week="2" aria-pressed="false" type="button">Mark Complete</button>
+  </header>
+
+  <section id="w2-objectives" class="content-section" aria-labelledby="w2-obj-h">
+    <h3 id="w2-obj-h" class="section-title">Learning Objectives</h3>
+    <ul class="objectives-list">
+      <li>Solve homogeneous systems \(A\mathbf{x}=\mathbf{0}\) and describe the solution set as a null space (subspace of \(\mathbb{R}^n\)).</li>
+      <li>Solve nonhomogeneous systems and express the solution as \(\mathbf{x} = \mathbf{x}_p + \mathbf{x}_h\) (particular + homogeneous).</li>
+      <li>Apply linear systems to real-world problems: network flows, equilibrium mixtures, Leontief input-output models.</li>
+      <li>Define linear independence; determine whether a set of vectors is linearly independent or dependent.</li>
+      <li>Identify the key characterizations of linear dependence (zero determinant, one vector as a linear combination of others, more vectors than entries).</li>
+    </ul>
+  </section>
+
+  <section id="w2-definitions" class="content-section" aria-labelledby="w2-def-h">
+    <h3 id="w2-def-h" class="section-title">Key Definitions</h3>
+    <dl class="definition-list">
+      <dt class="def-term">Homogeneous System</dt>
+      <dd class="def-body">A system \(A\mathbf{x} = \mathbf{0}\). It is always consistent (the trivial solution \(\mathbf{x}=\mathbf{0}\) always works). It has nontrivial solutions if and only if there is at least one free variable.</dd>
+
+      <dt class="def-term">Trivial Solution</dt>
+      <dd class="def-body">The zero vector \(\mathbf{x}=\mathbf{0}\), which is always a solution to \(A\mathbf{x}=\mathbf{0}\).</dd>
+
+      <dt class="def-term">Nontrivial Solution</dt>
+      <dd class="def-body">Any nonzero solution to \(A\mathbf{x}=\mathbf{0}\). Exists iff there is a free variable (i.e., \(A\) does not have a pivot in every column).</dd>
+
+      <dt class="def-term">Solution Structure of \(A\mathbf{x}=\mathbf{b}\)</dt>
+      <dd class="def-body">If \(\mathbf{x}_p\) is any particular solution and \(\mathbf{x}_h\) is the general solution to \(A\mathbf{x}=\mathbf{0}\), then the general solution to \(A\mathbf{x}=\mathbf{b}\) is \(\mathbf{x} = \mathbf{x}_p + \mathbf{x}_h\).</dd>
+
+      <dt class="def-term">Linear Independence</dt>
+      <dd class="def-body">Vectors \(\mathbf{v}_1,\ldots,\mathbf{v}_p \in \mathbb{R}^n\) are <em>linearly independent</em> if the only solution to \(c_1\mathbf{v}_1 + \cdots + c_p\mathbf{v}_p = \mathbf{0}\) is \(c_1 = c_2 = \cdots = c_p = 0\) (the trivial solution).</dd>
+
+      <dt class="def-term">Linear Dependence</dt>
+      <dd class="def-body">The vectors are <em>linearly dependent</em> if there exist scalars \(c_1,\ldots,c_p\), not all zero, such that \(c_1\mathbf{v}_1 + \cdots + c_p\mathbf{v}_p = \mathbf{0}\). Equivalently, at least one vector is a linear combination of the others.</dd>
+    </dl>
+  </section>
+
+  <section id="w2-concepts" class="content-section" aria-labelledby="w2-con-h">
+    <h3 id="w2-con-h" class="section-title">Core Concepts</h3>
+    <div class="concept-block">
+      <h4 class="concept-title">Null Space as a Subspace</h4>
+      <p>The solution set of \(A\mathbf{x}=\mathbf{0}\) is the <em>null space</em> of \(A\), denoted \(\operatorname{Nul}(A)\). It is always a subspace of \(\mathbb{R}^n\): it contains \(\mathbf{0}\), and is closed under addition and scalar multiplication. When there are \(k\) free variables, \(\operatorname{Nul}(A)\) has dimension \(k\).</p>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Geometric View: Solution Sets of Nonhomogeneous Systems</h4>
+      <p>The solution set of \(A\mathbf{x}=\mathbf{b}\) (when nonempty) is a <em>translated subspace</em> (an affine subspace): \(\{\mathbf{x}_p + \mathbf{x}_h : \mathbf{x}_h \in \operatorname{Nul}(A)\}\). In \(\mathbb{R}^2\), this is a line not necessarily through the origin. In \(\mathbb{R}^3\), it could be a line or plane shifted from the origin.</p>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Characterizations of Linear Independence</h4>
+      <ul>
+        <li>The matrix \(A = [\mathbf{v}_1 \cdots \mathbf{v}_p]\) has linearly independent columns iff \(A\mathbf{x}=\mathbf{0}\) has only the trivial solution, iff \(A\) has a pivot in every column (no free variables).</li>
+        <li>If \(p > n\), then \(p\) vectors in \(\mathbb{R}^n\) must be linearly dependent (more vectors than the dimension of the space).</li>
+        <li>If one of the vectors is \(\mathbf{0}\), the set is linearly dependent.</li>
+        <li>Two vectors are linearly dependent iff one is a scalar multiple of the other.</li>
+        <li>The set \(\{\mathbf{v}_1,\ldots,\mathbf{v}_p\}\) is linearly dependent iff at least one \(\mathbf{v}_j\) is in \(\text{Span}\{\mathbf{v}_1,\ldots,\mathbf{v}_{j-1}\}\).</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="w2-theorems" class="content-section" aria-labelledby="w2-thm-h">
+    <h3 id="w2-thm-h" class="section-title">Important Theorems</h3>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem – Nontrivial Solutions of Homogeneous Systems</div>
+      <p>The homogeneous equation \(A\mathbf{x}=\mathbf{0}\) has a nontrivial solution if and only if the equation has at least one free variable. This is equivalent to \(A\) having fewer pivot columns than columns — i.e., the rank of \(A\) is less than \(n\).</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Characterization Theorem (Linear Dependence)</div>
+      <p>An indexed set \(\{v_1,\ldots,v_p\}\) of two or more vectors is linearly dependent if and only if at least one of the vectors in the set is a linear combination of the preceding vectors in the list.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Overdetermined Dependence Theorem</div>
+      <p>If a set contains more vectors than there are entries in each vector, then the set is linearly dependent. That is, any set of \(p\) vectors in \(\mathbb{R}^n\) with \(p > n\) must be linearly dependent.</p>
+    </div>
+  </section>
+
+  <section id="w2-geometry" class="content-section" aria-labelledby="w2-geo-h">
+    <h3 id="w2-geo-h" class="section-title">Geometric Interpretation</h3>
+    <p>Two vectors in \(\mathbb{R}^2\) are linearly dependent iff they are collinear (both lie on the same line through the origin). In \(\mathbb{R}^3\), three vectors are linearly dependent iff they are coplanar (all three lie in the same plane through the origin).</p>
+    <p>Geometric mnemonic: linear dependence = one vector is "redundant" — it doesn't point in a genuinely new direction.</p>
+  </section>
+
+  <section id="w2-engineering" class="content-section" aria-labelledby="w2-eng-h">
+    <h3 id="w2-eng-h" class="section-title">Engineering Applications</h3>
+    <ul class="app-list">
+      <li><strong>Leontief Input-Output Model:</strong> An economy with \(n\) sectors satisfies \((\mathbf{I} - C)\mathbf{x} = \mathbf{d}\), where \(C\) is the consumption matrix and \(\mathbf{d}\) is final demand. Solving this linear system gives production levels.</li>
+      <li><strong>Network Analysis:</strong> Flow conservation at nodes gives a homogeneous system. Nontrivial solutions correspond to non-trivial flow patterns.</li>
+      <li><strong>Signal Superposition:</strong> Linearly independent signals are a basis for a signal space; dependent signals add redundancy.</li>
+    </ul>
+  </section>
+
+  <section id="w2-cs" class="content-section" aria-labelledby="w2-cs-h">
+    <h3 id="w2-cs-h" class="section-title">Computer Science Applications</h3>
+    <ul class="app-list">
+      <li><strong>Data Redundancy:</strong> Linearly dependent feature columns in a data matrix indicate redundant features in machine learning — they can be removed without losing information.</li>
+      <li><strong>Rank Deficiency and Conditioning:</strong> A matrix with dependent columns is rank-deficient, making solving \(A\mathbf{x}=\mathbf{b}\) numerically unstable (large condition number).</li>
+    </ul>
+  </section>
+
+  <section id="w2-examples" class="content-section" aria-labelledby="w2-ex-h">
+    <h3 id="w2-ex-h" class="section-title">Worked Examples</h3>
+    <div class="example-block">
+      <h4 class="example-title">Example: Homogeneous System with Nontrivial Solution</h4>
+      <p>Test for linear independence of \(\mathbf{v}_1 = \begin{bmatrix}0\\1\\5\end{bmatrix}\), \(\mathbf{v}_2 = \begin{bmatrix}1\\2\\8\end{bmatrix}\), \(\mathbf{v}_3 = \begin{bmatrix}4\\-1\\0\end{bmatrix}\) (from Lecture 10 Review).</p>
+      <p>Form \(A = [\mathbf{v}_1\ \mathbf{v}_2\ \mathbf{v}_3]\) and row reduce:</p>
+      <p>\[\begin{bmatrix}0&1&4\\1&2&-1\\5&8&0\end{bmatrix} \to \begin{bmatrix}1&2&-1\\0&1&4\\0&-2&5\end{bmatrix} \to \begin{bmatrix}1&2&-1\\0&1&4\\0&0&13\end{bmatrix}\]</p>
+      <p>Three pivots (rank 3 = number of columns). Only trivial solution → <strong>linearly independent</strong>.</p>
+    </div>
+    <div class="example-block">
+      <h4 class="example-title">Example: Nonhomogeneous System with Particular Solution</h4>
+      <p>For \(A\mathbf{x}=\mathbf{b}\) where RREF gives \(\begin{bmatrix}1&0&-5&1\\0&1&1&4\\0&0&0&0\end{bmatrix}\), the solution is:</p>
+      <p>\[\mathbf{x} = \underbrace{\begin{bmatrix}1\\4\\0\end{bmatrix}}_{\mathbf{x}_p} + x_3\underbrace{\begin{bmatrix}5\\-1\\1\end{bmatrix}}_{\text{null space basis vector}}\]</p>
+      <p>Geometrically: a line in \(\mathbb{R}^3\) passing through \((1,4,0)\) in the direction \((5,-1,1)\).</p>
+    </div>
+  </section>
+
+  <section id="w2-mistakes" class="content-section mistakes-section" aria-labelledby="w2-mis-h">
+    <h3 id="w2-mis-h" class="section-title">Common Mistakes</h3>
+    <ul class="mistakes-list">
+      <li><strong>Confusing "zero solution" with "no solution":</strong> \(\mathbf{x}=\mathbf{0}\) is the trivial solution — the system IS consistent. A system with "no solution" has no vector (not even \(\mathbf{0}\)) that satisfies it.</li>
+      <li><strong>Forgetting the particular solution:</strong> The general solution to \(A\mathbf{x}=\mathbf{b}\) must include both the particular solution AND all null space vectors.</li>
+      <li><strong>Linear independence test shortcut error:</strong> Do NOT simply check whether one vector is a multiple of another — that only works for exactly two vectors. For three or more, you must row reduce.</li>
+    </ul>
+  </section>
+
+  <section id="w2-memorize" class="content-section memorize-section" aria-labelledby="w2-mem-h">
+    <h3 id="w2-mem-h" class="section-title">Must Memorize</h3>
+    <ul class="memorize-list">
+      <li>Solution structure: \(\mathbf{x} = \mathbf{x}_p + \mathbf{x}_h\) for nonhomogeneous systems.</li>
+      <li>Homogeneous system always consistent; nontrivial solution ↔ free variable exists.</li>
+      <li>Linear independence definition and the three key characterizations.</li>
+      <li>\(p > n\) vectors in \(\mathbb{R}^n\) → always linearly dependent.</li>
+    </ul>
+  </section>
+
+  <section id="w2-examtips" class="content-section exam-tips-section" aria-labelledby="w2-tip-h">
+    <h3 id="w2-tip-h" class="section-title">Exam Tips</h3>
+    <ul class="tips-list">
+      <li>To test linear independence, form the matrix \(A = [\mathbf{v}_1 \cdots \mathbf{v}_p]\) and row reduce. Count pivots: if pivots = number of columns → independent; otherwise → dependent.</li>
+      <li>If you have more vectors than the space has dimensions (e.g., 4 vectors in \(\mathbb{R}^3\)), immediately declare dependence without any calculation.</li>
+      <li>When writing the solution to \(A\mathbf{x}=\mathbf{b}\), always separate the particular solution and the homogeneous part clearly.</li>
+    </ul>
+  </section>
+
+  <section id="w2-formulas" class="content-section formula-section" aria-labelledby="w2-for-h">
+    <h3 id="w2-for-h" class="section-title">Formula Sheet – Week 2</h3>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">General Solution</div>
+        <div class="formula-math">\[ \mathbf{x} = \mathbf{x}_p + \mathbf{x}_h \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Null Space</div>
+        <div class="formula-math">\[ \operatorname{Nul}(A) = \{\mathbf{x} \in \mathbb{R}^n : A\mathbf{x} = \mathbf{0}\} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Linear Dependence</div>
+        <div class="formula-math">\[ c_1\mathbf{v}_1 + \cdots + c_p\mathbf{v}_p = \mathbf{0},\ \text{not all }c_i = 0 \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Leontief Model</div>
+        <div class="formula-math">\[ (I - C)\mathbf{x} = \mathbf{d} \]</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="w2-practice" class="content-section practice-section" aria-labelledby="w2-prac-h">
+    <h3 id="w2-prac-h" class="section-title">Practice Questions</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">Determine if the following homogeneous system has a nontrivial solution: \(3x_1 - 5x_2 = 0,\ x_1 - 3x_2 = 0\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Row reduce the coefficient matrix. Does it have a free variable?</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Are the vectors \(\begin{bmatrix}1\\2\\3\end{bmatrix}, \begin{bmatrix}4\\5\\6\end{bmatrix}, \begin{bmatrix}7\\8\\9\end{bmatrix}\) linearly independent? Explain geometrically.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Notice \(\mathbf{v}_3 = 2\mathbf{v}_2 - \mathbf{v}_1\). Or row reduce to check rank.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">If \(A\) is a \(4\times3\) matrix, what is the maximum possible dimension of \(\operatorname{Nul}(A)\)?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Use rank-nullity: \(\dim\operatorname{Nul}(A) = n - \operatorname{rank}(A)\). What is the maximum rank of a \(4\times3\) matrix?</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Suppose the solution set of \(A\mathbf{x}=\mathbf{b}\) is a line in \(\mathbb{R}^3\). What can you say about the rank of \(A\)?</span>
+        <details class="hint-block"><summary>Hint</summary><p>A line through a point means there is exactly 1 free variable. Rank-nullity and the shape of the solution set are directly linked.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Describe all solutions to \(A\mathbf{x}=\mathbf{b}\) when RREF of \([A\mid\mathbf{b}]\) is \(\begin{bmatrix}1&0&-2&3&4\\0&1&1&-1&2\\0&0&0&0&0\end{bmatrix}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Identify basic variables (columns 1 and 2), free variables (columns 3 and 4), and express the solution with parameters.</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <section id="w2-faq" class="content-section faq-section" aria-labelledby="w2-faq-h">
+    <h3 id="w2-faq-h" class="section-title">Frequently Asked Questions</h3>
+    <details class="faq-item">
+      <summary class="faq-q">Is the zero vector linearly dependent by itself?</summary>
+      <div class="faq-a"><p>Yes. The set \(\{\mathbf{0}\}\) is linearly dependent because \(1 \cdot \mathbf{0} = \mathbf{0}\) gives a nontrivial linear combination equal to \(\mathbf{0}\).</p></div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">If a set of vectors is linearly dependent, can some subset be independent?</summary>
+      <div class="faq-a"><p>Yes. For example, \(\{\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3\}\) may be dependent (say \(\mathbf{v}_3 = \mathbf{v}_1 + \mathbf{v}_2\)), but \(\{\mathbf{v}_1, \mathbf{v}_2\}\) can still be independent.</p></div>
+    </details>
+  </section>
+
+  <section id="w2-summary" class="content-section summary-section" aria-labelledby="w2-sum-h">
+    <h3 id="w2-sum-h" class="section-title">Week 2 Summary</h3>
+    <div class="summary-card">
+      <p><strong>Big Picture:</strong> The solution set of a homogeneous system is always a subspace (the null space). The solution set of a nonhomogeneous system is either empty or a translated copy of the null space. Linear independence is the key structural concept: independent vectors bring genuinely new information; dependent vectors are "redundant."</p>
+    </div>
+  </section>
+</article>
+
+<!-- ===========================================================
+     WEEK 3: Linear Transformations, Matrix of a LT, Matrix Ops
+     =========================================================== -->
+<article id="week3" class="week-article" data-week="3" aria-labelledby="week3-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">03</div>
+    <div class="week-header-text">
+      <h2 id="week3-title" class="week-title">Week 3: Linear Transformations &amp; Matrix Operations</h2>
+      <p class="week-subtitle">Introduction to Linear Transformations &bull; The Matrix of a Linear Transformation &bull; Matrix Operations</p>
+    </div>
+    <button class="week-complete-btn" data-week="3" aria-pressed="false" type="button">Mark Complete</button>
+  </header>
+
+  <section id="w3-objectives" class="content-section" aria-labelledby="w3-obj-h">
+    <h3 id="w3-obj-h" class="section-title">Learning Objectives</h3>
+    <ul class="objectives-list">
+      <li>Define a linear transformation \(T: \mathbb{R}^n \to \mathbb{R}^m\) and verify the two linearity conditions.</li>
+      <li>Find the standard matrix \(A\) of any linear transformation using \(A = [T(\mathbf{e}_1)\ \cdots\ T(\mathbf{e}_n)]\).</li>
+      <li>Identify and construct geometric transformations: reflections, projections, rotations, shear, dilation, contraction.</li>
+      <li>Determine if a transformation is one-to-one and/or onto; relate these to properties of the standard matrix.</li>
+      <li>Perform matrix addition, scalar multiplication, and matrix multiplication; state and use properties of each.</li>
+    </ul>
+  </section>
+
+  <section id="w3-definitions" class="content-section" aria-labelledby="w3-def-h">
+    <h3 id="w3-def-h" class="section-title">Key Definitions</h3>
+    <dl class="definition-list">
+      <dt class="def-term">Transformation (Function/Map)</dt>
+      <dd class="def-body">A rule \(T\) that assigns to each vector \(\mathbf{x}\) in \(\mathbb{R}^n\) a vector \(T(\mathbf{x})\) in \(\mathbb{R}^m\). The set \(\mathbb{R}^n\) is the <em>domain</em>; \(\mathbb{R}^m\) is the <em>codomain</em>.</dd>
+
+      <dt class="def-term">Linear Transformation</dt>
+      <dd class="def-body">A map \(T: \mathbb{R}^n \to \mathbb{R}^m\) is linear if for all \(\mathbf{u},\mathbf{v}\) in the domain and all scalars \(c\):
+        <ul>
+          <li>(Additivity) \(T(\mathbf{u}+\mathbf{v}) = T(\mathbf{u}) + T(\mathbf{v})\)</li>
+          <li>(Homogeneity) \(T(c\mathbf{u}) = cT(\mathbf{u})\)</li>
         </ul>
-      </nav>
+        Together: \(T(c\mathbf{u}+d\mathbf{v}) = cT(\mathbf{u}) + dT(\mathbf{v})\) (superposition principle).
+      </dd>
 
-      <div role="group" aria-label="Practice mode">
-        <h2>Mode</h2>
-        <button id="mode-quiz" type="button">Quiz</button>
-        <button id="mode-practice" type="button">Practice</button>
-        <button id="mode-mock" type="button">Mock Exam</button>
+      <dt class="def-term">Standard Matrix of a Linear Transformation</dt>
+      <dd class="def-body">The unique \(m\times n\) matrix \(A\) such that \(T(\mathbf{x})=A\mathbf{x}\) for all \(\mathbf{x}\). It is constructed as \(A = [T(\mathbf{e}_1)\ T(\mathbf{e}_2)\ \cdots\ T(\mathbf{e}_n)]\), where \(\mathbf{e}_j\) is the \(j\)-th standard basis vector.</dd>
+
+      <dt class="def-term">Onto (Surjective)</dt>
+      <dd class="def-body">\(T: \mathbb{R}^n \to \mathbb{R}^m\) is <em>onto</em> if for every \(\mathbf{b} \in \mathbb{R}^m\) there exists at least one \(\mathbf{x}\) with \(T(\mathbf{x})=\mathbf{b}\). This is an existence question. Equivalent condition: columns of \(A\) span \(\mathbb{R}^m\).</dd>
+
+      <dt class="def-term">One-to-One (Injective)</dt>
+      <dd class="def-body">\(T\) is <em>one-to-one</em> if every \(\mathbf{b} \in \mathbb{R}^m\) is the image of at most one \(\mathbf{x}\). Equivalent condition: \(T(\mathbf{x})=\mathbf{0}\) has only the trivial solution, i.e., columns of \(A\) are linearly independent.</dd>
+    </dl>
+  </section>
+
+  <section id="w3-concepts" class="content-section" aria-labelledby="w3-con-h">
+    <h3 id="w3-con-h" class="section-title">Core Concepts</h3>
+    <div class="concept-block">
+      <h4 class="concept-title">Every Linear Transformation is a Matrix Transformation</h4>
+      <p>Theorem 10 guarantees that for every linear \(T: \mathbb{R}^n \to \mathbb{R}^m\), there is a unique matrix \(A\) such that \(T(\mathbf{x}) = A\mathbf{x}\). The proof: write \(\mathbf{x} = x_1\mathbf{e}_1 + \cdots + x_n\mathbf{e}_n\) and use linearity to get \(T(\mathbf{x}) = x_1T(\mathbf{e}_1) + \cdots + x_nT(\mathbf{e}_n) = A\mathbf{x}\).</p>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Geometric Linear Transformations of \(\mathbb{R}^2\)</h4>
+      <ul>
+        <li><strong>Dilation/Contraction:</strong> \(T(\mathbf{x})=r\mathbf{x}\), matrix \(\begin{bmatrix}r&0\\0&r\end{bmatrix}\). Scales every vector by \(r\).</li>
+        <li><strong>Shear (horizontal):</strong> Matrix \(\begin{bmatrix}1&k\\0&1\end{bmatrix}\). Tilts figures sideways.</li>
+        <li><strong>Reflection about the \(x_1\)-axis:</strong> Matrix \(\begin{bmatrix}1&0\\0&-1\end{bmatrix}\).</li>
+        <li><strong>Projection onto \(x_1\)-axis:</strong> Matrix \(\begin{bmatrix}1&0\\0&0\end{bmatrix}\).</li>
+        <li><strong>Rotation by angle \(\theta\):</strong> Matrix \(\begin{bmatrix}\cos\theta & -\sin\theta \\ \sin\theta & \cos\theta\end{bmatrix}\).</li>
+      </ul>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Matrix Multiplication as Composition</h4>
+      <p>If \(T_1(\mathbf{x})=A\mathbf{x}\) and \(T_2(\mathbf{x})=B\mathbf{x}\), then the composition \(T_1 \circ T_2\) (apply \(T_2\) first, then \(T_1\)) has matrix \(AB\). This is why matrix multiplication is defined the way it is.</p>
+      <p>Key: \((AB)_{ij} = \text{row } i \text{ of } A\) dotted with \(\text{column } j \text{ of } B\).</p>
+    </div>
+  </section>
+
+  <section id="w3-theorems" class="content-section" aria-labelledby="w3-thm-h">
+    <h3 id="w3-thm-h" class="section-title">Important Theorems</h3>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem 10 – Matrix Representation</div>
+      <p>Let \(T: \mathbb{R}^n \to \mathbb{R}^m\) be a linear transformation. Then there exists a unique \(m\times n\) matrix \(A\) such that \(T(\mathbf{x})=A\mathbf{x}\) for all \(\mathbf{x} \in \mathbb{R}^n\). In fact, \(A = [T(\mathbf{e}_1)\ \cdots\ T(\mathbf{e}_n)]\).</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem 11 – One-to-One Characterization</div>
+      <p>Let \(T: \mathbb{R}^n \to \mathbb{R}^m\) be linear. Then \(T\) is one-to-one if and only if \(T(\mathbf{x})=\mathbf{0}\) has only the trivial solution.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem 12 – Onto and One-to-One via the Standard Matrix</div>
+      <p>Let \(A\) be the standard matrix of \(T\). Then: (a) \(T\) maps \(\mathbb{R}^n\) onto \(\mathbb{R}^m\) iff the columns of \(A\) span \(\mathbb{R}^m\). (b) \(T\) is one-to-one iff the columns of \(A\) are linearly independent.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem 2 – Properties of Matrix Multiplication</div>
+      <p>For matrices \(A,B,C\) of compatible sizes and scalars \(r\):
+        (a) \(A(BC) = (AB)C\) (associative);
+        (b) \(A(B+C) = AB+AC\) (left distributive);
+        (c) \((B+C)A = BA+CA\) (right distributive);
+        (d) \(r(AB) = (rA)B = A(rB)\);
+        (e) \(I_m A = A = A I_n\).
+      </p>
+      <p class="theorem-warning"><strong>Warning:</strong> Matrix multiplication is <em>NOT commutative</em>: \(AB \neq BA\) in general.</p>
+    </div>
+  </section>
+
+  <section id="w3-mistakes" class="content-section mistakes-section" aria-labelledby="w3-mis-h">
+    <h3 id="w3-mis-h" class="section-title">Common Mistakes</h3>
+    <ul class="mistakes-list">
+      <li><strong>Assuming \(AB=BA\):</strong> This is almost never true. Always check the order of multiplication.</li>
+      <li><strong>Wrong standard matrix column order:</strong> The \(j\)-th column of the standard matrix is \(T(\mathbf{e}_j)\), where \(\mathbf{e}_j\) is the \(j\)-th standard basis vector. Do not mix up the column index.</li>
+      <li><strong>Confusing domain/codomain:</strong> For \(T:\mathbb{R}^n\to\mathbb{R}^m\), the matrix \(A\) is \(m\times n\) (rows = output dimension, columns = input dimension).</li>
+      <li><strong>Cancellation law fails:</strong> \(AB = AC\) does NOT imply \(B=C\) (unless \(A\) is invertible).</li>
+    </ul>
+  </section>
+
+  <section id="w3-formulas" class="content-section formula-section" aria-labelledby="w3-for-h">
+    <h3 id="w3-for-h" class="section-title">Formula Sheet – Week 3</h3>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Standard Matrix</div>
+        <div class="formula-math">\[ A = [T(\mathbf{e}_1)\ T(\mathbf{e}_2)\ \cdots\ T(\mathbf{e}_n)] \]</div>
       </div>
-    </aside>
-
-    <section id="main-content" aria-label="Problem workspace">
-      <div id="score-panel" aria-label="Score summary">
-        <span>Score: <span id="score-value">0</span></span>
-        <span>Streak: <span id="streak-value">0</span></span>
-        <span>Questions Attempted: <span id="attempts-value">0</span></span>
+      <div class="formula-card">
+        <div class="formula-name">Rotation Matrix (\(\mathbb{R}^2\))</div>
+        <div class="formula-math">\[ R_\theta = \begin{bmatrix}\cos\theta & -\sin\theta \\ \sin\theta & \cos\theta\end{bmatrix} \]</div>
       </div>
+      <div class="formula-card">
+        <div class="formula-name">Superposition Principle</div>
+        <div class="formula-math">\[ T\!\left(\sum c_i\mathbf{v}_i\right) = \sum c_i T(\mathbf{v}_i) \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Transpose Properties</div>
+        <div class="formula-math">\[ (AB)^T = B^T A^T,\quad (A+B)^T = A^T + B^T \]</div>
+      </div>
+    </div>
+  </section>
 
-      <div id="problem-card" aria-label="Problem card">
-        <div id="problem-statement" aria-label="Problem statement"></div>
+  <section id="w3-practice" class="content-section practice-section" aria-labelledby="w3-prac-h">
+    <h3 id="w3-prac-h" class="section-title">Practice Questions</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">Find the standard matrix of the linear transformation \(T(\mathbf{x}) = \begin{bmatrix}3x_1-x_2\\x_1+2x_2\end{bmatrix}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Compute \(T(\mathbf{e}_1)\) and \(T(\mathbf{e}_2)\) by substituting \(\mathbf{e}_1=(1,0)^T\) and \(\mathbf{e}_2=(0,1)^T\). Form the matrix with these as columns.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Is \(T(\mathbf{x}) = \begin{bmatrix}x_1+x_2\\x_1-x_2\\x_2\end{bmatrix}\) one-to-one? Is it onto \(\mathbb{R}^3\)?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Write the standard matrix (a \(3\times2\) matrix). Row reduce to find rank. One-to-one requires 2 pivots (in the 2 columns). Onto requires 3 pivots (in the 3 rows).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Compute \(AB\) and \(BA\) where \(A = \begin{bmatrix}2&3\\1&5\end{bmatrix}\) and \(B = \begin{bmatrix}1&0\\4&-1\end{bmatrix}\). Are they equal?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Apply the row-column rule. Do not assume commutativity.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">A linear transformation \(T:\mathbb{R}^2\to\mathbb{R}^2\) rotates vectors by \(90°\) counterclockwise and then reflects across the \(x_1\)-axis. Write the standard matrix for this composition.</span>
+        <details class="hint-block"><summary>Hint</summary><p>The standard matrix is \(A_{\text{reflect}} \cdot A_{\text{rotate}}\). Apply the rotation first (rightmost matrix).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Let \(A = \begin{bmatrix}1&3&-4\\-4&2&-6\end{bmatrix}\) and \(T(\mathbf{x})=A\mathbf{x}\). Determine if \(\mathbf{b}=\begin{bmatrix}3\\7\end{bmatrix}\) is in the range of \(T\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>This is the same as asking if \(A\mathbf{x}=\mathbf{b}\) is consistent. Row reduce the augmented matrix.</p></details>
+      </li>
+    </ol>
+  </section>
 
-        <div id="hint-container" aria-live="polite">
-          <p id="hint-text"></p>
+  <section id="w3-summary" class="content-section summary-section" aria-labelledby="w3-sum-h">
+    <h3 id="w3-sum-h" class="section-title">Week 3 Summary</h3>
+    <div class="summary-card">
+      <p><strong>Big Picture:</strong> Every linear transformation between Euclidean spaces can be represented by a matrix. The standard matrix is built column by column from the images of the standard basis vectors. One-to-one ↔ independent columns; Onto ↔ columns span the codomain. Matrix multiplication represents composition of linear transformations.</p>
+    </div>
+  </section>
+</article>
+
+<!-- ===========================================================
+     WEEK 4: Inverses, Invertible Matrix Theorem, Partitioned Matrices, LU
+     =========================================================== -->
+<article id="week4" class="week-article" data-week="4" aria-labelledby="week4-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">04</div>
+    <div class="week-header-text">
+      <h2 id="week4-title" class="week-title">Week 4: Inverses, Invertible Matrices &amp; LU Factorization</h2>
+      <p class="week-subtitle">Inverse of a Matrix &bull; Characterizations of Invertible Matrices &bull; Partitioned Matrices &bull; Matrix Factorizations (LU)</p>
+    </div>
+    <button class="week-complete-btn" data-week="4" aria-pressed="false" type="button">Mark Complete</button>
+  </header>
+
+  <section id="w4-objectives" class="content-section" aria-labelledby="w4-obj-h">
+    <h3 id="w4-obj-h" class="section-title">Learning Objectives</h3>
+    <ul class="objectives-list">
+      <li>Define the inverse of a square matrix; compute \(A^{-1}\) using row reduction on \([A \mid I]\).</li>
+      <li>State and apply the Invertible Matrix Theorem — the complete list of 20+ equivalent conditions for invertibility.</li>
+      <li>Use block matrix notation and perform operations with partitioned matrices.</li>
+      <li>Compute the LU factorization of a matrix and use it to efficiently solve multiple systems with the same coefficient matrix.</li>
+    </ul>
+  </section>
+
+  <section id="w4-definitions" class="content-section" aria-labelledby="w4-def-h">
+    <h3 id="w4-def-h" class="section-title">Key Definitions</h3>
+    <dl class="definition-list">
+      <dt class="def-term">Invertible (Nonsingular) Matrix</dt>
+      <dd class="def-body">An \(n\times n\) matrix \(A\) is <em>invertible</em> if there exists an \(n\times n\) matrix \(C\) such that \(CA = I_n\) and \(AC = I_n\). Then \(C = A^{-1}\) is the (unique) inverse of \(A\). A matrix that is not invertible is <em>singular</em>.</dd>
+
+      <dt class="def-term">Formula for \(2\times 2\) Inverse</dt>
+      <dd class="def-body">For \(A = \begin{bmatrix}a&b\\c&d\end{bmatrix}\) with \(\det(A) = ad-bc \neq 0\): \(A^{-1} = \frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}\).</dd>
+
+      <dt class="def-term">LU Factorization</dt>
+      <dd class="def-body">\(A = LU\) where \(L\) is a unit lower triangular matrix (1s on the diagonal, zeros above) and \(U\) is an upper triangular matrix (echelon form of \(A\)). Used to solve \(A\mathbf{x}=\mathbf{b}\) efficiently via \(L\mathbf{y}=\mathbf{b}\) (forward substitution) then \(U\mathbf{x}=\mathbf{y}\) (back substitution).</dd>
+    </dl>
+  </section>
+
+  <section id="w4-theorems" class="content-section" aria-labelledby="w4-thm-h">
+    <h3 id="w4-thm-h" class="section-title">The Invertible Matrix Theorem (IMT)</h3>
+    <div class="theorem-block theorem-block--large">
+      <div class="theorem-label">The Invertible Matrix Theorem</div>
+      <p>Let \(A\) be an \(n\times n\) matrix. The following statements are ALL equivalent (each implies all the others):</p>
+      <ol class="theorem-equiv-list">
+        <li>\(A\) is invertible.</li>
+        <li>\(A\) is row equivalent to \(I_n\).</li>
+        <li>\(A\) has \(n\) pivot positions.</li>
+        <li>The equation \(A\mathbf{x}=\mathbf{0}\) has only the trivial solution.</li>
+        <li>The columns of \(A\) are linearly independent.</li>
+        <li>The linear transformation \(\mathbf{x}\mapsto A\mathbf{x}\) is one-to-one.</li>
+        <li>For every \(\mathbf{b}\in\mathbb{R}^n\), the equation \(A\mathbf{x}=\mathbf{b}\) has at least one solution.</li>
+        <li>The columns of \(A\) span \(\mathbb{R}^n\).</li>
+        <li>The linear transformation \(\mathbf{x}\mapsto A\mathbf{x}\) is onto.</li>
+        <li>There exists an \(n\times n\) matrix \(C\) such that \(CA=I_n\).</li>
+        <li>There exists an \(n\times n\) matrix \(D\) such that \(AD=I_n\).</li>
+        <li>\(A^T\) is invertible.</li>
+        <li>The columns of \(A\) form a basis of \(\mathbb{R}^n\).</li>
+        <li>\(\operatorname{Col}(A) = \mathbb{R}^n\).</li>
+        <li>\(\dim\operatorname{Col}(A) = n\).</li>
+        <li>\(\operatorname{rank}(A) = n\).</li>
+        <li>\(\operatorname{Nul}(A) = \{\mathbf{0}\}\).</li>
+        <li>\(\dim\operatorname{Nul}(A) = 0\).</li>
+        <li>\(\det(A) \neq 0\).</li>
+        <li>\(0\) is NOT an eigenvalue of \(A\).</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="w4-concepts" class="content-section" aria-labelledby="w4-con-h">
+    <h3 id="w4-con-h" class="section-title">Core Concepts</h3>
+    <div class="concept-block">
+      <h4 class="concept-title">Computing \(A^{-1}\) via Row Reduction</h4>
+      <p>Form the augmented matrix \([A \mid I_n]\). Apply row operations until the left block becomes \(I_n\). Then the right block becomes \(A^{-1}\). If the left block cannot be reduced to \(I_n\), then \(A\) is singular.</p>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">LU Factorization — Why It Matters</h4>
+      <p>When solving \(A\mathbf{x}=\mathbf{b}\) for many different \(\mathbf{b}\) vectors (same \(A\)), computing \(A^{-1}\) explicitly is expensive. LU factorization stores the row reduction work once: \(LU\mathbf{x}=\mathbf{b}\) is solved by two triangular systems, each requiring \(O(n^2)\) operations instead of \(O(n^3)\) for full RREF.</p>
+    </div>
+  </section>
+
+  <section id="w4-examples" class="content-section" aria-labelledby="w4-ex-h">
+    <h3 id="w4-ex-h" class="section-title">Worked Example: Finding \(A^{-1}\)</h3>
+    <div class="example-block">
+      <h4 class="example-title">From Lecture 10 Review: Compute \(A^{-1}\) for \(A = \begin{bmatrix}-4&5&3\\5&-6&-3\\-3&4&2\end{bmatrix}\)</h4>
+      <p>Set up \([A \mid I_3]\) and apply RREF. The lecture shows step-by-step operations \(R_1 \cdot(-1/4)\), then \(R_2-5R_1\), \(R_3+3R_1\), etc. Final result:</p>
+      <p>\[ A^{-1} = \begin{bmatrix}0&2&3\\-1&1&3\\2&1&-1\end{bmatrix} \]</p>
+      <p><strong>Verification:</strong> Always check \(AA^{-1}=I_3\) — multiply out to confirm.</p>
+    </div>
+  </section>
+
+  <section id="w4-mistakes" class="content-section mistakes-section" aria-labelledby="w4-mis-h">
+    <h3 id="w4-mis-h" class="section-title">Common Mistakes</h3>
+    <ul class="mistakes-list">
+      <li><strong>Applying the \(2\times2\) formula to larger matrices:</strong> The formula \(A^{-1} = \frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}\) works only for \(2\times2\) matrices. For larger matrices, use row reduction.</li>
+      <li><strong>Confusing \(AB=I\) with \(A^{-1}=B\):</strong> For square matrices, if \(AB=I\) then automatically \(BA=I\) too. But always verify both, especially in hand calculations.</li>
+      <li><strong>IMT only applies to square matrices:</strong> The Invertible Matrix Theorem is stated for \(n\times n\) matrices. Nonsquare matrices are never invertible.</li>
+    </ul>
+  </section>
+
+  <section id="w4-formulas" class="content-section formula-section" aria-labelledby="w4-for-h">
+    <h3 id="w4-for-h" class="section-title">Formula Sheet – Week 4</h3>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">\(2\times 2\) Inverse</div>
+        <div class="formula-math">\[ A^{-1} = \frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Product Inverse</div>
+        <div class="formula-math">\[ (AB)^{-1} = B^{-1}A^{-1} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Transpose Inverse</div>
+        <div class="formula-math">\[ (A^T)^{-1} = (A^{-1})^T \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">LU Solve</div>
+        <div class="formula-math">\[ A\mathbf{x}=\mathbf{b} \Leftrightarrow L\mathbf{y}=\mathbf{b},\ U\mathbf{x}=\mathbf{y} \]</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="w4-practice" class="content-section practice-section" aria-labelledby="w4-prac-h">
+    <h3 id="w4-prac-h" class="section-title">Practice Questions</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">Find the inverse of \(A=\begin{bmatrix}1&2&3\\0&1&4\\0&0&1\end{bmatrix}\) using row reduction.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Row reduce \([A \mid I_3]\). Since \(A\) is upper triangular, this goes quickly — use the backward phase only (no forward phase needed).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Can a \(5\times 5\) matrix with two identical rows be invertible? Justify using the IMT.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Two identical rows → rows are linearly dependent → the matrix has fewer than \(n\) pivot rows → not invertible by IMT.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Use an LU factorization to solve \(A\mathbf{x}=\mathbf{b}\) for three different right-hand sides using the same \(L\) and \(U\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Compute \(L\) and \(U\) once using the factorization algorithm. Then for each \(\mathbf{b}\), solve \(L\mathbf{y}=\mathbf{b}\) (forward sub) followed by \(U\mathbf{x}=\mathbf{y}\) (back sub).</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <section id="w4-summary" class="content-section summary-section" aria-labelledby="w4-sum-h">
+    <h3 id="w4-sum-h" class="section-title">Week 4 Summary</h3>
+    <div class="summary-card">
+      <p><strong>Big Picture:</strong> The Invertible Matrix Theorem unifies nearly every concept from Weeks 1–3 into one grand equivalence. A square matrix is either invertible (all good things apply) or singular (many things fail simultaneously). LU factorization is a practical algorithm for efficient repeated solving. Master the IMT list — it is a constant source of exam questions.</p>
+    </div>
+  </section>
+</article>
+
+<!-- ===========================================================
+     WEEK 5: Determinants, Properties, Cramer's Rule, Volume
+     =========================================================== -->
+<article id="week5" class="week-article" data-week="5" aria-labelledby="week5-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">05</div>
+    <div class="week-header-text">
+      <h2 id="week5-title" class="week-title">Week 5: Determinants</h2>
+      <p class="week-subtitle">Introduction to Determinants &bull; Properties of Determinants &bull; Cramer's Rule &bull; Volume &amp; Linear Transformations</p>
+    </div>
+    <button class="week-complete-btn" data-week="5" aria-pressed="false" type="button">Mark Complete</button>
+  </header>
+
+  <section id="w5-objectives" class="content-section" aria-labelledby="w5-obj-h">
+    <h3 id="w5-obj-h" class="section-title">Learning Objectives</h3>
+    <ul class="objectives-list">
+      <li>Compute the determinant of a \(2\times2\) matrix and of larger matrices via cofactor expansion.</li>
+      <li>Compute minors and cofactors; choose the best row or column for efficient cofactor expansion.</li>
+      <li>Apply properties of determinants (row operations, triangular matrices, multiplicativity).</li>
+      <li>Use Cramer's Rule to solve small linear systems.</li>
+      <li>Interpret \(|\det(A)|\) as the volume scaling factor of the linear transformation \(T(\mathbf{x})=A\mathbf{x}\).</li>
+    </ul>
+  </section>
+
+  <section id="w5-definitions" class="content-section" aria-labelledby="w5-def-h">
+    <h3 id="w5-def-h" class="section-title">Key Definitions</h3>
+    <dl class="definition-list">
+      <dt class="def-term">Determinant of a \(2\times2\) Matrix</dt>
+      <dd class="def-body">\(\det\begin{bmatrix}a&b\\c&d\end{bmatrix} = ad - bc\). The determinant can be positive, negative, or zero.</dd>
+
+      <dt class="def-term">Minor \(M_{ij}\)</dt>
+      <dd class="def-body">The minor \(M_{ij}\) of entry \(a_{ij}\) is the determinant of the \((n-1)\times(n-1)\) submatrix obtained by deleting row \(i\) and column \(j\) from \(A\).</dd>
+
+      <dt class="def-term">Cofactor \(C_{ij}\)</dt>
+      <dd class="def-body">\(C_{ij} = (-1)^{i+j} M_{ij}\). The sign is \(+\) when \(i+j\) is even, \(-\) when odd. Sign pattern for \(3\times3\): \(\begin{bmatrix}+&-&+\\-&+&-\\+&-&+\end{bmatrix}\).</dd>
+
+      <dt class="def-term">Cofactor Expansion (Laplace Expansion)</dt>
+      <dd class="def-body">Expansion along row \(i\): \(\det(A) = \sum_{j=1}^n a_{ij}C_{ij}\). Expansion along column \(j\): \(\det(A) = \sum_{i=1}^n a_{ij}C_{ij}\). Always choose the row/column with the most zeros.</dd>
+    </dl>
+  </section>
+
+  <section id="w5-theorems" class="content-section" aria-labelledby="w5-thm-h">
+    <h3 id="w5-thm-h" class="section-title">Important Theorems</h3>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem 3.2 – Determinant of a Triangular Matrix</div>
+      <p>If \(A\) is upper triangular, lower triangular, or diagonal, then \(\det(A) = a_{11} a_{22} \cdots a_{nn}\) — just the product of the diagonal entries.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Row Operation Effects on Determinant</div>
+      <ul>
+        <li><strong>Row swap:</strong> \(\det\) changes sign.</li>
+        <li><strong>Row scaling by \(k\):</strong> \(\det\) is multiplied by \(k\).</li>
+        <li><strong>Row replacement (add \(k\) times one row to another):</strong> \(\det\) is UNCHANGED.</li>
+      </ul>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Multiplicative Property</div>
+      <p>\(\det(AB) = \det(A)\det(B)\). As a corollary, \(\det(A^{-1}) = 1/\det(A)\) and \(\det(A^T) = \det(A)\).</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Cramer's Rule</div>
+      <p>For \(A\mathbf{x}=\mathbf{b}\) with \(\det(A)\neq0\): \(x_i = \frac{\det(A_i(\mathbf{b}))}{\det(A)}\), where \(A_i(\mathbf{b})\) is \(A\) with column \(i\) replaced by \(\mathbf{b}\).</p>
+      <p class="theorem-warning"><strong>Note:</strong> Cramer's Rule is theoretically elegant but computationally inefficient for large systems. Use row reduction in practice.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Volume and Determinants</div>
+      <p>If \(T(\mathbf{x})=A\mathbf{x}\) and \(S\) is a parallelogram (or parallelepiped) in \(\mathbb{R}^2\) (or \(\mathbb{R}^3\)), then the area (or volume) of \(T(S)\) is \(|\det(A)|\) times the area (or volume) of \(S\).</p>
+    </div>
+  </section>
+
+  <section id="w5-geometry" class="content-section" aria-labelledby="w5-geo-h">
+    <h3 id="w5-geo-h" class="section-title">Geometric Interpretation</h3>
+    <p>The absolute value \(|\det(A)|\) measures how much a linear transformation \(T(\mathbf{x})=A\mathbf{x}\) scales areas (in 2D) or volumes (in 3D). If \(\det(A)=0\), the transformation collapses the space to a lower dimension — it squashes any region to zero area/volume. If \(\det(A) < 0\), the transformation reverses orientation (like a reflection).</p>
+  </section>
+
+  <section id="w5-examples" class="content-section" aria-labelledby="w5-ex-h">
+    <h3 id="w5-ex-h" class="section-title">Worked Examples</h3>
+    <div class="example-block">
+      <h4 class="example-title">Example: Determinant by Cofactor Expansion (3×3)</h4>
+      <p>Compute \(\det(A)\) where \(A=\begin{bmatrix}1&0&4\\2&1&3\\1&2&0\end{bmatrix}\) expanding along row 1:</p>
+      <p>\[\det(A) = 1\cdot C_{11} + 0\cdot C_{12} + 4\cdot C_{13}\]</p>
+      <p>\[= 1\cdot\begin{vmatrix}1&3\\2&0\end{vmatrix} + 0 + 4\cdot(-1)\begin{vmatrix}2&1\\1&2\end{vmatrix}\]</p>
+      <p>\[= 1\cdot(0-6) + 0 + 4\cdot(-1)\cdot(4-1) = -6 - 12 = -18\]</p>
+    </div>
+    <div class="example-block">
+      <h4 class="example-title">Example: Cramer's Rule (from Lecture 5)</h4>
+      <p>Solve \(\begin{cases}x-y+2z=-2\\3x+2y-z=4\\z-y=2\end{cases}\)</p>
+      <p>Compute \(\det(A)=8\), \(\det(A_1)=-8\), \(\det(A_2)=16\), \(\det(A_3)=-8\) (from Lecture 5 solution: \(x=-1, y=2, z=-1\) type problem).</p>
+    </div>
+    <div class="example-block">
+      <h4 class="example-title">Example: Determinant from Lecture 10</h4>
+      <p>Compute \(\det(A)\) for \(A=\begin{bmatrix}1&3&0&-2\\1&2&-2&-1\\0&-1&0&-3\\-1&0&2&1\end{bmatrix}\) by expanding along the third row (most zeros):</p>
+      <p>\[\det(A) = 0\cdot A_{31} - 0\cdot A_{32} + 2\cdot A_{33} - 1\cdot A_{34} = 2\cdot 2 - 1\cdot(-1) = 5\]</p>
+    </div>
+  </section>
+
+  <section id="w5-mistakes" class="content-section mistakes-section" aria-labelledby="w5-mis-h">
+    <h3 id="w5-mis-h" class="section-title">Common Mistakes</h3>
+    <ul class="mistakes-list">
+      <li><strong>Sign errors in cofactors:</strong> Remember the checkerboard sign pattern. \(C_{ij} = (-1)^{i+j}M_{ij}\). A common error is using \((-1)^{i+j}\) as positive when \(i+j\) is odd.</li>
+      <li><strong>Incorrect effect of row operations:</strong> Row replacement does NOT change the determinant. Only row scaling changes it (by a multiplicative factor), and row swaps negate it.</li>
+      <li><strong>Forgetting to account for all row swaps:</strong> Each row swap flips the sign. If you did \(k\) swaps, multiply by \((-1)^k\).</li>
+      <li><strong>Applying Cramer's Rule to non-square or singular systems:</strong> Cramer's Rule requires the system to be square and \(\det(A)\neq0\).</li>
+    </ul>
+  </section>
+
+  <section id="w5-formulas" class="content-section formula-section" aria-labelledby="w5-for-h">
+    <h3 id="w5-for-h" class="section-title">Formula Sheet – Week 5</h3>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Cofactor</div>
+        <div class="formula-math">\[ C_{ij} = (-1)^{i+j} M_{ij} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Cofactor Expansion</div>
+        <div class="formula-math">\[ \det(A) = \sum_{j=1}^n a_{ij} C_{ij} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Cramer's Rule</div>
+        <div class="formula-math">\[ x_i = \frac{\det(A_i(\mathbf{b}))}{\det(A)} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Multiplicativity</div>
+        <div class="formula-math">\[ \det(AB) = \det(A)\det(B) \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Triangular Det</div>
+        <div class="formula-math">\[ \det(A) = a_{11}a_{22}\cdots a_{nn} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Volume Scaling</div>
+        <div class="formula-math">\[ \text{Vol}(T(S)) = |\det(A)| \cdot \text{Vol}(S) \]</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="w5-practice" class="content-section practice-section" aria-labelledby="w5-prac-h">
+    <h3 id="w5-prac-h" class="section-title">Practice Questions</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">Compute \(\det\begin{bmatrix}2&0&4&3\\3&0&2&0\\2&0&1&1\\0&3&2&1\end{bmatrix}\) efficiently by choosing the best row or column.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Expand along column 2, which has three zeros. Only one nonzero entry to deal with.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">If \(\det(A)=3\), find \(\det(2A)\) where \(A\) is \(3\times3\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Scaling all three rows by 2 multiplies the determinant by \(2^3=8\). So \(\det(2A)=8\det(A)\). The general formula is \(\det(kA) = k^n\det(A)\) for \(n\times n\) matrices.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Use Cramer's Rule to solve \(\begin{cases}x+y+z=6\\2x-y+3z=14\\-x+2y-z=3\end{cases}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Compute \(\det(A)\) first. If it's zero, Cramer's Rule doesn't apply. Replace columns one at a time with \(\mathbf{b}\).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Find all values of \(k\) for which \(A = \begin{bmatrix}k-2&3\\1&k-4\end{bmatrix}\) is singular.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Set \(\det(A)=0\) and solve the resulting quadratic equation.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">A triangle in \(\mathbb{R}^2\) has vertices at \((0,0)\), \((4,0)\), and \((0,3)\). What is the area of its image under \(T(\mathbf{x})=\begin{bmatrix}2&1\\0&3\end{bmatrix}\mathbf{x}\)?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Area of original triangle = \(\frac{1}{2}\cdot4\cdot3=6\). Area of image = \(|\det(A)|\cdot6\).</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <section id="w5-faq" class="content-section faq-section" aria-labelledby="w5-faq-h">
+    <h3 id="w5-faq-h" class="section-title">Frequently Asked Questions</h3>
+    <details class="faq-item">
+      <summary class="faq-q">Can the determinant be negative?</summary>
+      <div class="faq-a"><p>Yes. A negative determinant indicates that the transformation reverses orientation (like a reflection). For example, \(\det\begin{bmatrix}1&0\\0&-1\end{bmatrix} = -1\). For volume calculations, we use \(|\det(A)|\).</p></div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Why is Cramer's Rule not used in practice?</summary>
+      <div class="faq-a"><p>For an \(n\times n\) system, Cramer's Rule requires computing \(n+1\) determinants of order \(n\). Each determinant costs \(O(n!)\) operations by cofactor expansion, or \(O(n^3)\) with row reduction. Row reducing the augmented matrix directly costs \(O(n^3)\) total — much simpler. Cramer's Rule is useful for theoretical results and symbolic answers in small systems.</p></div>
+    </details>
+  </section>
+
+  <section id="w5-summary" class="content-section summary-section" aria-labelledby="w5-sum-h">
+    <h3 id="w5-sum-h" class="section-title">Week 5 Summary</h3>
+    <div class="summary-card">
+      <p><strong>Big Picture:</strong> The determinant is a single number that encodes whether a matrix is invertible (\(\det\neq0\)) and how much it scales areas/volumes. The cofactor expansion is the theoretical definition; row reduction is the practical computation method. Properties (especially the triangular case and multiplicativity) appear constantly on exams.</p>
+    </div>
+  </section>
+</article>
+  <!-- PART 2: WEEKS 6-10 — to be concatenated with Part 1 -->
+<!-- ===========================================================
+     WEEK 6: Vector Spaces, Null/Column Spaces, Linear Transformations
+     =========================================================== -->
+<article id="week6" class="week-article" data-week="6" aria-labelledby="week6-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">06</div>
+    <div class="week-header-text">
+      <h2 id="week6-title" class="week-title">Week 6: Vector Spaces &amp; Subspaces</h2>
+      <p class="week-subtitle">Vector Spaces and Subspaces &bull; Null Spaces &bull; Column Spaces &bull; Linear Transformations</p>
+    </div>
+    <button class="week-complete-btn" data-week="6" aria-pressed="false" type="button">Mark Complete</button>
+  </header>
+
+  <section id="w6-objectives" class="content-section" aria-labelledby="w6-obj-h">
+    <h3 id="w6-obj-h" class="section-title">Learning Objectives</h3>
+    <ul class="objectives-list">
+      <li>State the 10 axioms that define a vector space and verify that a given set satisfies them.</li>
+      <li>Determine if a subset \(H\) of a vector space is a subspace (using the subspace test).</li>
+      <li>Define and compute the null space and column space of a matrix.</li>
+      <li>Find spanning sets and bases for null spaces and column spaces.</li>
+      <li>Connect null spaces to kernel of linear transformations and column spaces to image/range.</li>
+    </ul>
+  </section>
+
+  <section id="w6-definitions" class="content-section" aria-labelledby="w6-def-h">
+    <h3 id="w6-def-h" class="section-title">Key Definitions</h3>
+    <dl class="definition-list">
+      <dt class="def-term">Vector Space</dt>
+      <dd class="def-body">A nonempty set \(V\) with two operations (addition and scalar multiplication) satisfying 10 axioms:
+        <ol class="inline-list">
+          <li>Closure under addition: \(\mathbf{u}+\mathbf{v}\in V\).</li>
+          <li>Commutativity: \(\mathbf{u}+\mathbf{v}=\mathbf{v}+\mathbf{u}\).</li>
+          <li>Associativity: \((\mathbf{u}+\mathbf{v})+\mathbf{w}=\mathbf{u}+(\mathbf{v}+\mathbf{w})\).</li>
+          <li>Zero vector: \(\mathbf{u}+\mathbf{0}=\mathbf{u}\).</li>
+          <li>Additive inverse: \(\mathbf{u}+(-\mathbf{u})=\mathbf{0}\).</li>
+          <li>Closure under scalar multiplication: \(c\mathbf{u}\in V\).</li>
+          <li>Distributivity over vector addition: \(c(\mathbf{u}+\mathbf{v})=c\mathbf{u}+c\mathbf{v}\).</li>
+          <li>Distributivity over scalar addition: \((c+d)\mathbf{u}=c\mathbf{u}+d\mathbf{u}\).</li>
+          <li>Scalar associativity: \((cd)\mathbf{u}=c(d\mathbf{u})\).</li>
+          <li>Identity: \(1\cdot\mathbf{u}=\mathbf{u}\).</li>
+        </ol>
+      </dd>
+
+      <dt class="def-term">Subspace</dt>
+      <dd class="def-body">A subset \(H\) of a vector space \(V\) is a <em>subspace</em> of \(V\) if: (1) \(\mathbf{0}\in H\); (2) \(\mathbf{u},\mathbf{v}\in H \Rightarrow \mathbf{u}+\mathbf{v}\in H\); (3) \(\mathbf{u}\in H, c\in\mathbb{R} \Rightarrow c\mathbf{u}\in H\). Equivalently, every linear combination of vectors in \(H\) stays in \(H\).</dd>
+
+      <dt class="def-term">Null Space of \(A\)</dt>
+      <dd class="def-body">\(\operatorname{Nul}(A) = \{\mathbf{x} \in \mathbb{R}^n : A\mathbf{x}=\mathbf{0}\}\). Always a subspace of \(\mathbb{R}^n\). Its dimension equals the number of free variables in \(A\mathbf{x}=\mathbf{0}\). Also called the <em>kernel</em> of the transformation \(T(\mathbf{x})=A\mathbf{x}\).</dd>
+
+      <dt class="def-term">Column Space of \(A\)</dt>
+      <dd class="def-body">\(\operatorname{Col}(A) = \text{Span}\{\mathbf{a}_1,\ldots,\mathbf{a}_n\}\), where \(\mathbf{a}_j\) are the columns of \(A\). Always a subspace of \(\mathbb{R}^m\) (for an \(m\times n\) matrix). Its dimension equals the number of pivot columns (= rank of \(A\)). Also called the <em>image</em> or <em>range</em> of the transformation.</dd>
+
+      <dt class="def-term">Kernel and Image (General)</dt>
+      <dd class="def-body">For a linear transformation \(T:V\to W\): \(\ker(T) = \{\mathbf{v}\in V: T(\mathbf{v})=\mathbf{0}\}\) and \(\operatorname{Im}(T) = \{T(\mathbf{v}): \mathbf{v}\in V\}\). For matrix transformations, \(\ker(T_A)=\operatorname{Nul}(A)\) and \(\operatorname{Im}(T_A)=\operatorname{Col}(A)\).</dd>
+    </dl>
+  </section>
+
+  <section id="w6-theorems" class="content-section" aria-labelledby="w6-thm-h">
+    <h3 id="w6-thm-h" class="section-title">Important Theorems</h3>
+    <div class="theorem-block">
+      <div class="theorem-label">Subspace Test</div>
+      <p>A nonempty subset \(H\) of \(V\) is a subspace if and only if it is closed under addition and scalar multiplication. (Closure automatically forces \(\mathbf{0} \in H\) since \(0\cdot\mathbf{u}=\mathbf{0}\).)</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Span is a Subspace</div>
+      <p>The span of any set of vectors \(\{v_1,\ldots,v_p\}\) in a vector space \(V\) is a subspace of \(V\). This is the smallest subspace containing all \(v_j\).</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Kernel and Rank Dimensions</div>
+      <p>For a linear transformation \(T_A\) with matrix \(A\): \(\dim\operatorname{Im}(T_A) = \operatorname{rank}(A)\) and \(\dim\ker(T_A) = n - \operatorname{rank}(A)\).</p>
+    </div>
+  </section>
+
+  <section id="w6-geometry" class="content-section" aria-labelledby="w6-geo-h">
+    <h3 id="w6-geo-h" class="section-title">Geometric Interpretation</h3>
+    <p>\(\operatorname{Col}(A)\) tells you the range of outputs of the transformation: which target vectors can actually be reached? \(\operatorname{Nul}(A)\) tells you what gets sent to zero — the "blind spot" of the transformation. These two subspaces together completely characterize what \(T\) does.</p>
+    <p>Key geometric duality: a vector \(\mathbf{b}\) is reachable (in \(\operatorname{Col}(A)\)) precisely when the system \(A\mathbf{x}=\mathbf{b}\) is consistent.</p>
+  </section>
+
+  <section id="w6-examples" class="content-section" aria-labelledby="w6-ex-h">
+    <h3 id="w6-ex-h" class="section-title">Worked Examples</h3>
+    <div class="example-block">
+      <h4 class="example-title">Example: Kernel and Image of \(T_A\) (from Lecture 10 Review)</h4>
+      <p>Find the kernel and image of \(T_A\) where \(A = \begin{bmatrix}0&2&-3&0\\0&1&-2&-1\\3&-1&1&0\\3&0&-2&0\end{bmatrix}\).</p>
+      <p>After row reduction to REF, we find \(\operatorname{rank}(A)=3\). The system \(A\mathbf{x}=\mathbf{0}\) has one free variable \(x_4=t\), giving:</p>
+      <p>\[\ker(T_A) = \operatorname{Nul}(A) = \operatorname{span}\left\{\begin{bmatrix}2\\-3\\-2\\1\end{bmatrix}\right\}\]</p>
+      <p>The image has dimension 3, spanned by the first three (pivot) columns of \(A\).</p>
+    </div>
+  </section>
+
+  <section id="w6-mistakes" class="content-section mistakes-section" aria-labelledby="w6-mis-h">
+    <h3 id="w6-mis-h" class="section-title">Common Mistakes</h3>
+    <ul class="mistakes-list">
+      <li><strong>Confusing Nul(A) and Col(A):</strong> \(\operatorname{Nul}(A)\) is a subspace of \(\mathbb{R}^n\) (domain); \(\operatorname{Col}(A)\) is a subspace of \(\mathbb{R}^m\) (codomain). They live in different spaces.</li>
+      <li><strong>Using pivot columns of RREF for Col(A):</strong> Col(A) must be found using the pivot columns of the ORIGINAL matrix \(A\), not the RREF. The null space uses RREF, but the column space uses the original columns.</li>
+      <li><strong>Forgetting the zero vector test:</strong> Every subspace must contain \(\mathbf{0}\). If \(H\) does not contain \(\mathbf{0}\), it is not a subspace.</li>
+    </ul>
+  </section>
+
+  <section id="w6-formulas" class="content-section formula-section" aria-labelledby="w6-for-h">
+    <h3 id="w6-for-h" class="section-title">Formula Sheet – Week 6</h3>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Null Space</div>
+        <div class="formula-math">\[ \operatorname{Nul}(A) = \{\mathbf{x} : A\mathbf{x}=\mathbf{0}\} \subseteq \mathbb{R}^n \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Column Space</div>
+        <div class="formula-math">\[ \operatorname{Col}(A) = \operatorname{span}\{\mathbf{a}_1,\ldots,\mathbf{a}_n\} \subseteq \mathbb{R}^m \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Rank-Nullity</div>
+        <div class="formula-math">\[ \dim\operatorname{Im}(T) + \dim\ker(T) = n \]</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="w6-practice" class="content-section practice-section" aria-labelledby="w6-prac-h">
+    <h3 id="w6-prac-h" class="section-title">Practice Questions</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">Is \(H = \{(x_1,x_2,x_3) : x_1+2x_2-x_3=0\}\) a subspace of \(\mathbb{R}^3\)?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Check: (1) Is \(\mathbf{0}\in H\)? (2) If \(\mathbf{u},\mathbf{v}\in H\), is \(\mathbf{u}+\mathbf{v}\in H\)? (3) Is \(c\mathbf{u}\in H\)?</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Find a basis for \(\operatorname{Nul}(A)\) where \(A=\begin{bmatrix}1&-3&-8&5\\0&1&2&-4\\0&0&0&0\end{bmatrix}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>This is already in echelon form. Identify free variables, then express basic variables in terms of them to write the parametric solution. Each parameter gives one basis vector.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">For \(A=\begin{bmatrix}1&2&3\\4&5&6\\7&8&9\end{bmatrix}\), find bases for \(\operatorname{Nul}(A)\) and \(\operatorname{Col}(A)\). What are their dimensions?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Row reduce \(A\) to RREF. For Nul, use RREF and free variables. For Col, use the pivot column positions (from RREF) but take the corresponding columns from the ORIGINAL \(A\).</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <section id="w6-summary" class="content-section summary-section" aria-labelledby="w6-sum-h">
+    <h3 id="w6-sum-h" class="section-title">Week 6 Summary</h3>
+    <div class="summary-card">
+      <p><strong>Big Picture:</strong> Vector spaces generalize \(\mathbb{R}^n\) to polynomials, function spaces, and more. Subspaces are the "nice" subsets. The null space (kernel) and column space (image) are the two fundamental subspaces attached to any matrix, and they answer: "what is the input that produces zero?" and "what outputs are reachable?"</p>
+    </div>
+  </section>
+</article>
+
+<!-- ===========================================================
+     WEEK 7: Linearly Independent Sets, Bases, Coordinates, Dimension, Rank
+     =========================================================== -->
+<article id="week7" class="week-article" data-week="7" aria-labelledby="week7-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">07</div>
+    <div class="week-header-text">
+      <h2 id="week7-title" class="week-title">Week 7: Bases, Coordinates, Dimension &amp; Rank</h2>
+      <p class="week-subtitle">Linearly Independent Sets &bull; Bases &bull; Coordinate Systems &bull; Dimension &bull; Rank</p>
+    </div>
+    <button class="week-complete-btn" data-week="7" aria-pressed="false" type="button">Mark Complete</button>
+  </header>
+
+  <section id="w7-objectives" class="content-section" aria-labelledby="w7-obj-h">
+    <h3 id="w7-obj-h" class="section-title">Learning Objectives</h3>
+    <ul class="objectives-list">
+      <li>Define a basis for a vector space; verify that a set is a basis.</li>
+      <li>Compute the coordinate vector \([\mathbf{x}]_{\mathcal{B}}\) of a vector relative to a basis \(\mathcal{B}\).</li>
+      <li>Define the dimension of a vector space and compute it.</li>
+      <li>Define rank and nullity of a matrix; state and apply the Rank Theorem.</li>
+      <li>Find bases for the null space, column space, and row space of a matrix.</li>
+    </ul>
+  </section>
+
+  <section id="w7-definitions" class="content-section" aria-labelledby="w7-def-h">
+    <h3 id="w7-def-h" class="section-title">Key Definitions</h3>
+    <dl class="definition-list">
+      <dt class="def-term">Basis</dt>
+      <dd class="def-body">A basis for a vector space \(V\) is a linearly independent set \(\mathcal{B} = \{\mathbf{b}_1,\ldots,\mathbf{b}_n\}\) that spans \(V\). A basis is the most efficient description of a space: no redundancy, and every vector is reachable.</dd>
+
+      <dt class="def-term">Standard Basis</dt>
+      <dd class="def-body">For \(\mathbb{R}^n\): \(\mathcal{E} = \{\mathbf{e}_1,\ldots,\mathbf{e}_n\}\) where \(\mathbf{e}_j\) has 1 in position \(j\) and 0 elsewhere. For \(\mathcal{P}_n\) (polynomials of degree \(\leq n\)): \(\{1, t, t^2, \ldots, t^n\}\).</dd>
+
+      <dt class="def-term">Coordinates / Coordinate Vector</dt>
+      <dd class="def-body">If \(\mathcal{B}=\{\mathbf{b}_1,\ldots,\mathbf{b}_n\}\) is a basis and \(\mathbf{x} = c_1\mathbf{b}_1+\cdots+c_n\mathbf{b}_n\), then the <em>coordinate vector</em> of \(\mathbf{x}\) relative to \(\mathcal{B}\) is \([\mathbf{x}]_{\mathcal{B}} = (c_1,\ldots,c_n)^T\).</dd>
+
+      <dt class="def-term">Dimension</dt>
+      <dd class="def-body">If \(V\) is spanned by a finite set, then \(\dim(V)\) is the number of vectors in any basis for \(V\) (Theorem 10 guarantees all bases have the same size). \(\dim\{0\}=0\). If \(V\) cannot be spanned by a finite set, \(V\) is infinite-dimensional.</dd>
+
+      <dt class="def-term">Rank</dt>
+      <dd class="def-body">\(\operatorname{rank}(A) = \dim\operatorname{Col}(A) = \dim\operatorname{Row}(A)\) = number of pivot positions in \(A\).</dd>
+
+      <dt class="def-term">Nullity</dt>
+      <dd class="def-body">\(\operatorname{nullity}(A) = \dim\operatorname{Nul}(A)\) = number of free variables in \(A\mathbf{x}=\mathbf{0}\) = number of non-pivot columns.</dd>
+
+      <dt class="def-term">Row Space</dt>
+      <dd class="def-body">\(\operatorname{Row}(A) = \operatorname{Col}(A^T)\) = span of the row vectors of \(A\). A subspace of \(\mathbb{R}^n\). Basis: the nonzero rows of any echelon form of \(A\).</dd>
+    </dl>
+  </section>
+
+  <section id="w7-theorems" class="content-section" aria-labelledby="w7-thm-h">
+    <h3 id="w7-thm-h" class="section-title">Important Theorems</h3>
+    <div class="theorem-block">
+      <div class="theorem-label">Unique Representation Theorem</div>
+      <p>If \(\mathcal{B}=\{\mathbf{b}_1,\ldots,\mathbf{b}_n\}\) is a basis for \(V\), then every \(\mathbf{x}\in V\) can be written uniquely as a linear combination \(\mathbf{x} = c_1\mathbf{b}_1+\cdots+c_n\mathbf{b}_n\). The uniqueness is what makes bases so powerful — coordinates are well-defined.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Spanning Set Theorem</div>
+      <p>If \(S = \{\mathbf{v}_1,\ldots,\mathbf{v}_p\}\) spans \(V\) and one vector is a linear combination of the others, it can be removed to get a smaller spanning set. By repeatedly removing dependent vectors, any spanning set can be reduced to a basis.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem 10 – Bases Have Uniform Size</div>
+      <p>If \(V\) has a basis \(\mathcal{B}_1\) of \(n\) vectors, then every basis of \(V\) has exactly \(n\) vectors.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Rank Theorem (Rank-Nullity)</div>
+      <p>For an \(m\times n\) matrix \(A\): \(\operatorname{rank}(A) + \operatorname{nullity}(A) = n\). Equivalently, \(\dim\operatorname{Col}(A) + \dim\operatorname{Nul}(A) = n\). Also, \(\dim\operatorname{Col}(A) = \dim\operatorname{Row}(A)\).</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Basis Theorem</div>
+      <p>Let \(\dim V = p \geq 1\). Then: any linearly independent set of \(p\) elements in \(V\) is automatically a basis; any spanning set of \(p\) elements in \(V\) is automatically a basis. So with exactly \(p\) vectors, independence ↔ spanning.</p>
+    </div>
+  </section>
+
+  <section id="w7-examples" class="content-section" aria-labelledby="w7-ex-h">
+    <h3 id="w7-ex-h" class="section-title">Worked Example</h3>
+    <div class="example-block">
+      <h4 class="example-title">Bases for Row, Column, and Null Spaces (from Lecture 7)</h4>
+      <p>Given \(A = \begin{bmatrix}2&5&8&0&-17\\1&3&5&1&5\\-1&-4&-7&-2&1\\3&11&19&7&1\end{bmatrix}\), row reduce to echelon form \(B\) and then RREF \(C\).</p>
+      <p>Pivot columns: 1, 2, 4. Free variable columns: 3 and 5.</p>
+      <ul>
+        <li><strong>Basis for Row(A):</strong> Nonzero rows of \(B\): \(\{(1,3,5,1,5),\ (0,1,2,2,-7),\ (0,0,0,4,-20)\}\).</li>
+        <li><strong>Basis for Col(A):</strong> Columns 1, 2, 4 of the ORIGINAL \(A\): \(\left\{\begin{bmatrix}2\\1\\-1\\3\end{bmatrix},\begin{bmatrix}5\\3\\-4\\11\end{bmatrix},\begin{bmatrix}0\\1\\-2\\7\end{bmatrix}\right\}\).</li>
+        <li><strong>Basis for Nul(A):</strong> From RREF: two vectors, one for each free variable.</li>
+      </ul>
+    </div>
+    <div class="example-block">
+      <h4 class="example-title">Coordinate Vector Relative to a Basis (from Lecture 10 Final Prep)</h4>
+      <p>Let \(\mathcal{B} = \{1+2x, x-x^2, x+x^2\}\) be a basis for \(\mathcal{P}_2\). Find \([p(x)]_{\mathcal{B}}\) for \(p(x) = 1+3x+x^2\).</p>
+      <p>Solve \(c_1(1+2x) + c_2(x-x^2) + c_3(x+x^2) = 1+3x+x^2\). Matching coefficients: \(c_1=1, c_2+c_3=1, -c_2+c_3=1 \Rightarrow c_2=0, c_3=1\). Thus \([p(x)]_{\mathcal{B}} = (1,0,1)^T\).</p>
+    </div>
+  </section>
+
+  <section id="w7-mistakes" class="content-section mistakes-section" aria-labelledby="w7-mis-h">
+    <h3 id="w7-mis-h" class="section-title">Common Mistakes</h3>
+    <ul class="mistakes-list">
+      <li><strong>Rank vs. dimension of the null space:</strong> Rank = dim(Col) = number of pivots. Nullity = n − rank = number of non-pivot columns (free variables).</li>
+      <li><strong>Row space basis from wrong source:</strong> The basis for Row(A) comes from the nonzero rows of any echelon form, NOT from the original rows of \(A\).</li>
+      <li><strong>Column space basis from RREF columns:</strong> The basis for Col(A) consists of the pivot columns of the ORIGINAL matrix \(A\), not the corresponding columns of RREF.</li>
+    </ul>
+  </section>
+
+  <section id="w7-formulas" class="content-section formula-section" aria-labelledby="w7-for-h">
+    <h3 id="w7-for-h" class="section-title">Formula Sheet – Week 7</h3>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Rank Theorem</div>
+        <div class="formula-math">\[ \operatorname{rank}(A) + \operatorname{nullity}(A) = n \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Coordinate Map</div>
+        <div class="formula-math">\[ \mathbf{x} = P_{\mathcal{B}} [\mathbf{x}]_{\mathcal{B}},\ P_{\mathcal{B}} = [\mathbf{b}_1\ \cdots\ \mathbf{b}_n] \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Rank Equality</div>
+        <div class="formula-math">\[ \dim\operatorname{Col}(A) = \dim\operatorname{Row}(A) = \operatorname{rank}(A) \]</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="w7-practice" class="content-section practice-section" aria-labelledby="w7-prac-h">
+    <h3 id="w7-prac-h" class="section-title">Practice Questions</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">A \(7\times9\) matrix has rank 5. What is the dimension of its null space? Its row space? Its column space?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Nullity = 9 - 5 = 4. Row space dim = rank = 5. Column space dim = rank = 5.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Find the dimension of \(H = \{a+2b,\ 3a+b,\ a-b : a,b\in\mathbb{R}\}\) considered as a subspace of \(\mathbb{R}^3\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Write \(H\) as the column space of the matrix whose columns are the coefficients of \(a\) and \(b\) in each component. Find the rank.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Let \(\mathcal{B}=\{(1,2),(3,4)\}\). Compute \([(5,6)]_{\mathcal{B}}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Solve \(c_1(1,2)+c_2(3,4)=(5,6)\) as a linear system. The solution \((c_1,c_2)\) is the coordinate vector.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Could a \(6\times9\) matrix have a two-dimensional null space?</span>
+        <details class="hint-block"><summary>Hint</summary><p>If nullity = 2, then rank = 9-2=7. But a \(6\times9\) matrix has at most 6 pivot rows, so rank ≤ 6. Contradiction — check your reasoning carefully.</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <section id="w7-faq" class="content-section faq-section" aria-labelledby="w7-faq-h">
+    <h3 id="w7-faq-h" class="section-title">Frequently Asked Questions</h3>
+    <details class="faq-item">
+      <summary class="faq-q">Why do the row space and column space have the same dimension?</summary>
+      <div class="faq-a"><p>Both dimensions equal the number of pivots. In REF, the pivot rows give a basis for the row space, and the pivot columns (of the original matrix) give a basis for the column space. Same number of pivots → same dimension.</p></div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Can a basis have infinitely many vectors?</summary>
+      <div class="faq-a"><p>Yes, for infinite-dimensional spaces. For example, the space of all polynomials \(\mathcal{P}\) has the infinite basis \(\{1, t, t^2, t^3, \ldots\}\). In this course, we mainly work with finite-dimensional spaces.</p></div>
+    </details>
+  </section>
+
+  <section id="w7-summary" class="content-section summary-section" aria-labelledby="w7-sum-h">
+    <h3 id="w7-sum-h" class="section-title">Week 7 Summary</h3>
+    <div class="summary-card">
+      <p><strong>Big Picture:</strong> A basis is the "coordinate system" of a vector space — the minimal spanning set, or the maximal independent set. Dimension is the size of any basis. The Rank Theorem (\(\text{rank}+\text{nullity}=n\)) is a fundamental conservation law of linear algebra. Master the three subspace bases and how to compute them from a matrix.</p>
+    </div>
+  </section>
+</article>
+
+<!-- ===========================================================
+     WEEK 8: Change of Basis, Eigenvalues, Eigenvectors, Characteristic Equation
+     EXPANDED (exam-heavy topics)
+     =========================================================== -->
+<article id="week8" class="week-article week-article--highlight" data-week="8" aria-labelledby="week8-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">08</div>
+    <div class="week-header-text">
+      <h2 id="week8-title" class="week-title">Week 8: Eigenvalues &amp; Eigenvectors</h2>
+      <p class="week-subtitle">Change of Basis &bull; Eigenvalues &bull; Eigenvectors &bull; Characteristic Equation</p>
+    </div>
+    <div class="exam-heavy-badge" aria-label="Exam-heavy topic">⭐ Final Exam Focus</div>
+    <button class="week-complete-btn" data-week="8" aria-pressed="false" type="button">Mark Complete</button>
+  </header>
+
+  <section id="w8-objectives" class="content-section" aria-labelledby="w8-obj-h">
+    <h3 id="w8-obj-h" class="section-title">Learning Objectives</h3>
+    <ul class="objectives-list">
+      <li>Define eigenvalue and eigenvector; verify that \(\lambda\) is an eigenvalue and find the corresponding eigenvectors.</li>
+      <li>Compute the characteristic polynomial \(\det(A-\lambda I)\) and find eigenvalues by solving the characteristic equation.</li>
+      <li>Find a basis for each eigenspace (the null space of \(A-\lambda I\)).</li>
+      <li>Apply the change-of-basis formula; understand how coordinate vectors change when the basis changes.</li>
+      <li>Prove that eigenvectors corresponding to distinct eigenvalues are linearly independent.</li>
+    </ul>
+  </section>
+
+  <section id="w8-definitions" class="content-section" aria-labelledby="w8-def-h">
+    <h3 id="w8-def-h" class="section-title">Key Definitions</h3>
+    <dl class="definition-list">
+      <dt class="def-term">Eigenvector &amp; Eigenvalue</dt>
+      <dd class="def-body">A nonzero vector \(\mathbf{x}\) is an <em>eigenvector</em> of \(A\) corresponding to eigenvalue \(\lambda\) if \(A\mathbf{x} = \lambda\mathbf{x}\). Geometrically: \(A\) only scales \(\mathbf{x}\) (by factor \(\lambda\)) — it does not rotate it.</dd>
+
+      <dt class="def-term">Eigenspace</dt>
+      <dd class="def-body">The eigenspace of \(A\) corresponding to \(\lambda\) is \(\operatorname{Nul}(A-\lambda I) = \{\mathbf{x}: A\mathbf{x}=\lambda\mathbf{x}\}\). It always contains \(\mathbf{0}\) plus all eigenvectors for \(\lambda\).</dd>
+
+      <dt class="def-term">Characteristic Polynomial</dt>
+      <dd class="def-body">The polynomial \(p(\lambda) = \det(A-\lambda I)\). It has degree \(n\) for an \(n\times n\) matrix. Eigenvalues of \(A\) are exactly the roots of the characteristic polynomial.</dd>
+
+      <dt class="def-term">Characteristic Equation</dt>
+      <dd class="def-body">\(\det(A-\lambda I) = 0\). Solving this equation gives all eigenvalues of \(A\).</dd>
+
+      <dt class="def-term">Algebraic Multiplicity</dt>
+      <dd class="def-body">The multiplicity of \(\lambda\) as a root of the characteristic polynomial.</dd>
+
+      <dt class="def-term">Geometric Multiplicity</dt>
+      <dd class="def-body">The dimension of the eigenspace corresponding to \(\lambda\), i.e., \(\dim\operatorname{Nul}(A-\lambda I)\). Always \(\leq\) algebraic multiplicity.</dd>
+
+      <dt class="def-term">Change of Basis Matrix \(P_{\mathcal{C}\leftarrow\mathcal{B}}\)</dt>
+      <dd class="def-body">The matrix that converts coordinates from basis \(\mathcal{B}\) to basis \(\mathcal{C}\). If \(P\) is the matrix with \(\mathcal{B}\) basis vectors as columns (relative to the standard basis), then \([\mathbf{x}]_{\mathcal{E}} = P[\mathbf{x}]_{\mathcal{B}}\), so \([\mathbf{x}]_{\mathcal{B}} = P^{-1}\mathbf{x}\).</dd>
+    </dl>
+  </section>
+
+  <section id="w8-concepts" class="content-section" aria-labelledby="w8-con-h">
+    <h3 id="w8-con-h" class="section-title">Core Concepts</h3>
+    <div class="concept-block">
+      <h4 class="concept-title">Step-by-Step: Finding Eigenvalues and Eigenvectors</h4>
+      <ol class="concept-list">
+        <li><strong>Form \(A-\lambda I\)</strong>: subtract \(\lambda\) from each diagonal entry of \(A\).</li>
+        <li><strong>Compute \(\det(A-\lambda I) = 0\)</strong>: this gives the characteristic polynomial.</li>
+        <li><strong>Solve for \(\lambda\)</strong>: the roots are the eigenvalues.</li>
+        <li><strong>For each \(\lambda\), solve \((A-\lambda I)\mathbf{x}=\mathbf{0}\)</strong>: row reduce and find the null space. This gives the eigenvectors (and the eigenspace).</li>
+      </ol>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Geometric Meaning of Eigenvalues &amp; Eigenvectors</h4>
+      <p>An eigenvector \(\mathbf{v}\) is a "special direction" for the transformation \(T(\mathbf{x})=A\mathbf{x}\) — the transformation leaves this direction invariant (just scales it). The eigenvalue \(\lambda\) tells you the scale factor: if \(\lambda=2\), vectors in this direction are doubled; if \(\lambda=-1\), they are reversed; if \(\lambda=0\), they are collapsed to zero.</p>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">The Characteristic Polynomial for \(3\times3\) Matrices</h4>
+      <p>For \(A\) a \(3\times3\) matrix, the characteristic polynomial is \(\lambda^3 - I_1\lambda^2 + I_2\lambda - I_3 = 0\) where:</p>
+      <ul>
+        <li>\(I_1 = \text{tr}(A) = a_{11}+a_{22}+a_{33}\) (sum of diagonal entries)</li>
+        <li>\(I_2\) = sum of \(2\times2\) principal minors = \(\begin{vmatrix}a_{11}&a_{12}\\a_{21}&a_{22}\end{vmatrix}+\begin{vmatrix}a_{11}&a_{13}\\a_{31}&a_{33}\end{vmatrix}+\begin{vmatrix}a_{22}&a_{23}\\a_{32}&a_{33}\end{vmatrix}\)</li>
+        <li>\(I_3 = \det(A)\)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="w8-theorems" class="content-section" aria-labelledby="w8-thm-h">
+    <h3 id="w8-thm-h" class="section-title">Important Theorems</h3>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem 1 – Eigenvalues of Triangular Matrices</div>
+      <p>The eigenvalues of a triangular matrix (upper or lower) are the entries on its main diagonal.</p>
+      <p><em>Proof sketch:</em> \(A-\lambda I\) is also triangular; it has a zero on the diagonal iff \(\lambda\) equals one of the \(a_{ii}\). Triangular matrix is singular iff a diagonal entry is zero.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem 2 – Distinct Eigenvalues → Independent Eigenvectors</div>
+      <p>If \(\mathbf{v}_1,\ldots,\mathbf{v}_r\) are eigenvectors corresponding to <em>distinct</em> eigenvalues \(\lambda_1,\ldots,\lambda_r\), then \(\{\mathbf{v}_1,\ldots,\mathbf{v}_r\}\) is linearly independent.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">\(\lambda\) is Eigenvalue iff \(\det(A-\lambda I)=0\)</div>
+      <p>\(\lambda\) is an eigenvalue of \(A\) \(\Leftrightarrow\) \((A-\lambda I)\) is singular \(\Leftrightarrow\) \(\det(A-\lambda I)=0\) \(\Leftrightarrow\) \((A-\lambda I)\mathbf{x}=\mathbf{0}\) has a nontrivial solution.</p>
+    </div>
+  </section>
+
+  <section id="w8-examples" class="content-section" aria-labelledby="w8-ex-h">
+    <h3 id="w8-ex-h" class="section-title">Worked Examples</h3>
+    <div class="example-block">
+      <h4 class="example-title">Example 1: Eigenvalue λ=7 for a 2×2 Matrix</h4>
+      <p>Given \(A=\begin{bmatrix}1&6\\5&2\end{bmatrix}\), verify \(\lambda=7\) is an eigenvalue and find eigenvectors.</p>
+      <p>Form \(A-7I=\begin{bmatrix}-6&6\\5&-5\end{bmatrix}\). Row reduce: \(\to\begin{bmatrix}1&-1\\0&0\end{bmatrix}\).</p>
+      <p>Solution: \(x_1 = x_2\), so eigenvectors are \(\begin{bmatrix}1\\1\end{bmatrix}t\) for \(t\neq0\). Eigenspace: \(\text{Span}\left\{\begin{bmatrix}1\\1\end{bmatrix}\right\}\).</p>
+    </div>
+    <div class="example-block">
+      <h4 class="example-title">Example 2: Full 3×3 Computation (from Lecture 10 Review)</h4>
+      <p>Given \(A = \begin{bmatrix}1&2&-2\\-1&2&1\\1&1&-2\end{bmatrix}\), find all eigenvalues and eigenvectors.</p>
+      <p><strong>Characteristic polynomial:</strong> \(I_1 = 1+2-2=1\), \(I_2 = -1\), \(I_3 = -1\). So \(\lambda^3-\lambda^2-\lambda+1=0\). Factor: \((\lambda-1)^2(\lambda+1)=0\). Eigenvalues: \(\lambda_1=\lambda_2=1\), \(\lambda_3=-1\).</p>
+      <p><strong>For \(\lambda=1\):</strong> Row reduce \(A-I\) to get system \(\begin{cases}x_2-x_3=0\\x_1-2x_3=0\end{cases}\). Set \(x_3=t\): eigenvector \(\mathbf{v}_1 = \begin{bmatrix}2\\1\\1\end{bmatrix}\).</p>
+      <p><strong>For \(\lambda=-1\):</strong> Row reduce \(A+I\) to get system \(\begin{cases}4x_2=0\\x_1+x_2-x_3=0\end{cases}\). Set \(x_3=t\): eigenvector \(\mathbf{v}_2 = \begin{bmatrix}1\\0\\1\end{bmatrix}\).</p>
+    </div>
+    <div class="example-block">
+      <h4 class="example-title">Example 3: Eigenspace of Dimension 2 (from Lecture 8)</h4>
+      <p>For \(A=\begin{bmatrix}4&-1&6\\2&1&6\\2&-1&8\end{bmatrix}\) with eigenvalue \(\lambda=2\): row reduce \(A-2I\) to find the eigenspace has basis \(\left\{\begin{bmatrix}-3\\-6\\1\end{bmatrix}, \begin{bmatrix}1/2\\0\\0\end{bmatrix}\cdot2\right\}\) — a 2-dimensional eigenspace. (Geometric multiplicity 2.)</p>
+    </div>
+  </section>
+
+  <section id="w8-intuition" class="content-section" aria-labelledby="w8-int-h">
+    <h3 id="w8-int-h" class="section-title">Mathematical Intuition &amp; Memory Aids</h3>
+    <div class="intuition-block">
+      <h4>The Eigen-Detective Method</h4>
+      <p>Think of eigenvalue/eigenvector finding as a three-step detective story: (1) "What values of \(\lambda\) make \(A-\lambda I\) singular?" → characteristic equation; (2) "How singular is it?" → algebraic multiplicity; (3) "What's in the null space?" → eigenvectors.</p>
+    </div>
+    <div class="intuition-block">
+      <h4>Memory Aid: EIGEN = "own" (German)</h4>
+      <p>"Eigen" means "own/self" in German. An eigenvector is a vector that the matrix "owns" — the matrix only scales it, never rotates it out of its span.</p>
+    </div>
+    <div class="intuition-block">
+      <h4>The 5 Key Facts</h4>
+      <ul>
+        <li>\(\lambda=0\) is an eigenvalue iff \(A\) is singular (\(\det(A)=0\)).</li>
+        <li>An \(n\times n\) matrix has exactly \(n\) eigenvalues (counted with multiplicity, possibly complex).</li>
+        <li>The sum of eigenvalues = trace of \(A\); product of eigenvalues = \(\det(A)\).</li>
+        <li>If \(A\mathbf{v}=\lambda\mathbf{v}\), then \(A^k\mathbf{v}=\lambda^k\mathbf{v}\).</li>
+        <li>Eigenvalues of a triangular matrix are its diagonal entries.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="w8-mistakes" class="content-section mistakes-section" aria-labelledby="w8-mis-h">
+    <h3 id="w8-mis-h" class="section-title">Common Mistakes</h3>
+    <ul class="mistakes-list">
+      <li><strong>Not verifying eigenvector is nonzero:</strong> \(\mathbf{x}=\mathbf{0}\) is always a solution to \((A-\lambda I)\mathbf{x}=\mathbf{0}\) but is NOT an eigenvector. Only nonzero solutions qualify.</li>
+      <li><strong>Computing wrong determinant:</strong> The characteristic polynomial is \(\det(A-\lambda I)\), NOT \(\det(\lambda I - A)\)... technically both give the same roots, but the sign of the polynomial differs. Be consistent with your definition.</li>
+      <li><strong>Confusing algebraic and geometric multiplicity:</strong> Geometric multiplicity ≤ algebraic multiplicity, but they may differ. Diagonalizability requires them to be equal for all eigenvalues.</li>
+      <li><strong>Forgetting that eigenvalues may be repeated:</strong> If the characteristic equation has a repeated root, check whether the eigenspace is large enough (geometric multiplicity test).</li>
+    </ul>
+  </section>
+
+  <section id="w8-examtips" class="content-section exam-tips-section" aria-labelledby="w8-tip-h">
+    <h3 id="w8-tip-h" class="section-title">Exam Tips</h3>
+    <ul class="tips-list">
+      <li>For \(2\times2\): use trace and determinant: eigenvalues satisfy \(\lambda^2 - \text{tr}(A)\lambda + \det(A) = 0\).</li>
+      <li>Always check: eigenvalue \(\lambda=0\) iff \(\det(A)=0\). This appears in many proofs and IMT connections.</li>
+      <li>When asked "find the eigenspace," remember it includes the zero vector but the eigenvectors are the nonzero elements.</li>
+      <li>Practice expanding \(\det(A-\lambda I)\) for \(3\times3\) matrices using the best row/column (look for entries with \(\lambda\) in only one spot).</li>
+      <li>After finding eigenvectors, always verify: compute \(A\mathbf{v}\) and check it equals \(\lambda\mathbf{v}\).</li>
+    </ul>
+  </section>
+
+  <section id="w8-formulas" class="content-section formula-section" aria-labelledby="w8-for-h">
+    <h3 id="w8-for-h" class="section-title">Formula Sheet – Week 8</h3>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Eigenvalue Equation</div>
+        <div class="formula-math">\[ A\mathbf{v} = \lambda\mathbf{v} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Characteristic Equation</div>
+        <div class="formula-math">\[ \det(A - \lambda I) = 0 \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Eigenspace</div>
+        <div class="formula-math">\[ E_\lambda = \operatorname{Nul}(A - \lambda I) \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">\(2\times2\) Char. Polynomial</div>
+        <div class="formula-math">\[ \lambda^2 - \operatorname{tr}(A)\lambda + \det(A) = 0 \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">\(3\times3\) Char. Polynomial</div>
+        <div class="formula-math">\[ \lambda^3 - I_1\lambda^2 + I_2\lambda - I_3 = 0 \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Change of Basis</div>
+        <div class="formula-math">\[ [\mathbf{x}]_{\mathcal{B}} = P^{-1}\mathbf{x},\quad P = [\mathbf{b}_1 \cdots \mathbf{b}_n] \]</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="w8-practice" class="content-section practice-section" aria-labelledby="w8-prac-h">
+    <h3 id="w8-prac-h" class="section-title">Practice Questions</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">Find all eigenvalues and eigenvectors of \(A=\begin{bmatrix}3&1\\0&3\end{bmatrix}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Upper triangular: eigenvalues are the diagonal entries. For \(\lambda=3\) (repeated), compute \(\dim\operatorname{Nul}(A-3I)\). Is the geometric multiplicity 1 or 2?</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Show that \(\lambda\) is an eigenvalue of \(A\) if and only if \(\det(A-\lambda I) = 0\). What does this have to do with the null space?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Use the definition: \(\lambda\) is an eigenvalue iff \(A\mathbf{x}=\lambda\mathbf{x}\) has a nontrivial solution, i.e., \((A-\lambda I)\mathbf{x}=\mathbf{0}\) has nontrivial solutions, i.e., \(A-\lambda I\) is singular.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">A matrix \(A\) has eigenvalues 0, 3, and -2. Is \(A\) invertible? What is \(\det(A)\)?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Product of eigenvalues = \(\det(A)\). An eigenvalue of 0 means \(A\) is singular (by IMT).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">If \(A\mathbf{v}=3\mathbf{v}\), what is \(A^5\mathbf{v}\)? What is \((A-2I)\mathbf{v}\)?</span>
+        <details class="hint-block"><summary>Hint</summary><p>Use the fact that \(A^k\mathbf{v}=\lambda^k\mathbf{v}\). For the second part, \((A-2I)\mathbf{v}=A\mathbf{v}-2\mathbf{v}=3\mathbf{v}-2\mathbf{v}\).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Let \(A\) be a \(2\times2\) matrix with eigenvalue 2 for eigenvector \(\begin{bmatrix}1\\1\end{bmatrix}\) and eigenvalue 1 for eigenvector \(\begin{bmatrix}2\\3\end{bmatrix}\). Compute \(A^3\mathbf{v}\) where \(\mathbf{v}=\begin{bmatrix}3\\4\end{bmatrix}\) (from Lecture 10 Final Prep).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Express \(\mathbf{v}\) as a linear combination of the eigenvectors. Then \(A^3\mathbf{v} = c_1\cdot2^3\mathbf{v}_1 + c_2\cdot1^3\mathbf{v}_2\).</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <section id="w8-challenge" class="content-section challenge-section" aria-labelledby="w8-chal-h">
+    <h3 id="w8-chal-h" class="section-title">Challenge Problems</h3>
+    <ol class="challenge-list">
+      <li class="challenge-item">
+        <span class="challenge-q">Prove: If \(\{u_1, u_2, u_3\}\) is an orthogonal set (from Lecture 10 Final Prep), then these three vectors are linearly independent.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Assume \(c_1u_1+c_2u_2+c_3u_3=0\). Take the dot product of both sides with \(u_1\). Use orthogonality (\(u_1\cdot u_j=0\) for \(j\neq1\)) and nonzero-ness (\(u_1\cdot u_1>0\)) to conclude \(c_1=0\). Repeat for \(c_2\) and \(c_3\).</p></details>
+      </li>
+      <li class="challenge-item">
+        <span class="challenge-q">Let \(A\) be \(n\times n\) and let \(W=\{v\in\mathbb{R}^n: Av=\lambda v\}\) (the \(\lambda\)-eigenspace). Prove that \(W\) is a subspace of \(\mathbb{R}^n\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Prove: (1) \(\mathbf{0}\in W\); (2) if \(A\mathbf{u}=\lambda\mathbf{u}\) and \(A\mathbf{v}=\lambda\mathbf{v}\), show \(A(\mathbf{u}+\mathbf{v})=\lambda(\mathbf{u}+\mathbf{v})\); (3) if \(A\mathbf{u}=\lambda\mathbf{u}\), show \(A(c\mathbf{u})=\lambda(c\mathbf{u})\).</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <section id="w8-faq" class="content-section faq-section" aria-labelledby="w8-faq-h">
+    <h3 id="w8-faq-h" class="section-title">Frequently Asked Questions</h3>
+    <details class="faq-item">
+      <summary class="faq-q">Can a matrix have more eigenvalues than its size?</summary>
+      <div class="faq-a"><p>No. An \(n\times n\) matrix has a degree-\(n\) characteristic polynomial, hence at most \(n\) eigenvalues (counted with multiplicity, some may be complex).</p></div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">Are eigenvectors unique?</summary>
+      <div class="faq-a"><p>No. Any nonzero scalar multiple of an eigenvector is also an eigenvector for the same eigenvalue. The eigenspace (a whole subspace) can have dimension greater than 1 when the geometric multiplicity is greater than 1.</p></div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-q">What does it mean if \(\lambda = 0\) is an eigenvalue?</summary>
+      <div class="faq-a"><p>If \(\lambda=0\) is an eigenvalue, then \(A\mathbf{x}=0\cdot\mathbf{x}=\mathbf{0}\) has a nontrivial solution, meaning the null space is nontrivial, meaning \(A\) is singular (not invertible). This is direct from the IMT.</p></div>
+    </details>
+  </section>
+
+  <section id="w8-summary" class="content-section summary-section" aria-labelledby="w8-sum-h">
+    <h3 id="w8-sum-h" class="section-title">Week 8 Summary</h3>
+    <div class="summary-card">
+      <p><strong>Big Picture:</strong> Eigenvalues and eigenvectors are one of the most important tools in all of applied mathematics. They reveal the "natural directions" of a linear transformation — the directions along which it acts purely by scaling. The characteristic equation gives eigenvalues; null space computation gives eigenvectors. Master these techniques thoroughly — they dominate the final exam.</p>
+    </div>
+  </section>
+</article>
+
+<!-- ===========================================================
+     WEEK 9: Diagonalization, Eigenvectors & LT, Complex Eigenvalues
+     EXPANDED (exam-heavy topics)
+     =========================================================== -->
+<article id="week9" class="week-article week-article--highlight" data-week="9" aria-labelledby="week9-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">09</div>
+    <div class="week-header-text">
+      <h2 id="week9-title" class="week-title">Week 9: Diagonalization &amp; Complex Eigenvalues</h2>
+      <p class="week-subtitle">Diagonalization &bull; Eigenvectors and Linear Transformations &bull; Complex Eigenvalues &bull; Jordan Decomposition &bull; Gram-Schmidt</p>
+    </div>
+    <div class="exam-heavy-badge" aria-label="Exam-heavy topic">⭐ Final Exam Focus</div>
+    <button class="week-complete-btn" data-week="9" aria-pressed="false" type="button">Mark Complete</button>
+  </header>
+
+  <section id="w9-objectives" class="content-section" aria-labelledby="w9-obj-h">
+    <h3 id="w9-obj-h" class="section-title">Learning Objectives</h3>
+    <ul class="objectives-list">
+      <li>Define diagonalizability; determine if a matrix is diagonalizable.</li>
+      <li>Construct the diagonalization \(A = PDP^{-1}\) and compute powers \(A^k\) using it.</li>
+      <li>Find the matrix of a linear transformation in a given basis.</li>
+      <li>Handle complex eigenvalues: express \(A = PCP^{-1}\) with rotation-scaling matrix \(C\).</li>
+      <li>Understand Jordan form for non-diagonalizable matrices; find generalized eigenvectors.</li>
+      <li>Apply the Gram-Schmidt process to orthogonalize a basis.</li>
+    </ul>
+  </section>
+
+  <section id="w9-definitions" class="content-section" aria-labelledby="w9-def-h">
+    <h3 id="w9-def-h" class="section-title">Key Definitions</h3>
+    <dl class="definition-list">
+      <dt class="def-term">Diagonalizable Matrix</dt>
+      <dd class="def-body">An \(n\times n\) matrix \(A\) is <em>diagonalizable</em> if it is similar to a diagonal matrix \(D\); that is, there exists an invertible \(P\) such that \(A = PDP^{-1}\). Equivalently, \(P^{-1}AP = D\).</dd>
+
+      <dt class="def-term">Diagonalization</dt>
+      <dd class="def-body">\(A = PDP^{-1}\) where: \(P\) has eigenvectors as columns; \(D\) is diagonal with the corresponding eigenvalues on the diagonal. The columns of \(P\) must form a basis of \(\mathbb{R}^n\) consisting of eigenvectors of \(A\).</dd>
+
+      <dt class="def-term">Similar Matrices</dt>
+      <dd class="def-body">\(A\) and \(B\) are <em>similar</em> if \(B = P^{-1}AP\) for some invertible \(P\). Similar matrices represent the same linear transformation in different bases. They have the same characteristic polynomial, eigenvalues, rank, determinant, and trace.</dd>
+
+      <dt class="def-term">Generalized Eigenvector</dt>
+      <dd class="def-body">For a repeated eigenvalue \(\lambda\) with algebraic multiplicity \(> \dim E_\lambda\), a <em>generalized eigenvector</em> \(\mathbf{v}^{(k)}\) satisfies \((A-\lambda I)^k \mathbf{v}^{(k)} = \mathbf{0}\) but \((A-\lambda I)^{k-1}\mathbf{v}^{(k)}\neq\mathbf{0}\). Used to build the Jordan form.</dd>
+
+      <dt class="def-term">Jordan Normal Form</dt>
+      <dd class="def-body">For any square matrix \(A\), there exists invertible \(P\) such that \(A=PJP^{-1}\), where \(J\) is a block-diagonal matrix with Jordan blocks. A Jordan block for eigenvalue \(\lambda\) of size \(k\) is a \(k\times k\) matrix with \(\lambda\) on the diagonal and 1s on the superdiagonal.</dd>
+
+      <dt class="def-term">Gram-Schmidt Orthogonalization</dt>
+      <dd class="def-body">Given a basis \(\{v_1,\ldots,v_p\}\) for a subspace \(W\), construct an orthogonal basis \(\{u_1,\ldots,u_p\}\) by the formula:
+        \[ u_k = v_k - \sum_{j=1}^{k-1}\frac{v_k\cdot u_j}{u_j\cdot u_j}u_j \]
+        Normalize to get an orthonormal basis: \(e_k = u_k/\|u_k\|\).
+      </dd>
+    </dl>
+  </section>
+
+  <section id="w9-theorems" class="content-section" aria-labelledby="w9-thm-h">
+    <h3 id="w9-thm-h" class="section-title">Important Theorems</h3>
+    <div class="theorem-block">
+      <div class="theorem-label">Diagonalization Theorem</div>
+      <p>An \(n\times n\) matrix \(A\) is diagonalizable if and only if \(A\) has \(n\) linearly independent eigenvectors. Equivalently, \(A\) is diagonalizable iff the geometric multiplicity equals the algebraic multiplicity for every eigenvalue.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Sufficient Condition for Diagonalizability</div>
+      <p>If \(A\) has \(n\) distinct eigenvalues (all different), then \(A\) is diagonalizable. (Having distinct eigenvalues is sufficient but not necessary.)</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Theorem – Computing \(A^k\) via Diagonalization</div>
+      <p>If \(A = PDP^{-1}\), then \(A^k = PD^kP^{-1}\), where \(D^k\) is computed by raising each diagonal entry to the \(k\)-th power.</p>
+    </div>
+    <div class="theorem-block">
+      <div class="theorem-label">Complex Eigenvalue Theorem</div>
+      <p>If \(A\) is a real \(2\times2\) matrix with complex eigenvalue \(\lambda = a-bi\) (\(b\neq0\)), then \(A\) is similar to the rotation-scaling matrix \(C = \begin{bmatrix}a&-b\\b&a\end{bmatrix} = r\begin{bmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{bmatrix}\), where \(r=|\lambda|=\sqrt{a^2+b^2}\) and \(\theta=\arg(\lambda)\).</p>
+    </div>
+  </section>
+
+  <section id="w9-concepts" class="content-section" aria-labelledby="w9-con-h">
+    <h3 id="w9-con-h" class="section-title">Core Concepts</h3>
+    <div class="concept-block">
+      <h4 class="concept-title">Step-by-Step: Diagonalizing \(A\)</h4>
+      <ol class="concept-list">
+        <li>Find all eigenvalues by solving \(\det(A-\lambda I)=0\).</li>
+        <li>For each eigenvalue \(\lambda_i\), find a basis for the eigenspace \(\operatorname{Nul}(A-\lambda_i I)\).</li>
+        <li>Check: do the eigenspace bases together contain \(n\) vectors? If yes, \(A\) is diagonalizable.</li>
+        <li>Form \(P\) by placing these \(n\) eigenvectors as columns (order matters: eigenvalue order in \(D\) must match column order in \(P\)).</li>
+        <li>Form \(D\) with eigenvalues on the diagonal corresponding to the column order in \(P\).</li>
+        <li>Compute \(P^{-1}\) to complete \(A = PDP^{-1}\).</li>
+      </ol>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Why Diagonalization is Powerful</h4>
+      <ul>
+        <li><strong>Powers of matrices:</strong> \(A^{100} = PD^{100}P^{-1}\) requires only \(n\) scalar exponentiations, not 100 matrix multiplications.</li>
+        <li><strong>Matrix exponential:</strong> \(e^A = Pe^DP^{-1}\) where \(e^D\) has \(e^{\lambda_i}\) on the diagonal.</li>
+        <li><strong>Differential equations:</strong> Systems \(\mathbf{x}'=A\mathbf{x}\) decouple completely when \(A\) is diagonalizable.</li>
+        <li><strong>Quadratic forms:</strong> Diagonalization identifies the principal axes of quadrics (ellipses, hyperbolas in \(\mathbb{R}^2\)).</li>
+      </ul>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Jordan Form: When Diagonalization Fails</h4>
+      <p>If the geometric multiplicity of some eigenvalue is less than its algebraic multiplicity, \(A\) is not diagonalizable. The Jordan form \(J\) is the next best thing: it is as close to diagonal as possible, with 1s on the superdiagonal of each Jordan block.</p>
+      <p>Finding the Jordan form requires <em>generalized eigenvectors</em> — solutions to \((A-\lambda I)\mathbf{w}=\mathbf{v}\) where \(\mathbf{v}\) is an eigenvector. (See Lecture 10, Section 9.)</p>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Gram-Schmidt Process</h4>
+      <p>Start with \(u_1 = v_1\). For each subsequent vector \(v_k\), subtract its projections onto all previous \(u_j\): \(u_k = v_k - \operatorname{proj}_{u_1}v_k - \cdots - \operatorname{proj}_{u_{k-1}}v_k\). The result is an orthogonal set. Normalize if orthonormal basis is required.</p>
+    </div>
+  </section>
+
+  <section id="w9-examples" class="content-section" aria-labelledby="w9-ex-h">
+    <h3 id="w9-ex-h" class="section-title">Worked Examples</h3>
+    <div class="example-block">
+      <h4 class="example-title">Example 1: Full Diagonalization (from Lecture 8/10)</h4>
+      <p>For \(A = \begin{bmatrix}5&6&3\\-1&0&1\\1&2&-1\end{bmatrix}\) with eigenvalues \(\lambda_1=2, \lambda_2=-2, \lambda_3=4\) and corresponding eigenvectors:</p>
+      <p>\[\mathbf{v}_1=\begin{bmatrix}-2\\1\\0\end{bmatrix},\quad \mathbf{v}_2=\begin{bmatrix}0\\1\\-2\end{bmatrix},\quad \mathbf{v}_3=\begin{bmatrix}9\\-2\\1\end{bmatrix}\]</p>
+      <p>Since 3 distinct eigenvalues → diagonalizable. Form:</p>
+      <p>\[P=\begin{bmatrix}0&-2&9\\1&1&-2\\-2&0&1\end{bmatrix},\quad D=\begin{bmatrix}-2&0&0\\0&2&0\\0&0&4\end{bmatrix}\]</p>
+      <p>(Note: ordering in the problem matches eigenvectors in the given order.)</p>
+    </div>
+    <div class="example-block">
+      <h4 class="example-title">Example 2: Jordan Form for Non-Diagonalizable Matrix (from Lecture 10)</h4>
+      <p>For \(A = \begin{bmatrix}1&2&-2\\-1&2&1\\1&1&-2\end{bmatrix}\) with eigenvalues \(\lambda_1=\lambda_2=1\) (algebraic mult. 2, geometric mult. 1) and \(\lambda_3=-1\):</p>
+      <p>Find generalized eigenvector \(\mathbf{v}_{11}\): Solve \((A-I)\mathbf{w}=\mathbf{v}_1\) where \(\mathbf{v}_1=\begin{bmatrix}2\\1\\1\end{bmatrix}\). Result: \(\mathbf{v}_{11}=\begin{bmatrix}0\\1\\0\end{bmatrix}\).</p>
+      <p>\[P=\begin{bmatrix}2&0&1\\1&1&0\\1&0&1\end{bmatrix},\quad J=\begin{bmatrix}1&1&0\\0&1&0\\0&0&-1\end{bmatrix}\]</p>
+    </div>
+    <div class="example-block">
+      <h4 class="example-title">Example 3: Gram-Schmidt (from Lecture 10)</h4>
+      <p>Orthogonalize \(\mathbf{v}_1=\begin{bmatrix}-1\\1\\1\end{bmatrix}\), \(\mathbf{v}_2=\begin{bmatrix}2\\-3\\4\end{bmatrix}\), \(\mathbf{v}_3=\begin{bmatrix}2\\2\\6\end{bmatrix}\).</p>
+      <p>Set \(\mathbf{u}_1=\mathbf{v}_1\). Then \(\mathbf{u}_2 = \mathbf{v}_2 - \frac{\mathbf{v}_2\cdot\mathbf{u}_1}{\|\mathbf{u}_1\|^2}\mathbf{u}_1\). Continue for \(\mathbf{u}_3\).</p>
+    </div>
+  </section>
+
+  <section id="w9-complex" class="content-section" aria-labelledby="w9-cpx-h">
+    <h3 id="w9-cpx-h" class="section-title">Complex Eigenvalues</h3>
+    <div class="concept-block">
+      <h4 class="concept-title">Why Complex Eigenvalues Appear</h4>
+      <p>A real matrix can have complex eigenvalues — they always appear in conjugate pairs \(\lambda = a\pm bi\). The corresponding real transformation involves <em>rotation</em> and <em>scaling</em>.</p>
+    </div>
+    <div class="concept-block">
+      <h4 class="concept-title">Rotation-Scaling Form</h4>
+      <p>For a real \(2\times2\) matrix with complex eigenvalue \(\lambda = a-bi\) (\(b\neq0\)), it is similar over \(\mathbb{R}\) to:</p>
+      <p>\[ C = \begin{bmatrix}a&-b\\b&a\end{bmatrix} = r\begin{bmatrix}\cos\theta&-\sin\theta\\\sin\theta&\cos\theta\end{bmatrix} \]</p>
+      <p>where \(r=\sqrt{a^2+b^2}=|\lambda|\) is the scaling factor and \(\theta=\arctan(b/a)\) is the rotation angle.</p>
+    </div>
+    <div class="example-block">
+      <h4 class="example-title">Example: Complex Eigenvalue</h4>
+      <p>For \(A=\begin{bmatrix}0&-1\\1&0\end{bmatrix}\): characteristic equation \(\lambda^2+1=0\), eigenvalues \(\lambda=\pm i\). The transformation is a pure 90° rotation (\(r=1\), \(\theta=\pi/2\)). \(A^4 = I\) (four rotations = identity).</p>
+    </div>
+  </section>
+
+  <section id="w9-mistakes" class="content-section mistakes-section" aria-labelledby="w9-mis-h">
+    <h3 id="w9-mis-h" class="section-title">Common Mistakes</h3>
+    <ul class="mistakes-list">
+      <li><strong>Assuming all matrices are diagonalizable:</strong> A matrix with a repeated eigenvalue may NOT be diagonalizable. Always check geometric multiplicity = algebraic multiplicity.</li>
+      <li><strong>Wrong column order in \(P\):</strong> The \(k\)-th column of \(P\) must be an eigenvector for the \(k\)-th diagonal entry of \(D\). Mixing up the order gives a wrong factorization.</li>
+      <li><strong>Not checking \(n\) linearly independent eigenvectors:</strong> Even if you found eigenvectors, verify they are linearly independent before declaring \(A\) diagonalizable.</li>
+      <li><strong>Forgetting that \(D\) contains eigenvalues (not eigenvectors):</strong> \(D\) is diagonal with eigenvalues on the diagonal; \(P\) contains eigenvectors as columns.</li>
+    </ul>
+  </section>
+
+  <section id="w9-examtips" class="content-section exam-tips-section" aria-labelledby="w9-tip-h">
+    <h3 id="w9-tip-h" class="section-title">Exam Tips</h3>
+    <ul class="tips-list">
+      <li>Check for \(n\) distinct eigenvalues first — if yes, immediately diagonalizable without further checking.</li>
+      <li>When computing \(A^k\) using diagonalization, remember \(D^k\) has \(\lambda_i^k\) on the diagonal.</li>
+      <li>For proofs about diagonalizability, always connect to the dimension of eigenspaces (geometric vs. algebraic multiplicity).</li>
+      <li>The Jordan form appears when eigenspaces are "too small" — one Jordan block per eigenvalue of size = its algebraic multiplicity.</li>
+    </ul>
+  </section>
+
+  <section id="w9-formulas" class="content-section formula-section" aria-labelledby="w9-for-h">
+    <h3 id="w9-for-h" class="section-title">Formula Sheet – Week 9</h3>
+    <div class="formula-grid">
+      <div class="formula-card">
+        <div class="formula-name">Diagonalization</div>
+        <div class="formula-math">\[ A = PDP^{-1} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Matrix Powers</div>
+        <div class="formula-math">\[ A^k = PD^kP^{-1} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Jordan Form</div>
+        <div class="formula-math">\[ A = PJP^{-1},\quad J_\lambda = \begin{bmatrix}\lambda&1&0\\0&\lambda&1\\0&0&\lambda\end{bmatrix} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Gram-Schmidt</div>
+        <div class="formula-math">\[ u_k = v_k - \sum_{j=1}^{k-1}\frac{v_k\cdot u_j}{\|u_j\|^2}u_j \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Complex Eigenvalue Form</div>
+        <div class="formula-math">\[ C = \begin{bmatrix}a&-b\\b&a\end{bmatrix},\quad\lambda=a-bi \]</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="w9-practice" class="content-section practice-section" aria-labelledby="w9-prac-h">
+    <h3 id="w9-prac-h" class="section-title">Practice Questions</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">Diagonalize \(A=\begin{bmatrix}2&0&0\\-1&4&0\\3&-2&3\end{bmatrix}\) or explain why it is not diagonalizable.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Lower triangular → eigenvalues are diagonal entries: 2, 4, 3 (all distinct). This guarantees diagonalizability. Find each eigenvector and form \(P\) and \(D\).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Is \(A=\begin{bmatrix}5&-1\\1&3\end{bmatrix}\) diagonalizable? If so, find \(A^{10}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Find eigenvalues. If diagonalizable, form \(P\) and \(D\). Then \(A^{10}=PD^{10}P^{-1}\).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Explain why two matrices with the same characteristic polynomial might not be similar.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Same char. poly. → same eigenvalues. But similar matrices must have the same Jordan form. Compare \(\begin{bmatrix}1&0\\0&1\end{bmatrix}\) and \(\begin{bmatrix}1&1\\0&1\end{bmatrix}\).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Apply Gram-Schmidt to \(\{(1,1,0),\ (1,0,1),\ (0,1,1)\}\) to find an orthogonal basis.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Start with \(u_1=(1,1,0)\). Compute \(u_2 = v_2 - \text{proj}_{u_1}v_2\). Then \(u_3 = v_3 - \text{proj}_{u_1}v_3 - \text{proj}_{u_2}v_3\).</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <section id="w9-summary" class="content-section summary-section" aria-labelledby="w9-sum-h">
+    <h3 id="w9-sum-h" class="section-title">Week 9 Summary</h3>
+    <div class="summary-card">
+      <p><strong>Big Picture:</strong> Diagonalization is the ultimate simplification: when a matrix can be diagonalized, computations like \(A^k\) and \(e^A\) become trivial. The key criterion is having \(n\) linearly independent eigenvectors. When this fails, the Jordan form offers a canonical alternative. Complex eigenvalues encode rotation and scaling in real transformations. Gram-Schmidt produces orthogonal bases, essential for QR decomposition and least-squares methods.</p>
+    </div>
+  </section>
+</article>
+
+<!-- ===========================================================
+     WEEK 10: COMPREHENSIVE REVIEW
+     =========================================================== -->
+<article id="week10" class="week-article week-article--review" data-week="10" aria-labelledby="week10-title">
+  <header class="week-header">
+    <div class="week-number-badge" aria-hidden="true">10</div>
+    <div class="week-header-text">
+      <h2 id="week10-title" class="week-title">Week 10: Comprehensive Review &amp; Final Exam Preparation</h2>
+      <p class="week-subtitle">Complete Course Review &bull; Concept Map &bull; Mock Exam Problems &bull; High-Frequency Topics</p>
+    </div>
+    <div class="exam-heavy-badge" aria-label="Final exam preparation">🎯 Final Exam Ready</div>
+    <button class="week-complete-btn" data-week="10" aria-pressed="false" type="button">Mark Complete</button>
+  </header>
+
+  <!-- Course Concept Map -->
+  <section id="w10-conceptmap" class="content-section" aria-labelledby="w10-map-h">
+    <h3 id="w10-map-h" class="section-title">Course Concept Map</h3>
+    <div class="concept-map-container" role="img" aria-label="Course concept map showing connections between linear algebra topics">
+      <div class="concept-map-grid">
+        <div class="cm-node cm-node--central">Linear<br/>Systems</div>
+        <div class="cm-arrow" aria-hidden="true">→</div>
+        <div class="cm-node">Row<br/>Reduction</div>
+        <div class="cm-arrow" aria-hidden="true">→</div>
+        <div class="cm-node">RREF &amp;<br/>Pivots</div>
+        <div class="cm-arrow" aria-hidden="true">→</div>
+        <div class="cm-node">Solution<br/>Sets</div>
+
+        <div class="cm-node">Matrix<br/>Equation<br/>\(A\mathbf{x}=\mathbf{b}\)</div>
+        <div class="cm-arrow" aria-hidden="true">↔</div>
+        <div class="cm-node">Linear<br/>Transformations</div>
+        <div class="cm-arrow" aria-hidden="true">→</div>
+        <div class="cm-node">Standard<br/>Matrix</div>
+        <div class="cm-arrow" aria-hidden="true">→</div>
+        <div class="cm-node">One-to-one<br/>/ Onto</div>
+
+        <div class="cm-node">Invertible<br/>Matrix<br/>Theorem</div>
+        <div class="cm-arrow" aria-hidden="true">↔</div>
+        <div class="cm-node">Determinant<br/>\(\det(A)\neq0\)</div>
+        <div class="cm-arrow" aria-hidden="true">↔</div>
+        <div class="cm-node">Full<br/>Rank</div>
+        <div class="cm-arrow" aria-hidden="true">↔</div>
+        <div class="cm-node">Trivial<br/>Null Space</div>
+
+        <div class="cm-node cm-node--eigen">Eigenvalues<br/>\(\lambda\)</div>
+        <div class="cm-arrow" aria-hidden="true">→</div>
+        <div class="cm-node cm-node--eigen">Eigenvectors<br/>\(\mathbf{v}\)</div>
+        <div class="cm-arrow" aria-hidden="true">→</div>
+        <div class="cm-node cm-node--eigen">Diagonal-<br/>ization</div>
+        <div class="cm-arrow" aria-hidden="true">→</div>
+        <div class="cm-node cm-node--eigen">Powers<br/>\(A^k\)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapter Connections -->
+  <section id="w10-connections" class="content-section" aria-labelledby="w10-con-h">
+    <h3 id="w10-con-h" class="section-title">Chapter Connections</h3>
+    <div class="connections-grid">
+      <div class="connection-card">
+        <h4>Weeks 1–2 → Weeks 4, 7</h4>
+        <p>Row reduction (Wk 1) is the fundamental algorithm used throughout. Rank (Wk 7) counts pivot columns found in Wk 1. Null space (Wk 2) connects to invertibility (Wk 4) via the IMT.</p>
+      </div>
+      <div class="connection-card">
+        <h4>Week 3 → Weeks 6, 8, 9</h4>
+        <p>Linear transformations (Wk 3) generalize to abstract spaces (Wk 6). The "matrix of a LT in a given basis" (Wk 8) uses the change-of-basis idea from Wk 3. Diagonalization (Wk 9) finds the best basis for a LT.</p>
+      </div>
+      <div class="connection-card">
+        <h4>Week 5 → Week 8</h4>
+        <p>Determinant (Wk 5) is used to define the characteristic polynomial and find eigenvalues (Wk 8). The formula \(\det(A-\lambda I)=0\) is the bridge.</p>
+      </div>
+      <div class="connection-card">
+        <h4>Weeks 6–7 → Weeks 8–9</h4>
+        <p>Subspaces and dimension (Wk 6–7) underlie eigenspaces (Wk 8). Rank-nullity gives the count of independent eigenvectors (Wk 9). Gram-Schmidt (Wk 9) orthogonalizes the bases found in Wk 7.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- High-Frequency Exam Concepts -->
+  <section id="w10-highfreq" class="content-section" aria-labelledby="w10-hf-h">
+    <h3 id="w10-hf-h" class="section-title">High-Frequency Exam Concepts</h3>
+    <div class="highfreq-grid">
+      <div class="hf-card hf-card--critical">
+        <div class="hf-rank">🔥 Always on Exam</div>
+        <ul>
+          <li>Row reduction to solve \(A\mathbf{x}=\mathbf{b}\); parametric solution form.</li>
+          <li>Eigenvalues and eigenvectors (find and verify).</li>
+          <li>Diagonalization: construct \(P\) and \(D\); compute \(A^k\).</li>
+          <li>Determining consistency and counting solutions.</li>
+          <li>Rank-Nullity theorem application.</li>
+        </ul>
+      </div>
+      <div class="hf-card hf-card--very-likely">
+        <div class="hf-rank">🌡 Very Likely</div>
+        <ul>
+          <li>Matrix inverse via RREF on \([A\mid I]\).</li>
+          <li>Determinant by cofactor expansion; properties.</li>
+          <li>Null space and column space bases.</li>
+          <li>Linear independence test.</li>
+          <li>Standard matrix of a linear transformation.</li>
+        </ul>
+      </div>
+      <div class="hf-card hf-card--likely">
+        <div class="hf-rank">📋 Likely</div>
+        <ul>
+          <li>Subspace verification (3-point test).</li>
+          <li>Coordinate vectors in non-standard basis.</li>
+          <li>Cramer's Rule for small systems.</li>
+          <li>LU factorization algorithm.</li>
+          <li>Complex eigenvalues and rotation-scaling form.</li>
+        </ul>
+      </div>
+      <div class="hf-card hf-card--possible">
+        <div class="hf-rank">💭 Possible</div>
+        <ul>
+          <li>Jordan normal form for non-diagonalizable matrices.</li>
+          <li>Gram-Schmidt orthogonalization.</li>
+          <li>Orthonormal bases and orthogonal projections.</li>
+          <li>Abstract vector spaces (polynomials, etc.).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Complete Review: All 10 Topics from Lecture 10 -->
+  <section id="w10-review10" class="content-section" aria-labelledby="w10-rev-h">
+    <h3 id="w10-rev-h" class="section-title">Lecture 10 Complete Review Problems</h3>
+    <p>The following are from the course's official Lecture 10 "Preparation for Final Exam" materials:</p>
+
+    <div class="review-problem-set">
+      <div class="review-problem">
+        <span class="rp-number">1.</span>
+        <div class="rp-content">
+          <p class="rp-statement">(10 points) (a) Find the general solution of: \(\begin{cases}x_1+x_2+3x_3=0\\2x_1+x_2+4x_3=1\\3x_1+x_2+5x_3=2\end{cases}\). (b) Describe the geometric shape of the collection of all solutions as a subset of \(\mathbb{R}^3\).</p>
+          <details class="hint-block"><summary>Hint</summary><p>Row reduce the augmented matrix. Identify free variables. The geometric shape depends on the number of free variables: 0 → point, 1 → line, 2 → plane.</p></details>
         </div>
+      </div>
 
-        <div class="answer-area">
-          <label for="answer-input">Your answer:</label>
-          <input type="text" id="answer-input" aria-label="Answer input field">
-          <div class="button-row">
-            <button id="check-btn" type="button">Check</button>
-            <button id="hint-btn" type="button">Hint</button>
-            <button id="next-btn" type="button">Next Problem</button>
-          </div>
+      <div class="review-problem">
+        <span class="rp-number">2.</span>
+        <div class="rp-content">
+          <p class="rp-statement">(10 points) Let \(A\) be a \(3\times3\) matrix such that \(A\mathbf{x}=\begin{bmatrix}1\\0\\-1\end{bmatrix}\) has both \(\begin{bmatrix}1\\2\\3\end{bmatrix}\) and \(\begin{bmatrix}3\\1\\4\end{bmatrix}\) as solutions. Find another solution. Explain.</p>
+          <details class="hint-block"><summary>Hint</summary><p>If \(\mathbf{u}\) and \(\mathbf{v}\) are both solutions, then \(\mathbf{u}-\mathbf{v}\) is in \(\operatorname{Nul}(A)\). Any particular solution plus any element of \(\operatorname{Nul}(A)\) gives another solution.</p></details>
         </div>
-
-        <div id="feedback-message" aria-live="assertive" aria-label="Feedback message"></div>
       </div>
 
-      <div id="mock-timer-container" aria-label="Mock exam timer" hidden>
-        <span>Time Left: <span id="timer-display">10:00</span></span>
+      <div class="review-problem">
+        <span class="rp-number">3.</span>
+        <div class="rp-content">
+          <p class="rp-statement">(20 points) Let \(\mathcal{B}=\{1+2x,\ x-x^2,\ x+x^2\}\). (a) Show \(\mathcal{B}\) is a basis for \(\mathcal{P}_2[x]\). (b) Let \(p(x)=1+3x+x^2\). Compute \([p(x)]_{\mathcal{B}}\). (c) Let \(T:\mathcal{P}_2[x]\to\mathcal{P}_2[x]\) be \(T(p(x))=p'(x)-p(x)\). Write the matrix of \(T\) with respect to \(\mathcal{B}\).</p>
+          <details class="hint-block"><summary>Hint</summary><p>For (a), show the 3 polynomials are linearly independent in a 3-dimensional space. For (b), solve \(c_1(1+2x)+c_2(x-x^2)+c_3(x+x^2)=1+3x+x^2\). For (c), compute \(T(\mathbf{b}_j)\) for each basis vector and express in \(\mathcal{B}\)-coordinates.</p></details>
+        </div>
       </div>
+
+      <div class="review-problem">
+        <span class="rp-number">4.</span>
+        <div class="rp-content">
+          <p class="rp-statement">(20 points) Let \(W\subset\mathbb{R}^4\) be the subspace of vectors \((v_1,v_2,v_3,v_4)\) satisfying \(2v_1-v_3+v_4=0\). Find an orthonormal basis for \(W\).</p>
+          <details class="hint-block"><summary>Hint</summary><p>Find a basis for \(W\) (parametric form with 3 free variables → 3-dimensional subspace). Then apply Gram-Schmidt to obtain orthogonal vectors. Normalize to get orthonormal basis.</p></details>
+        </div>
+      </div>
+
+      <div class="review-problem">
+        <span class="rp-number">5.</span>
+        <div class="rp-content">
+          <p class="rp-statement">(10 points) Let \(A\) be a \(2\times2\) matrix with eigenvector \(\begin{bmatrix}1\\1\end{bmatrix}\) for eigenvalue 2 and eigenvector \(\begin{bmatrix}2\\3\end{bmatrix}\) for eigenvalue 1. If \(V=\begin{bmatrix}3\\4\end{bmatrix}\), compute \(A^3\cdot V\).</p>
+          <details class="hint-block"><summary>Hint</summary><p>Write \(V = c_1\mathbf{v}_1+c_2\mathbf{v}_2\) by solving a linear system. Then \(A^3V = c_1\cdot2^3\mathbf{v}_1+c_2\cdot1^3\mathbf{v}_2\).</p></details>
+        </div>
+      </div>
+
+      <div class="review-problem">
+        <span class="rp-number">6.</span>
+        <div class="rp-content">
+          <p class="rp-statement">(10 points) Let \(W\subset\mathbb{R}^3\) be the plane \(x_1-x_2+x_3=0\). Let \(T:\mathbb{R}^3\to W\) be the orthogonal projection to \(W\). Find the standard matrix of \(T\).</p>
+          <details class="hint-block"><summary>Hint</summary><p>Find a normal vector \(\mathbf{n}\) to the plane. Orthogonal projection to \(W\) is \(T(\mathbf{x})=\mathbf{x}-\text{proj}_\mathbf{n}\mathbf{x}\). The standard matrix has columns \(T(\mathbf{e}_1), T(\mathbf{e}_2), T(\mathbf{e}_3)\).</p></details>
+        </div>
+      </div>
+
+      <div class="review-problem">
+        <span class="rp-number">7.</span>
+        <div class="rp-content">
+          <p class="rp-statement">(10 points) Let \(A\) be an \(n\times n\) matrix and let \(W=\{v\in\mathbb{R}^n: Av=\lambda v\}\) (the \(\lambda\)-eigenspace). Prove that \(W\) is a subspace of \(\mathbb{R}^n\).</p>
+          <details class="hint-block"><summary>Hint</summary><p>Check three conditions: (1) \(\mathbf{0}\in W\) since \(A\mathbf{0}=\lambda\mathbf{0}\). (2) If \(Au=\lambda u\) and \(Av=\lambda v\), does \(A(u+v)=\lambda(u+v)\)? Use linearity. (3) If \(Au=\lambda u\), does \(A(cu)=\lambda(cu)\)?</p></details>
+        </div>
+      </div>
+
+      <div class="review-problem">
+        <span class="rp-number">8.</span>
+        <div class="rp-content">
+          <p class="rp-statement">(10 points) Explain (algebraically) why one of these facts is true (your choice): (A) If \(\lambda\) is an eigenvalue of \(A\), then \(\det(A-\lambda I_n)=0\). (B) If \(\{u_1,u_2,u_3\}\) is an orthogonal set, then the three vectors are linearly independent.</p>
+          <details class="hint-block"><summary>Hint</summary><p>For (A): \(\lambda\) is an eigenvalue iff \(A\mathbf{v}=\lambda\mathbf{v}\) has a nontrivial solution iff \((A-\lambda I)\) is singular iff its determinant is zero. For (B): take the dot product of the equation \(c_1u_1+c_2u_2+c_3u_3=\mathbf{0}\) with each \(u_i\) in turn.</p></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Master Formula Sheet -->
+  <section id="w10-masterformulas" class="content-section formula-section" aria-labelledby="w10-mf-h">
+    <h3 id="w10-mf-h" class="section-title">Master Formula Collection</h3>
+    <div class="formula-grid formula-grid--master">
+      <div class="formula-card">
+        <div class="formula-name">Ax=b Solution Structure</div>
+        <div class="formula-math">\[ \mathbf{x} = \mathbf{x}_p + t_1\mathbf{v}_1 + \cdots + t_k\mathbf{v}_k \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Matrix–Vector Product</div>
+        <div class="formula-math">\[ A\mathbf{x} = \sum_{j=1}^n x_j\mathbf{a}_j \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Standard Matrix of T</div>
+        <div class="formula-math">\[ A = [T(\mathbf{e}_1)\ \cdots\ T(\mathbf{e}_n)] \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">2×2 Inverse</div>
+        <div class="formula-math">\[ A^{-1}=\frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Product of Inverses</div>
+        <div class="formula-math">\[ (AB)^{-1}=B^{-1}A^{-1} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Cofactor Expansion</div>
+        <div class="formula-math">\[ \det(A)=\sum_j a_{ij}C_{ij} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Cramer's Rule</div>
+        <div class="formula-math">\[ x_i=\frac{\det(A_i(\mathbf{b}))}{\det(A)} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Rank + Nullity</div>
+        <div class="formula-math">\[ \operatorname{rank}(A)+\operatorname{nullity}(A)=n \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Characteristic Equation</div>
+        <div class="formula-math">\[ \det(A-\lambda I)=0 \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">2×2 Char. Poly.</div>
+        <div class="formula-math">\[ \lambda^2-\operatorname{tr}(A)\lambda+\det(A)=0 \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Diagonalization</div>
+        <div class="formula-math">\[ A=PDP^{-1},\quad A^k=PD^kP^{-1} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Gram-Schmidt</div>
+        <div class="formula-math">\[ u_k=v_k-\sum_{j<k}\frac{v_k\cdot u_j}{\|u_j\|^2}u_j \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">LU Factorization</div>
+        <div class="formula-math">\[ A=LU,\quad L\mathbf{y}=\mathbf{b},\quad U\mathbf{x}=\mathbf{y} \]</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-name">Jordan Block</div>
+        <div class="formula-math">\[ J_\lambda = \begin{bmatrix}\lambda&1\\0&\lambda\end{bmatrix} \]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final Exam Preparation Guide -->
+  <section id="w10-examguide" class="content-section" aria-labelledby="w10-eg-h">
+    <h3 id="w10-eg-h" class="section-title">Final Exam Preparation Guide</h3>
+    <div class="exam-guide-grid">
+      <div class="eg-card eg-card--strategy">
+        <h4>Study Strategy (Last 3 Days)</h4>
+        <ol>
+          <li><strong>Day 1:</strong> Revisit Weeks 1–5 (systems, transformations, determinants). Solve 3 full examples from each week from scratch without notes.</li>
+          <li><strong>Day 2:</strong> Revisit Weeks 6–9 (vector spaces, eigenvalues, diagonalization). Focus on Weeks 8–9 — they dominate the final.</li>
+          <li><strong>Day 3:</strong> Solve all 8 Lecture 10 Final Prep problems under timed conditions. Review the Master Formula Sheet.</li>
+        </ol>
+      </div>
+      <div class="eg-card eg-card--common-errors">
+        <h4>Top 10 Final Exam Traps</h4>
+        <ol>
+          <li>Forgetting to check consistency before writing the solution.</li>
+          <li>Using RREF columns for Col(A) instead of original matrix columns.</li>
+          <li>Assuming \(AB=BA\).</li>
+          <li>Applying the \(2\times2\) inverse formula to a \(3\times3\) matrix.</li>
+          <li>Forgetting that \(\det(kA)=k^n\det(A)\), not \(k\det(A)\).</li>
+          <li>Declaring diagonalizability without checking geometric multiplicity.</li>
+          <li>Column order mismatch between \(P\) and \(D\) in diagonalization.</li>
+          <li>Confusing the eigenspace with the set of all eigenvectors (eigenspace includes \(\mathbf{0}\)).</li>
+          <li>Forgetting that eigenvalues of triangular matrices are the diagonal entries.</li>
+          <li>Using Cramer's Rule on a singular matrix (\(\det(A)=0\)).</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Revision Cards -->
+  <section id="w10-quickrev" class="content-section" aria-labelledby="w10-qr-h">
+    <h3 id="w10-qr-h" class="section-title">Quick Revision Notes — One-Page Summary</h3>
+    <div class="quick-rev-grid">
+      <div class="qr-block">
+        <h4 class="qr-title">Solving Linear Systems</h4>
+        <ul class="qr-list">
+          <li>Write augmented matrix \([A\mid\mathbf{b}]\).</li>
+          <li>Row reduce → RREF.</li>
+          <li>Inconsistent ↔ pivot in last column.</li>
+          <li>Free variable ↔ infinitely many solutions.</li>
+          <li>Parametric solution: basic in terms of free.</li>
+        </ul>
+      </div>
+      <div class="qr-block">
+        <h4 class="qr-title">Linear Transformations</h4>
+        <ul class="qr-list">
+          <li>Standard matrix: \(A=[T(\mathbf{e}_1)\cdots T(\mathbf{e}_n)]\).</li>
+          <li>One-to-one ↔ columns independent.</li>
+          <li>Onto ↔ columns span codomain.</li>
+          <li>\(T(c\mathbf{u}+d\mathbf{v})=cT(\mathbf{u})+dT(\mathbf{v})\).</li>
+        </ul>
+      </div>
+      <div class="qr-block">
+        <h4 class="qr-title">Determinants</h4>
+        <ul class="qr-list">
+          <li>Cofactor: \(C_{ij}=(-1)^{i+j}M_{ij}\).</li>
+          <li>Triangular: product of diagonal.</li>
+          <li>Row swap → sign flip.</li>
+          <li>Row scaling by \(k\) → det ×\(k\).</li>
+          <li>Row replacement → no change.</li>
+          <li>\(\det(AB)=\det(A)\det(B)\).</li>
+        </ul>
+      </div>
+      <div class="qr-block">
+        <h4 class="qr-title">Vector Spaces</h4>
+        <ul class="qr-list">
+          <li>Subspace test: \(\mathbf{0}\), closed under + and \(\cdot\).</li>
+          <li>Nul(A): use RREF of \(A\) (in domain).</li>
+          <li>Col(A): pivot columns of ORIGINAL \(A\) (in codomain).</li>
+          <li>Row(A): nonzero rows of echelon form.</li>
+          <li>\(\operatorname{rank}(A)+\operatorname{nullity}(A)=n\).</li>
+        </ul>
+      </div>
+      <div class="qr-block">
+        <h4 class="qr-title">Eigenvalues &amp; Eigenvectors</h4>
+        <ul class="qr-list">
+          <li>Find \(\lambda\): solve \(\det(A-\lambda I)=0\).</li>
+          <li>Find \(\mathbf{v}\): solve \((A-\lambda I)\mathbf{x}=\mathbf{0}\).</li>
+          <li>Eigenspace = null space of \(A-\lambda I\).</li>
+          <li>Triangular matrix: eigenvalues = diagonal.</li>
+          <li>Trace = sum of eigenvalues; det = product.</li>
+        </ul>
+      </div>
+      <div class="qr-block">
+        <h4 class="qr-title">Diagonalization</h4>
+        <ul class="qr-list">
+          <li>Diagonalizable ↔ \(n\) independent eigenvectors.</li>
+          <li>Sufficient: \(n\) distinct eigenvalues.</li>
+          <li>\(P\) = eigenvectors as columns; \(D\) = eigenvalues on diagonal.</li>
+          <li>\(A^k = PD^kP^{-1}\).</li>
+          <li>Non-diagonalizable → Jordan form.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Additional Practice (Final Level) -->
+  <section id="w10-practice" class="content-section practice-section" aria-labelledby="w10-prac-h">
+    <h3 id="w10-prac-h" class="section-title">Final-Level Practice Problems</h3>
+    <ol class="practice-list">
+      <li class="practice-item">
+        <span class="practice-q">Solve the system and describe the geometric shape of its solution set: \(\begin{cases}5x_1-3x_2+8x_3=1\\x_1+4x_2-15x_3=2\\2x_2-8x_3=0\end{cases}\)</span>
+        <details class="hint-block"><summary>Hint</summary><p>This is Example 1 from Lecture 10. Row reduce carefully. The solution is the unique point \((1,4,1)\).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">For \(A=\begin{bmatrix}1&2&-2\\-1&2&1\\1&1&-2\end{bmatrix}\), find all eigenvalues and eigenvectors. Is \(A\) diagonalizable? If not, find its Jordan form.</span>
+        <details class="hint-block"><summary>Hint</summary><p>Characteristic polynomial: \(\lambda^3-\lambda^2-\lambda+1=0\). Factor: \((\lambda-1)^2(\lambda+1)=0\). Check geometric multiplicity of \(\lambda=1\).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Find bases for the null space and column space of \(A=\begin{bmatrix}2&-2&-5&-3&-1&2\\2&-1&-3&2&3&2\\4&-1&-4&10&11&4\\0&1&2&5&4&0\end{bmatrix}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Row reduce to echelon form (3 pivots). For Nul(A), the RREF gives 3 free variables and 3 basis vectors. For Col(A), use the 3 pivot columns of the ORIGINAL \(A\).</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Compute \(\det(A)\) for \(A=\begin{bmatrix}1&3&0&-2\\1&2&-2&-1\\0&-1&0&-3\\-1&0&2&1\end{bmatrix}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Expand along the 3rd row (two zeros). From Lecture 10: the answer is 5.</p></details>
+      </li>
+      <li class="practice-item">
+        <span class="practice-q">Find the inverse of \(A=\begin{bmatrix}-4&5&3\\5&-6&-3\\-3&4&2\end{bmatrix}\).</span>
+        <details class="hint-block"><summary>Hint</summary><p>Form \([A\mid I_3]\) and row reduce. From Lecture 10: \(A^{-1}=\begin{bmatrix}0&2&3\\-1&1&3\\2&1&-1\end{bmatrix}\).</p></details>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Motivational Closing -->
+  <section id="w10-closing" class="content-section summary-section" aria-labelledby="w10-cls-h">
+    <h3 id="w10-cls-h" class="section-title">Final Words</h3>
+    <div class="summary-card summary-card--final">
+      <p><strong>The Big Picture of Linear Algebra:</strong> This course has been about one fundamental question: <em>how does a linear map rearrange space?</em> Systems of equations tell us about specific outputs. Matrices encode linear transformations. Eigenvalues reveal the natural structure — the "skeleton" — of the transformation. Diagonalization makes this structure explicit and efficient.</p>
+      <p><strong>Key Insight:</strong> Every matrix problem reduces to asking: How many pivots are there? (That is: what is the rank?) Everything flows from this single number — the solution types, invertibility, dimension of null space, determinant being zero or not, and the existence of enough eigenvectors for diagonalization.</p>
+      <p class="closing-quote">"Mathematics is not about numbers, equations, computations, or algorithms: it is about understanding." — William Paul Thurston</p>
+      <p><strong>Good luck on your final exam!</strong> You have the tools. Use them.</p>
+    </div>
+  </section>
+</article>
+
+<!-- END MAIN CONTENT -->
+
+<!-- ============================================================
+     ASIDE: QUICK ACCESS TOOLS
+     ============================================================ -->
+<aside id="quick-tools" class="quick-tools" role="complementary" aria-label="Quick study tools">
+  <div class="qt-inner">
+    <h2 class="qt-title">Study Tools</h2>
+
+    <section class="qt-section" aria-labelledby="qt-key-thms">
+      <h3 id="qt-key-thms" class="qt-section-title">Key Theorems Quick Reference</h3>
+      <ul class="qt-list">
+        <li><a href="#thm-rref-unique" class="qt-link">Theorem 1 – Uniqueness of RREF</a></li>
+        <li><a href="#thm-exist-unique" class="qt-link">Theorem 2 – Existence &amp; Uniqueness</a></li>
+        <li><a href="#thm-ax-b-equiv" class="qt-link">Equivalent Statements for Ax=b</a></li>
+        <li><a href="#w4-theorems" class="qt-link">Invertible Matrix Theorem (Full)</a></li>
+        <li><a href="#w7-theorems" class="qt-link">Rank-Nullity Theorem</a></li>
+        <li><a href="#w8-theorems" class="qt-link">Eigenvalue Theorems</a></li>
+        <li><a href="#w9-theorems" class="qt-link">Diagonalization Theorem</a></li>
+      </ul>
     </section>
-  </main>
-  <script src="script.js"></script>
+
+    <section class="qt-section" aria-labelledby="qt-formulas-ref">
+      <h3 id="qt-formulas-ref" class="qt-section-title">Formula Quick Access</h3>
+      <ul class="qt-list">
+        <li><a href="#w1-formulas" class="qt-link">Week 1 Formulas</a></li>
+        <li><a href="#w5-formulas" class="qt-link">Determinant Formulas</a></li>
+        <li><a href="#w8-formulas" class="qt-link">Eigenvalue Formulas</a></li>
+        <li><a href="#w9-formulas" class="qt-link">Diagonalization Formulas</a></li>
+        <li><a href="#w10-masterformulas" class="qt-link">Master Formula Sheet</a></li>
+      </ul>
+    </section>
+
+    <section class="qt-section" aria-labelledby="qt-practice-ref">
+      <h3 id="qt-practice-ref" class="qt-section-title">Practice Sets</h3>
+      <ul class="qt-list">
+        <li><a href="#w1-practice" class="qt-link">Week 1 Practice</a></li>
+        <li><a href="#w5-practice" class="qt-link">Week 5 (Determinants)</a></li>
+        <li><a href="#w8-practice" class="qt-link">Week 8 (Eigenvalues)</a></li>
+        <li><a href="#w9-practice" class="qt-link">Week 9 (Diagonalization)</a></li>
+        <li><a href="#w10-review10" class="qt-link">Final Prep Problems</a></li>
+        <li><a href="#w10-practice" class="qt-link">Final-Level Practice</a></li>
+      </ul>
+    </section>
+  </div>
+</aside>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer id="site-footer" class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo" aria-hidden="true">&#x3a3;</span>
+      <div>
+        <p class="footer-title">Linear Algebra Prep Hub</p>
+        <p class="footer-subtitle">Astana IT University — School of AI &amp; Data Science</p>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <p>Based on lecture materials by Zamart Ramazanova, Senior Lecturer</p>
+      <p>Primary textbook: Lay, Lay &amp; McDonald, <em>Linear Algebra and Its Applications</em>, 5th ed., 2016</p>
+      <p>Course: Linear Algebra, 5 credit units, Spring 2026</p>
+    </div>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <ul class="footer-nav-list">
+        <li><a href="#week1" class="footer-link">Week 1</a></li>
+        <li><a href="#week2" class="footer-link">Week 2</a></li>
+        <li><a href="#week3" class="footer-link">Week 3</a></li>
+        <li><a href="#week4" class="footer-link">Week 4</a></li>
+        <li><a href="#week5" class="footer-link">Week 5</a></li>
+        <li><a href="#week6" class="footer-link">Week 6</a></li>
+        <li><a href="#week7" class="footer-link">Week 7</a></li>
+        <li><a href="#week8" class="footer-link">Week 8</a></li>
+        <li><a href="#week9" class="footer-link">Week 9</a></li>   <!-- ← исправлено -->
+        <li><a href="#week10" class="footer-link">Week 10</a></li>
+</ul>
+
+</main>
 </body>
 </html>
