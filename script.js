@@ -378,7 +378,6 @@ const SearchSystem = (() => {
      if (!el) return '';
      return (el.textContent || '').toLowerCase().replace(/\s+/g, ' ').trim();
    }
-  }
 
   /** Escape for RegExp */
   function escapeRE(str) {
