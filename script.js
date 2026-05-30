@@ -349,30 +349,35 @@ const SearchSystem = (() => {
 
   /** Build a flat index of searchable text nodes */
   function buildIndex() {
-    allSections = Array.from(qsa([
-      '.def-term', '.def-body',
-      '.concept-title', '.concept-block p',
-      '.theorem-label', '.theorem-block p',
-      '.example-title', '.example-block p',
-      '.formula-name', '.formula-math',
-      '.faq-q', '.faq-a p',
-      '.practice-q', '.challenge-q',
-      '.rp-statement',
-      '.objectives-list li',
-      '.tips-list li',
-      '.memorize-list li',
-      '.mistakes-list li',
-      '.app-list li',
-      '.summary-card p',
-      '.week-title', '.week-subtitle',
-      '.step-text',
-      '.section-title'
-    ].join(', ')));
-  }
+     const selectors = [
+       '.def-term', '.def-body',
+       '.concept-title', '.concept-block p',
+       '.theorem-label', '.theorem-block p',
+       '.example-title', '.example-block p',
+       '.formula-name', '.formula-math',
+       '.faq-q', '.faq-a p',
+       '.practice-q', '.challenge-q',
+       '.rp-statement',
+       '.objectives-list li',
+       '.tips-list li',
+       '.memorize-list li',
+       '.mistakes-list li',
+       '.app-list li',
+       '.summary-card p',
+       '.week-title', '.week-subtitle',
+       '.step-text',
+       '.section-title'
+     ].join(', ');
+  
+     allSections = Array.from(qsa(selectors));
+     console.log(`Search index built: ${allSections.length} elements`);
+}
 
   /** Strip HTML tags and MathJax artifacts for plain-text search */
   function plainText(el) {
-    return (el.textContent || '').toLowerCase().replace(/\s+/g, ' ').trim();
+     if (!el) return '';
+     return (el.textContent || '').toLowerCase().replace(/\s+/g, ' ').trim();
+   }
   }
 
   /** Escape for RegExp */
@@ -737,6 +742,7 @@ const SearchSystem = (() => {
   }
 
   function handleOverlaySearch(query) {
+     if (!allSections.length) buildIndex();
     const resultsDiv = qs('#search-overlay-results');
     if (!resultsDiv) return;
     if (!query.trim()) { resultsDiv.innerHTML = ''; return; }
